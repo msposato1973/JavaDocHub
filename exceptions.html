@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Eccezioni | JavaDoc Hub</title>
+     <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#gerarchia" class="toc-link" data-target="gerarchia">
+                    <i class="fas fa-sitemap"></i> Gerarchia delle Eccezioni
+                </a></li>
+                <li><a href="#try-catch" class="toc-link" data-target="try-catch">
+                    <i class="fas fa-hand-paper"></i> try-catch-finally
+                </a></li>
+                <li><a href="#throw-throws" class="toc-link" data-target="throw-throws">
+                    <i class="fas fa-throw"></i> throw e throws
+                </a></li>
+                <li><a href="#custom" class="toc-link" data-target="custom">
+                    <i class="fas fa-custom"></i> Eccezioni Custom
+                </a></li>
+                <li><a href="#try-resources" class="toc-link" data-target="try-resources">
+                    <i class="fas fa-database"></i> try-with-resources
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+                <li><a href="#esempi-pratici" class="toc-link" data-target="esempi-pratici">
+                    <i class="fas fa-code-branch"></i> Esempi Pratici
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-exclamation-triangle"></i> Gestione delle Eccezioni in Java</h1>
+                <p>try-catch-finally, throw, throws, eccezioni custom, try-with-resources e best practices</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è un'eccezione?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Un'eccezione in Java è un evento che interrompe il normale flusso di esecuzione di un programma.
+                        Java fornisce un robusto meccanismo per gestire gli errori attraverso le eccezioni, permettendo
+                        di separare la logica di business dalla gestione degli errori.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi della gestione delle eccezioni:</strong><br>
+                        - Separazione della logica di errore dalla logica di business<br>
+                        - Propagazione degli errori lungo la call stack<br>
+                        - Raggruppamento di tipi di errore<br>
+                        - Gestione centralizzata degli errori
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. GERARCHIA DELLE ECCEZIONI ==================== -->
+            <div class="section-card" id="gerarchia">
+                <div class="card-header">
+                    <i class="fas fa-sitemap"></i>
+                    <h2>Gerarchia delle Eccezioni</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Throwable è la classe base di tutte le eccezioni</div>
+                    <pre><code class="language-java">// Gerarchia delle eccezioni in Java:
+//
+//                    Throwable
+//                   /        \
+//              Error        Exception
+//              /    \       /        \
+//   OutOfMemoryError  StackOverflowError  RuntimeException  IOException
+//                                         /        \
+//                              NullPointerException  IllegalArgumentException
+//
+// - Error: errori gravi dell'ambiente (non recuperabili)
+// - Exception (checked): obbligano a gestione (try-catch o throws)
+// - RuntimeException (unchecked): non obbligano a gestione
+
+public class GerarchiaEccezioni {
+    public static void main(String[] args) {
+        // RuntimeException (non obbliga try-catch)
+        String s = null;
+        try {
+            s.length();  // NullPointerException
+        } catch (NullPointerException e) {
+            System.out.println("Gestita NPE: " + e.getMessage());
+        }
+        
+        // Checked Exception (obbliga try-catch o throws)
+        try {
+            FileReader file = new FileReader("file.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File non trovato!");
+        }
+    }
+}</code></pre>
+                    <div class="warning-block">
+                        <i class="fas fa-info-circle"></i> <strong>Nota:</strong> Le eccezioni checked (come IOException) 
+                        DEVONO essere gestite con try-catch o dichiarate con throws. Le unchecked (RuntimeException) 
+                        sono opzionali ma consigliate.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. TRY-CATCH-FINALLY ==================== -->
+            <div class="section-card" id="try-catch">
+                <div class="card-header">
+                    <i class="fas fa-hand-paper"></i>
+                    <h2>try-catch-finally</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Blocchi fondamentali per la gestione delle eccezioni</div>
+                    <pre><code class="language-java">public class TryCatchFinallyDemo {
+    public static void main(String[] args) {
+        System.out.println(divisioneSicura(10, 2));
+        System.out.println(divisioneSicura(10, 0));
+    }
+    
+    public static int divisioneSicura(int a, int b) {
+        try {
+            System.out.println("Tentativo divisione: " + a + "/" + b);
+            return a / b;
+        } catch (ArithmeticException e) {
+            System.err.println("ERRORE: " + e.getMessage());
+            return -1;
+        } finally {
+            System.out.println("Finally - sempre eseguito");
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Tentativo divisione: 10/2<br>
+                        Finally - sempre eseguito<br>
+                        5<br>
+                        Tentativo divisione: 10/0<br>
+                        ERRORE: / by zero<br>
+                        Finally - sempre eseguito<br>
+                        -1
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Importante:</strong> Il blocco <code>finally</code> viene eseguito 
+                        SEMPRE, anche se c'è un return nel try o nel catch. È ideale per chiudere risorse.
+                    </div>
+                    
+                    <h3 style="margin-top: 1.5rem; color: #ff9800;">Multi-catch (Java 7+)</h3>
+                    <pre><code class="language-java">try {
+    // operazione che può lanciare più eccezioni
+} catch (FileNotFoundException | SQLException | IOException e) {
+    // Gestisce tutti e tre i tipi di eccezione
+    System.err.println("Errore: " + e.getMessage());
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 4. THROW E THROWS ==================== -->
+            <div class="section-card" id="throw-throws">
+                <div class="card-header">
+                    <i class="fas fa-throw"></i>
+                    <h2>throw e throws</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">throw → lancia un'eccezione | throws → dichiara che un metodo può lanciare eccezioni</div>
+                    <pre><code class="language-java">public class ThrowThrowsDemo {
+    
+    // throws dichiara che il metodo può lanciare un'eccezione
+    public static void verificaEta(int eta) throws IllegalArgumentException {
+        if (eta < 0 || eta > 150) {
+            // throw lancia effettivamente l'eccezione
+            throw new IllegalArgumentException("Età non valida: " + eta);
+        }
+        System.out.println("Età valida: " + eta);
+    }
+    
+    // Multiplo throws
+    public static void leggiFile(String path) throws FileNotFoundException, IOException {
+        FileReader reader = new FileReader(path);
+        int data = reader.read();
+        reader.close();
+    }
+    
+    // Rilancio eccezione con causa
+    public static void elaboraDati() throws BusinessException {
+        try {
+            // operazione che può fallire
+            leggiFile("dati.txt");
+        } catch (IOException e) {
+            // Preserva la causa originale
+            throw new BusinessException("Errore elaborazione dati", e);
+        }
+    }
+    
+    public static void main(String[] args) {
+        try {
+            verificaEta(200);  // Lancia eccezione
+        } catch (IllegalArgumentException e) {
+            System.out.println("Catturata: " + e.getMessage());
+        }
+        
+        try {
+            verificaEta(25);   // Ok
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        // Gestione di più eccezioni in un unico catch (Java 7+)
+        try {
+            leggiFile("test.txt");
+        } catch (FileNotFoundException | IOException e) {
+            System.out.println("Errore I/O: " + e.getMessage());
+        }
+    }
+}
+
+class BusinessException extends Exception {
+    public BusinessException(String message, Throwable cause) {
+        super(message, cause);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Catturata: Età non valida: 200<br>
+                        Età valida: 25
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. ECCEZIONI CUSTOM ==================== -->
+            <div class="section-card" id="custom">
+                <div class="card-header">
+                    <i class="fas fa-custom"></i>
+                    <h2>Eccezioni Custom</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Creare le proprie eccezioni per errori specifici del dominio</div>
+                    <pre><code class="language-java">// ==================== ECCEZIONE UNCHECKED ====================
+// Estende RuntimeException (non obbliga try-catch)
+class SaldoInsufficienteException extends RuntimeException {
+    private final double saldoCorrente;
+    private final double importoRichiesto;
+    
+    public SaldoInsufficienteException(double saldoCorrente, double importoRichiesto) {
+        super(String.format("Saldo insufficiente: €%.2f disponibili, €%.2f richiesti", 
+              saldoCorrente, importoRichiesto));
+        this.saldoCorrente = saldoCorrente;
+        this.importoRichiesto = importoRichiesto;
+    }
+    
+    public double getSaldoCorrente() { return saldoCorrente; }
+    public double getImportoRichiesto() { return importoRichiesto; }
+}
+
+// ==================== ECCEZIONE CHECKED ====================
+// Estende Exception (obbliga try-catch o throws)
+class ContoNonTrovatoException extends Exception {
+    private final String iban;
+    private final LocalDateTime timestamp;
+    
+    public ContoNonTrovatoException(String iban) {
+        super("Conto con IBAN " + iban + " non trovato nel sistema");
+        this.iban = iban;
+        this.timestamp = LocalDateTime.now();
+    }
+    
+    public ContoNonTrovatoException(String iban, Throwable cause) {
+        super("Conto con IBAN " + iban + " non trovato nel sistema", cause);
+        this.iban = iban;
+        this.timestamp = LocalDateTime.now();
+    }
+    
+    public String getIban() { return iban; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+}
+
+// ==================== CLASSE CONTO BANCARIO ====================
+class ContoBancario {
+    private double saldo;
+    private String iban;
+    private String proprietario;
+    
+    public ContoBancario(String iban, String proprietario, double saldoIniziale) {
+        this.iban = iban;
+        this.proprietario = proprietario;
+        this.saldo = saldoIniziale;
+    }
+    
+    public void preleva(double importo) {
+        if (importo > saldo) {
+            throw new SaldoInsufficienteException(saldo, importo);
+        }
+        saldo -= importo;
+        System.out.printf("Prelievo di €%.2f effettuato. Nuovo saldo: €%.2f%n", importo, saldo);
+    }
+    
+    public void deposita(double importo) {
+        if (importo <= 0) {
+            throw new IllegalArgumentException("Importo deposito non valido: " + importo);
+        }
+        saldo += importo;
+        System.out.printf("Deposito di €%.2f effettuato. Nuovo saldo: €%.2f%n", importo, saldo);
+    }
+    
+    public static ContoBancario trovaPerIban(String iban) throws ContoNonTrovatoException {
+        // Simulazione ricerca
+        if (!iban.equals("IT1234567890")) {
+            throw new ContoNonTrovatoException(iban);
+        }
+        return new ContoBancario(iban, "Mario Rossi", 1000.0);
+    }
+    
+    public double getSaldo() { return saldo; }
+    public String getIban() { return iban; }
+    public String getProprietario() { return proprietario; }
+}
+
+public class CustomExceptionDemo {
+    public static void main(String[] args) {
+        ContoBancario conto = new ContoBancario("IT1234567890", "Mario Rossi", 1000.0);
+        
+        // Test eccezione unchecked
+        System.out.println("=== Test SaldoInsufficienteException ===");
+        try {
+            conto.preleva(1500);
+        } catch (SaldoInsufficienteException e) {
+            System.err.println("Errore: " + e.getMessage());
+            System.err.printf("Saldo: €%.2f, Richiesto: €%.2f%n", 
+                e.getSaldoCorrente(), e.getImportoRichiesto());
+        }
+        
+        // Test eccezione checked
+        System.out.println("\n=== Test ContoNonTrovatoException ===");
+        try {
+            ContoBancario.trovaPerIban("IT9999999999");
+        } catch (ContoNonTrovatoException e) {
+            System.err.println("Errore: " + e.getMessage());
+            System.err.println("IBAN cercato: " + e.getIban());
+            System.err.println("Timestamp: " + e.getTimestamp());
+        }
+        
+        // Operazioni normali
+        System.out.println("\n=== Operazioni normali ===");
+        conto.deposita(500);
+        conto.preleva(300);
+        System.out.printf("Saldo finale: €%.2f%n", conto.getSaldo());
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        === Test SaldoInsufficienteException ===<br>
+                        Errore: Saldo insufficiente: €1000.00 disponibili, €1500.00 richiesti<br>
+                        Saldo: €1000.00, Richiesto: €1500.00<br>
+                        === Test ContoNonTrovatoException ===<br>
+                        Errore: Conto con IBAN IT9999999999 non trovato nel sistema<br>
+                        IBAN cercato: IT9999999999<br>
+                        Timestamp: 2024-01-15T10:30:45.123<br>
+                        === Operazioni normali ===<br>
+                        Deposito di €500.00 effettuato. Nuovo saldo: €1500.00<br>
+                        Prelievo di €300.00 effettuato. Nuovo saldo: €1200.00<br>
+                        Saldo finale: €1200.00
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. TRY-WITH-RESOURCES ==================== -->
+            <div class="section-card" id="try-resources">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>try-with-resources (AutoCloseable)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fas fa-magic"></i> Java 7+ - Chiusura automatica delle risorse</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 VECCHIO MODO (Java 6 e precedenti)</h3>
+                    <pre><code class="language-java">// Senza try-with-resources - tanto boilerplate!
+BufferedReader br = null;
+try {
+    br = new BufferedReader(new FileReader("file.txt"));
+    String linea = br.readLine();
+    System.out.println(linea);
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    if (br != null) {
+        try {
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 NUOVO MODO (try-with-resources)</h3>
+                    <pre><code class="language-java">// Con try-with-resources - molto più pulito!
+try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
+    String linea = br.readLine();
+    System.out.println(linea);
+} catch (IOException e) {
+    System.err.println("Errore lettura: " + e.getMessage());
+}
+// br viene chiuso automaticamente!</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 MULTIPLE RESOURCES</h3>
+                    <pre><code class="language-java">// Gestione di più risorse contemporaneamente
+try (FileInputStream fis = new FileInputStream("input.dat");
+     FileOutputStream fos = new FileOutputStream("output.dat");
+     BufferedReader reader = new BufferedReader(new FileReader("log.txt"))) {
+    
+    int data;
+    while ((data = fis.read()) != -1) {
+        fos.write(data);
+    }
+    System.out.println("Copia completata");
+    
+} catch (IOException e) {
+    e.printStackTrace();
+}
+// Tutte e tre le risorse vengono chiuse automaticamente!</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 CLASSE CUSTOM AUTO-CLOSEABLE</h3>
+                    <pre><code class="language-java">class CustomResource implements AutoCloseable {
+    private String name;
+    
+    public CustomResource(String name) {
+        this.name = name;
+        System.out.println("🔓 Apertura risorsa: " + name);
+    }
+    
+    public void doSomething() {
+        System.out.println("⚙️ Utilizzo risorsa: " + name);
+    }
+    
+    @Override
+    public void close() throws Exception {
+        System.out.println("🔒 Chiusura risorsa: " + name);
+    }
+}
+
+// Utilizzo
+try (CustomResource res1 = new CustomResource("DB Connection");
+     CustomResource res2 = new CustomResource("File Handler")) {
+    
+    res1.doSomething();
+    res2.doSomething();
+    
+} catch (Exception e) {
+    e.printStackTrace();
+}
+// Output:
+// 🔓 Apertura risorsa: DB Connection
+// 🔓 Apertura risorsa: File Handler
+// ⚙️ Utilizzo risorsa: DB Connection
+// ⚙️ Utilizzo risorsa: File Handler
+// 🔒 Chiusura risorsa: File Handler
+// 🔒 Chiusura risorsa: DB Connection</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi di try-with-resources:</strong><br>
+                        - Codice più pulito e leggibile<br>
+                        - Chiusura automatica anche in caso di eccezioni<br>
+                        - Supporto per risorse multiple<br>
+                        - Le risorse vengono chiuse in ordine inverso di apertura
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices per le Eccezioni</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Regole fondamentali per scrivere codice robusto</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. NON IGNORARE MAI LE ECCEZIONI ====================
+// ❌ SBAGLIATO
+try {
+    // codice
+} catch (Exception e) {
+    // Non fare nulla - pessima pratica!
+}
+
+// ✅ CORRETTO - almeno logga l'errore
+try {
+    // codice
+} catch (Exception e) {
+    logger.error("Errore durante l'operazione", e);
+    // o e.printStackTrace();
+}
+
+// ==================== 2. USA ECCEZIONI SPECIFICHE ====================
+// ❌ SBAGLIATO - troppo generico
+try {
+    // codice
+} catch (Exception e) {
+    // cattura tutto
+}
+
+// ✅ CORRETTO - eccezioni specifiche
+try {
+    // codice
+} catch (FileNotFoundException e) {
+    System.out.println("File non trovato");
+} catch (IOException e) {
+    System.out.println("Errore I/O");
+} catch (SQLException e) {
+    System.out.println("Errore database");
+}
+
+// ==================== 3. PROPAGA LE ECCEZIONI QUANDO APPROPRIATO ====================
+// ✅ Quando il metodo chiamante deve sapere dell'errore
+public void leggiConfigurazione() throws IOException {
+    // se fallisce, il chiamante decide come gestire
+}
+
+// ==================== 4. USA FINALLY PER PULIRE RISORSE (O TRY-WITH-RESOURCES) ====================
+Connection conn = null;
+try {
+    conn = dataSource.getConnection();
+    // usa connection
+} finally {
+    if (conn != null) {
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            // logga ma non rilanciare
+        }
+    }
+}
+
+// ==================== 5. NON USARE ECCEZIONI PER IL FLUSSO NORMALE ====================
+// ❌ SBAGLIATO
+try {
+    return array[index];
+} catch (IndexOutOfBoundsException e) {
+    return null;  // non usare eccezioni per controlli logici!
+}
+
+// ✅ CORRETTO
+if (index >= 0 && index < array.length) {
+    return array[index];
+} else {
+    return null;
+}
+
+// ==================== 6. FORNISCI MESSAGGI SIGNIFICATIVI ====================
+// ❌ SBAGLIATO
+throw new RuntimeException("Errore");
+
+// ✅ CORRETTO
+throw new IllegalArgumentException(
+    String.format("Valore %d non valido. Deve essere compreso tra %d e %d", 
+                  valore, min, max)
+);
+
+// ==================== 7. PRESERVA LA STACK TRACE ORIGINALE ====================
+// ❌ SBAGLIATO - perde la causa originale
+try {
+    // operazione
+} catch (SQLException e) {
+    throw new MyBusinessException("Errore DB");
+}
+
+// ✅ CORRETTO - preserva la causa
+try {
+    // operazione
+} catch (SQLException e) {
+    throw new MyBusinessException("Errore DB", e);  // passa la causa
+}
+
+// ==================== 8. DOCUMENTA LE ECCEZIONI ====================
+/**
+ * Calcola la radice quadrata di un numero.
+ * 
+ * @param numero il numero di cui calcolare la radice quadrata
+ * @return la radice quadrata del numero
+ * @throws IllegalArgumentException se il numero è negativo
+ */
+public double radiceQuadrata(double numero) throws IllegalArgumentException {
+    if (numero < 0) {
+        throw new IllegalArgumentException("Numero negativo: " + numero);
+    }
+    return Math.sqrt(numero);
+}</code></pre>
+                    
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist per eccezioni di qualità:</strong><br>
+                        ✓ Usa eccezioni specifiche (non Exception generica)<br>
+                        ✓ Fornisci messaggi di errore informativi<br>
+                        ✓ Non nascondere mai le eccezioni (catch vuoto)<br>
+                        ✓ Usa try-with-resources per risorse AutoCloseable<br>
+                        ✓ Documenta le eccezioni con @throws nei JavaDoc<br>
+                        ✓ Preserva la stack trace originale (causa)
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. ESEMPI PRATICI ==================== -->
+            <div class="section-card" id="esempi-pratici">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>Esempi Pratici Completi</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Esempi reali di gestione eccezioni</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 ESEMPIO 1: Validazione input utente</h3>
+                    <pre><code class="language-java">import java.util.Scanner;
+
+public class InputValidator {
+    
+    public static int parseIntSicuro(String input) {
+        try {
+            return Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.err.println("Input non valido: '" + input + "' non è un numero");
+            return 0;  // valore di default
+        }
+    }
+    
+    public static Optional&lt;Integer&gt; parseIntOptional(String input) {
+        try {
+            return Optional.of(Integer.parseInt(input));
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Inserisci un numero: ");
+        String input = scanner.nextLine();
+        
+        // Modo 1: con valore di default
+        int numero1 = parseIntSicuro(input);
+        System.out.println("Numero (default): " + numero1);
+        
+        // Modo 2: con Optional
+        Optional&lt;Integer&gt; numero2 = parseIntOptional(input);
+        numero2.ifPresentOrElse(
+            n -> System.out.println("Numero (optional): " + n),
+            () -> System.out.println("Input non valido, nessun numero")
+        );
+        
+        scanner.close();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 ESEMPIO 2: Lettura file con multiple eccezioni</h3>
+                    <pre><code class="language-java">import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+public class FileProcessor {
+    
+    public static List&lt;String&gt; leggiRighe(String path) {
+        List&lt;String&gt; righe = new ArrayList&lt;&gt;();
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                righe.add(linea);
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("File non trovato: " + path);
+            // Crea il file di default
+            creaFileDefault(path);
+            // Prova a leggerlo di nuovo
+            return leggiRighe(path);
+        } catch (IOException e) {
+            System.err.println("Errore durante la lettura: " + e.getMessage());
+        }
+        
+        return righe;
+    }
+    
+    private static void creaFileDefault(String path) {
+        try (FileWriter writer = new FileWriter(path)) {
+            writer.write("# File creato automaticamente\n");
+            writer.write("riga1\n");
+            writer.write("riga2\n");
+            writer.write("riga3\n");
+            System.out.println("File default creato: " + path);
+        } catch (IOException e) {
+            System.err.println("Impossibile creare il file default: " + e.getMessage());
+        }
+    }
+    
+    public static void main(String[] args) {
+        List&lt;String&gt; righe = leggiRighe("config.txt");
+        System.out.println("Righe lette: " + righe.size());
+        righe.forEach(System.out::println);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 ESEMPIO 3: Gestione errori in API REST (simulazione)</h3>
+                    <pre><code class="language-java">import java.time.LocalDateTime;
+import java.util.*;
+
+// ==================== MODELLI DI RISPOSTA ====================
+class ErrorResponse {
+    private String code;
+    private String message;
+    private LocalDateTime timestamp;
+    private Map&lt;String, String&gt; details;
+    
+    public ErrorResponse(String code, String message) {
+        this.code = code;
+        this.message = message;
+        this.timestamp = LocalDateTime.now();
+        this.details = new HashMap&lt;&gt;();
+    }
+    
+    public ErrorResponse addDetail(String key, String value) {
+        details.put(key, value);
+        return this;
+    }
+    
+    // Getters
+    public String getCode() { return code; }
+    public String getMessage() { return message; }
+    public LocalDateTime getTimestamp() { return timestamp; }
+    public Map&lt;String, String&gt; getDetails() { return details; }
+    
+    @Override
+    public String toString() {
+        return String.format("ErrorResponse{code='%s', message='%s', timestamp=%s, details=%s}",
+            code, message, timestamp, details);
+    }
+}
+
+// ==================== ECCEZIONI PERSONALIZZATE ====================
+class ResourceNotFoundException extends RuntimeException {
+    private final String resourceType;
+    private final String resourceId;
+    
+    public ResourceNotFoundException(String resourceType, String resourceId) {
+        super(String.format("%s con ID '%s' non trovato", resourceType, resourceId));
+        this.resourceType = resourceType;
+        this.resourceId = resourceId;
+    }
+    
+    public String getResourceType() { return resourceType; }
+    public String getResourceId() { return resourceId; }
+}
+
+class ValidationException extends RuntimeException {
+    private final Map&lt;String, String&gt; errors;
+    
+    public ValidationException(Map&lt;String, String&gt; errors) {
+        super("Errore di validazione");
+        this.errors = errors;
+    }
+    
+    public Map&lt;String, String&gt; getErrors() { return errors; }
+}
+
+// ==================== GESTORE CENTRALIZZATO ECCEZIONI ====================
+class GlobalExceptionHandler {
+    
+    public ErrorResponse handleNotFound(ResourceNotFoundException e) {
+        return new ErrorResponse("NOT_FOUND", e.getMessage())
+            .addDetail("resourceType", e.getResourceType())
+            .addDetail("resourceId", e.getResourceId());
+    }
+    
+    public ErrorResponse handleValidation(ValidationException e) {
+        ErrorResponse response = new ErrorResponse("VALIDATION_ERROR", e.getMessage());
+        e.getErrors().forEach(response::addDetail);
+        return response;
+    }
+    
+    public ErrorResponse handleGeneric(Exception e) {
+        return new ErrorResponse("INTERNAL_ERROR", "Errore interno del server")
+            .addDetail("exception", e.getClass().getSimpleName());
+    }
+}
+
+// ==================== ESEMPIO DI UTILIZZO ====================
+public class ApiExceptionDemo {
+    
+    private static final GlobalExceptionHandler exceptionHandler = new GlobalExceptionHandler();
+    
+    public static void main(String[] args) {
+        // Simula una chiamata API
+        System.out.println("=== Test ResourceNotFoundException ===\n");
+        try {
+            trovaUtente("999");
+        } catch (ResourceNotFoundException e) {
+            ErrorResponse response = exceptionHandler.handleNotFound(e);
+            System.out.println(response);
+        }
+        
+        System.out.println("\n=== Test ValidationException ===\n");
+        try {
+            creaUtente(null, "email");
+        } catch (ValidationException e) {
+            ErrorResponse response = exceptionHandler.handleValidation(e);
+            System.out.println(response);
+        }
+        
+        System.out.println("\n=== Test generico ===\n");
+        try {
+            operazioneRischiosa();
+        } catch (Exception e) {
+            ErrorResponse response = exceptionHandler.handleGeneric(e);
+            System.out.println(response);
+        }
+    }
+    
+    static Utente trovaUtente(String id) {
+        if (!id.equals("123")) {
+            throw new ResourceNotFoundException("Utente", id);
+        }
+        return new Utente(id, "Mario Rossi", "mario@email.com");
+    }
+    
+    static void creaUtente(String nome, String email) {
+        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();
+        
+        if (nome == null || nome.isEmpty()) {
+            errors.put("nome", "Il nome è obbligatorio");
+        }
+        if (email == null || !email.contains("@")) {
+            errors.put("email", "Email non valida");
+        }
+        
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
+        
+        System.out.println("Utente creato: " + nome);
+    }
+    
+    static void operazioneRischiosa() {
+        throw new RuntimeException("Errore imprevisto nel database");
+    }
+    
+    static class Utente {
+        String id, nome, email;
+        Utente(String id, String nome, String email) {
+            this.id = id; this.nome = nome; this.email = email;
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        === Test ResourceNotFoundException ===<br>
+                        ErrorResponse{code='NOT_FOUND', message='Utente con ID '999' non trovato', timestamp=..., details={resourceId=999, resourceType=Utente}}<br>
+                        === Test ValidationException ===<br>
+                        ErrorResponse{code='VALIDATION_ERROR', message='Errore di validazione', ..., details={nome=Il nome è obbligatorio, email=Email non valida}}<br>
+                        === Test generico ===<br>
+                        ErrorResponse{code='INTERNAL_ERROR', message='Errore interno del server', ..., details={exception=RuntimeException}}
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Gestione Eccezioni | Error handling professionale
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Prism.js e Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+    
+    <script src="includes/include.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'gerarchia', 'try-catch', 'throw-throws', 'custom', 'try-resources', 'best-practices', 'esempi-pratici'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

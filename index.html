@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaDoc Hub | Home</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+				<li><a href="#benvenuto" class="toc-link" data-target="benvenuto">
+                    <i class="fas fa-home"></i> Benvenuto
+                </a></li>
+                <li><a href="#argomenti" class="toc-link" data-target="argomenti">
+                    <i class="fas fa-book"></i> Argomenti
+                </a></li>
+				<li><a href="#roadmap" class="toc-link" data-target="roadmap">
+                    <i class="fas fa-book"></i> Roadmap
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+		<div class="page-header" id="benvenuto">
+			<h1><i class="fas fa-home"></i> Benvenuto su JavaDoc Hub</h1>
+			<p>La tua guida completa alla programmazione Java con esempi pratici</p>
+		</div>
+           <div class="section-card">
+			<div class="card-header">
+				<i class="fas fa-rocket" style="color: #ff9800;"></i>
+				<h2>Impara Java in modo semplice ed efficace</h2>
+			</div>
+    <div class="card-body">
+        <div class="desc">
+            <strong>JavaDoc Hub</strong> è un progetto nato con l'obiettivo di fornire una 
+            <strong>documentazione chiara, completa e ricca di esempi pratici</strong> per tutti coloro che vogliono 
+            imparare o approfondire il linguaggio Java.
+        </div>
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1.5rem 0;">
+            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
+                <i class="fas fa-check-circle" style="font-size: 2rem; color: #4caf50;"></i>
+                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Documentazione chiara</h3>
+                <p style="font-size: 0.8rem; color: #9aa3b3;">Spiegazioni semplici e dirette</p>
+            </div>
+            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
+                <i class="fas fa-code" style="font-size: 2rem; color: #ff9800;"></i>
+                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Esempi pronti all'uso</h3>
+                <p style="font-size: 0.8rem; color: #9aa3b3;">Codice copiabile e testabile</p>
+            </div>
+            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
+                <i class="fas fa-graduation-cap" style="font-size: 2rem; color: #2196f3;"></i>
+                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Percorso completo</h3>
+                <p style="font-size: 0.8rem; color: #9aa3b3;">Dai fondamenti all'avanzato</p>
+            </div>
+            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
+                <i class="fas fa-sync-alt" style="font-size: 2rem; color: #ce93d8;"></i>
+                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Sempre aggiornato</h3>
+                <p style="font-size: 0.8rem; color: #9aa3b3;">Java 17+ e Spring Boot 3</p>
+            </div>
+			<div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
+                <i class="fas fa-sync-alt" style="font-size: 2rem; color: #ce93d8;"></i>
+                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Sempre aggiornato</h3>
+                <p style="font-size: 0.8rem; color: #9aa3b3;">Java 17 vs Java 21</p>
+            </div>
+        </div>
+        
+        <div class="info-block">
+            <i class="fas fa-lightbulb"></i> <strong>Perché JavaDoc Hub?</strong><br>
+            Abbiamo raccolto in un unico posto tutto ciò che serve per diventare uno sviluppatore Java competente: 
+            dalla sintassi base ai principi SOLID, dalle collection agli stream, fino ai microservizi con Spring Boot. 
+            Ogni argomento è accompagnato da <strong>esempi di codice funzionanti</strong> e <strong>output dimostrativi</strong> 
+            che puoi copiare, incollare e testare immediatamente.
+        </div>
+        
+        <div style="margin-top: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #ff980020, #f4433620); border-radius: 12px; text-align: center;">
+            <i class="fas fa-chart-line" style="color: #ff9800;"></i>
+            <strong style="margin-left: 0.5rem;">Oltre 70 esempi di codice pronti all'uso</strong>
+            <span style="display: inline-block; margin-left: 1rem; background: #ff9800; color: #111; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;">
+                <i class="fas fa-download"></i> Tutti eseguibili
+            </span>
+        </div>
+    </div>
+</div>
+
+            <div class="section-card" id="argomenti">
+                <div class="card-header">
+                    <i class="fas fa-book"></i>
+                    <h2>Argomenti disponibili</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Esplora tutti gli argomenti disponibili nel menu di navigazione. Ogni sezione contiene esempi di codice 
+                        pronti all'uso con output dimostrativo.
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+						<div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fab fa-java" style="color: #ff9800;"></i> <strong>Core Java</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">JVM alla sintassi base, tipi di dati, operatori e strutture di controllo</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fab fa-java" style="color: #ff9800;"></i> <strong>Fondamenti Java</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Variabili, cicli, array, stringhe</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-project-diagram" style="color: #ff9800;"></i> <strong>Programmazione OOP</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Classi, ereditarietà, polimorfismo</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-layer-group" style="color: #ff9800;"></i> <strong>Collections Framework</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">ArrayList, HashMap, Lambda</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-stream" style="color: #ff9800;"></i> <strong>Stream API</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Filter, map, collect, parallel</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-exclamation-triangle" style="color: #ff9800;"></i> <strong>Eccezioni</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Try-catch, custom exceptions</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-tasks" style="color: #ff9800;"></i> <strong>Multithreading</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Thread, ExecutorService, Lock</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-microchip" style="color: #ff9800;"></i> <strong>Microservizi</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Spring Boot, Cloud, Docker</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-code-compare" style="color: #ff9800;"></i> <strong>Java 11 vs 17</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Record, Switch expression, Text block</p>
+                        </div>
+						 <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-code-compare" style="color: #ff9800;"></i> <strong>Java 17 vs 21</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Java 17 (LTS - set 2021), Java 21 (LTS - set 2023)</p>
+                        </div>
+                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
+                            <i class="fas fa-cubes" style="color: #ff9800;"></i> <strong>SOLID Principi</strong>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">SRP, OCP, LSP, ISP, DIP</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="section-card" id="roadmap">
+                <div class="card-header">
+                    <i class="fas fa-book"></i>
+                    <h2>Roadmap di apprendimento </h2>
+                </div>
+				<div class="card-body">
+				   <div style="background: #111317; border-radius: 20px; padding: 2rem; margin-top: 2rem; border: 1px solid #252b33;">
+						<h3 style="color: #ff9800; margin-bottom: 1rem;"><i class="fas fa-map-signs"></i> Roadmap di apprendimento</h3>
+						<div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+						<div style="flex: 1; min-width: 150px;">
+							<div style="font-weight: 600; margin-bottom: 0.5rem;">🥇 Livello Base</div>
+							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
+							    <li>✓ Core Java</li>
+								<li>✓ Fondamenti Java</li>
+								<li>✓ Programmazione OOP</li>
+								<li>✓ Gestione Eccezioni</li>
+							</ul>
+						</div>
+						<div style="flex: 1; min-width: 150px;">
+							<div style="font-weight: 600; margin-bottom: 0.5rem;">🥈 Livello Intermedio</div>
+							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
+								<li>✓ Collections Framework</li>
+								<li>✓ Stream API</li>
+								<li>✓ Multithreading</li>
+							</ul>
+						</div>
+						<div style="flex: 1; min-width: 150px;">
+							<div style="font-weight: 600; margin-bottom: 0.5rem;">🥉 Livello Avanzato</div>
+							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
+								<li>✓ Microservizi Spring Boot</li>
+								<li>✓ Spring Cloud</li>
+								<li>✓ Docker / Kubernetes</li>
+							</ul>
+						</div>
+						<div style="flex: 1; min-width: 150px;">
+							<div style="font-weight: 600; margin-bottom: 0.5rem;">📊 Aggiornamento</div>
+							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
+								<li>✓ Java 11 → 17</li>
+								<li>✓ Java 17 → 21</li>
+								<li>✓ Nuove feature LTS</li>
+								<li>✓ Migrazione best practices</li>
+							</ul>
+						</div>
+					</div>
+				   </div>
+			   </div>
+            </div>
+			<!-- Sezione risorse utili -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; justify-content: center;">
+            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
+                <i class="fab fa-java" style="color: #ff9800;"></i> Java 17 LTS
+            </div>
+            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
+                <i class="fas fa-leaf" style="color: #6db33f;"></i> Spring Boot 3.x
+            </div>
+            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
+                <i class="fab fa-docker" style="color: #2496ed;"></i> Docker
+            </div>
+            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
+                <i class="fas fa-cloud" style="color: #ff9800;"></i> Spring Cloud
+            </div>
+            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
+                <i class="fas fa-lambda" style="color: #6db33f;"></i> Lambda & Stream
+            </div>
+        </div>
+
+        <!-- Sezione statistiche contenuti -->
+         <!-- Sezione statistiche contenuti -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
+            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
+                <div style="font-size: 2rem; color: #ff9800;">8</div>
+                <div style="font-size: 0.8rem; color: #8e96a3;">Argomenti trattati</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
+                <div style="font-size: 2rem; color: #ff9800;">60+</div>
+                <div style="font-size: 0.8rem; color: #8e96a3;">Esempi di codice</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
+                <div style="font-size: 2rem; color: #ff9800;">100%</div>
+                <div style="font-size: 0.8rem; color: #8e96a3;">Pronti da eseguire</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
+                <div style="font-size: 2rem; color: #ff9800;">📚</div>
+                <div style="font-size: 0.8rem; color: #8e96a3;">Documentazione completa</div>
+            </div>
+        </div>
+
+        <!-- Call to action -->
+        <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #ff980020, #f4433620); border-radius: 20px;">
+            <p style="color: #ffb347;">
+                <i class="fas fa-graduation-cap"></i> Tutto il codice è pronto per essere copiato e testato!
+            </p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">
+                Ogni esempio include output dimostrativo per una comprensione immediata
+            </p>
+        </div>
+         <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Documentazione tecnica con esempi pratici | Java 17+ | Spring Boot 3
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+		<div style="margin-top: 0.5rem; font-size: 0.7rem; color: #5a6370;">
+            <i class="fas fa-sync-alt"></i> Ultimo aggiornamento: Java 11 vs Java 17 | Lambda nelle Collection
+        </div>
+		<div style="margin-top: 0.5rem; font-size: 0.7rem; color: #5a6370;">
+            <i class="fas fa-sync-alt"></i> Ultimo aggiornamento: Java 17 vs Java 21
+        </div>
+    </footer>
+
+    <!-- Prism.js e Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-xml-doc.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
+    <script src="js/script.js"></script>
+	<script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['benvenuto', 'argomenti'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

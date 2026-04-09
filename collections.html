@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections Framework | JavaDoc Hub</title>
+    
+   <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#confronto" class="toc-link" data-target="confronto">
+                    <i class="fas fa-chart-simple"></i> Confronto Collection
+                </a></li>
+                <li><a href="#arraylist" class="toc-link" data-target="arraylist">
+                    <i class="fas fa-list"></i> ArrayList
+                </a></li>
+                <li><a href="#linkedlist" class="toc-link" data-target="linkedlist">
+                    <i class="fas fa-link"></i> LinkedList
+                </a></li>
+                <li><a href="#hashset" class="toc-link" data-target="hashset">
+                    <i class="fas fa-hashtag"></i> HashSet
+                </a></li>
+                <li><a href="#treeset" class="toc-link" data-target="treeset">
+                    <i class="fas fa-tree"></i> TreeSet
+                </a></li>
+                <li><a href="#hashmap" class="toc-link" data-target="hashmap">
+                    <i class="fas fa-map"></i> HashMap
+                </a></li>
+                <li><a href="#treemap" class="toc-link" data-target="treemap">
+                    <i class="fas fa-map"></i> TreeMap
+                </a></li>
+                <li><a href="#priorityqueue" class="toc-link" data-target="priorityqueue">
+                    <i class="fas fa-chart-line"></i> PriorityQueue
+                </a></li>
+                <li><a href="#lambda-collections" class="toc-link" data-target="lambda-collections">
+                    <i class="fas fa-lambda"></i> Lambda con Collections
+                </a></li>
+                <li><a href="#esempi-pratici" class="toc-link" data-target="esempi-pratici">
+                    <i class="fas fa-code-branch"></i> Esempi Pratici
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-layer-group"></i> Java Collections Framework</h1>
+                <p>List, Set, Map, Queue - le strutture dati fondamentali di Java con esempi pratici e Lambda expressions</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è il Collections Framework?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Il Java Collections Framework è un'architettura unificata per rappresentare e manipolare collezioni di oggetti.
+                        Include interfacce, implementazioni e algoritmi per operazioni come ricerca, ordinamento e manipolazione.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Gerarchia delle Collection:</strong><br>
+                        <code>Iterable</code> → <code>Collection</code> → <code>List</code>, <code>Set</code>, <code>Queue</code><br>
+                        <code>Map</code> è un'interfaccia separata (non estende Collection)
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. CONFRONTO COLLECTION ==================== -->
+            <div class="section-card" id="confronto">
+                <div class="card-header"><i class="fas fa-chart-simple"></i><h2>Confronto tra Collection</h2></div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Interfaccia</th><th>Implementazioni</th><th>Caratteristiche</th><th>Ordine</th></tr>
+                        <tr><td rowspan="2">List</td><td>ArrayList</td><td>Accesso rapido per indice</td><td>Mantiene l'ordine di inserimento</td></tr>
+                        <tr><td>LinkedList</td><td>Inserimento/rimozione efficiente</td><td>Mantiene l'ordine di inserimento</td></tr>
+                        <tr><td rowspan="2">Set</td><td>HashSet</td><td>Nessun duplicato, performance O(1)</td><td>Ordine non garantito</td></tr>
+                        <tr><td>TreeSet</td><td>Ordinato naturalmente</td><td>Ordinato (crescente)</td></tr>
+                        <tr><td rowspan="2">Map</td><td>HashMap</td><td>Coppie chiave-valore, O(1)</td><td>Ordine non garantito</td></tr>
+                        <tr><td>TreeMap</td><td>Chiavi ordinate</td><td>Ordinato per chiave</td></tr>
+                        <tr><td>Queue</td><td>PriorityQueue</td><td>FIFO con priorità</td><td>Ordinato per priorità</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ==================== 3. ARRAYLIST ==================== -->
+            <div class="section-card" id="arraylist">
+                <div class="card-header"><i class="fas fa-list"></i><h2>ArrayList - La Lista Dinamica</h2></div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-plus-circle"></i> Inserimento, accesso, rimozione</div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class DemoArrayList {
+    public static void main(String[] args) {
+        // Creazione e aggiunta
+        List&lt;String&gt; frutti = new ArrayList&lt;&gt;();
+        frutti.add("Mela");
+        frutti.add("Banana");
+        frutti.add("Arancia");
+        frutti.add(1, "Pera");  // Inserisce alla posizione 1
+        
+        System.out.println("Frutti: " + frutti);
+        
+        // Accesso
+        String primo = frutti.get(0);
+        System.out.println("Primo frutto: " + primo);
+        
+        // Rimozione
+        frutti.remove("Banana");
+        frutti.remove(1);
+        
+        // Iterazione
+        System.out.print("Iterazione for-each: ");
+        for (String frutto : frutti) {
+            System.out.print(frutto + " ");
+        }
+        
+        // Verifica esistenza
+        boolean presente = frutti.contains("Mela");
+        System.out.println("\nContiene Mela? " + presente);
+        System.out.println("Dimensione: " + frutti.size());
+        
+        // Svuotamento
+        frutti.clear();
+        System.out.println("Lista vuota? " + frutti.isEmpty());
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Frutti: [Mela, Pera, Banana, Arancia]<br>
+                        Primo frutto: Mela<br>
+                        Iterazione for-each: Mela Arancia <br>
+                        Contiene Mela? true<br>
+                        Dimensione: 2<br>
+                        Lista vuota? true
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. LINKEDLIST ==================== -->
+            <div class="section-card" id="linkedlist">
+                <div class="card-header"><i class="fas fa-link"></i><h2>LinkedList - Lista Doppiamente Collegata</h2></div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-arrow-right-arrow-left"></i> Inserimento efficiente, implementa Deque</div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class DemoLinkedList {
+    public static void main(String[] args) {
+        LinkedList&lt;String&gt; coda = new LinkedList&lt;&gt;();
+        
+        // Operazioni da List
+        coda.add("Primo");
+        coda.add("Secondo");
+        coda.add("Terzo");
+        System.out.println("Lista: " + coda);
+        
+        // Operazioni da Deque (doppia coda)
+        coda.addFirst("Inizio");
+        coda.addLast("Fine");
+        System.out.println("Dopo addFirst/addLast: " + coda);
+        
+        // Rimozione da entrambe le estremità
+        String primo = coda.removeFirst();
+        String ultimo = coda.removeLast();
+        System.out.println("Rimosso primo: " + primo);
+        System.out.println("Rimosso ultimo: " + ultimo);
+        System.out.println("Lista dopo rimozioni: " + coda);
+        
+        // Peek (vede senza rimuovere)
+        System.out.println("Primo elemento: " + coda.peekFirst());
+        System.out.println("Ultimo elemento: " + coda.peekLast());
+        
+        // Come pila (stack)
+        LinkedList&lt;String&gt; pila = new LinkedList&lt;&gt;();
+        pila.push("Elemento1");
+        pila.push("Elemento2");
+        pila.push("Elemento3");
+        System.out.println("Pila: " + pila);
+        System.out.println("Pop: " + pila.pop());
+        System.out.println("Pila dopo pop: " + pila);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Lista: [Primo, Secondo, Terzo]<br>
+                        Dopo addFirst/addLast: [Inizio, Primo, Secondo, Terzo, Fine]<br>
+                        Rimosso primo: Inizio<br>
+                        Rimosso ultimo: Fine<br>
+                        Lista dopo rimozioni: [Primo, Secondo, Terzo]<br>
+                        Primo elemento: Primo<br>
+                        Ultimo elemento: Terzo<br>
+                        Pila: [Elemento3, Elemento2, Elemento1]<br>
+                        Pop: Elemento3<br>
+                        Pila dopo pop: [Elemento2, Elemento1]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. HASHSET ==================== -->
+            <div class="section-card" id="hashset">
+                <div class="card-header"><i class="fas fa-hashtag"></i><h2>HashSet - Insieme senza Duplicati</h2></div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-ban"></i> Nessun duplicato, performance O(1)</div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class DemoHashSet {
+    public static void main(String[] args) {
+        Set&lt;Integer&gt; numeri = new HashSet&lt;&gt;();
+        
+        numeri.add(10);
+        numeri.add(20);
+        numeri.add(10);  // Duplicato - non verrà aggiunto
+        numeri.add(30);
+        numeri.add(20);  // Duplicato - ignorato
+        
+        System.out.println("Set: " + numeri);
+        
+        // Verifica esistenza
+        System.out.println("Contiene 20? " + numeri.contains(20));
+        System.out.println("Dimensione: " + numeri.size());
+        
+        // Operazioni insiemistiche
+        Set&lt;Integer&gt; set1 = new HashSet<>(Arrays.asList(1, 2, 3, 4));
+        Set&lt;Integer&gt; set2 = new HashSet<>(Arrays.asList(3, 4, 5, 6));
+        
+        // Unione
+        Set&lt;Integer&gt; unione = new HashSet<>(set1);
+        unione.addAll(set2);
+        System.out.println("Unione: " + unione);
+        
+        // Intersezione
+        Set&lt;Integer&gt; intersezione = new HashSet<>(set1);
+        intersezione.retainAll(set2);
+        System.out.println("Intersezione: " + intersezione);
+        
+        // Differenza
+        Set&lt;Integer&gt; differenza = new HashSet<>(set1);
+        differenza.removeAll(set2);
+        System.out.println("Differenza (set1 - set2): " + differenza);
+        
+        // Sottoinsieme
+        boolean sottoinsieme = set2.containsAll(intersezione);
+        System.out.println("set2 contiene l'intersezione? " + sottoinsieme);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Set: [20, 10, 30]<br>
+                        Contiene 20? true<br>
+                        Dimensione: 3<br>
+                        Unione: [1, 2, 3, 4, 5, 6]<br>
+                        Intersezione: [3, 4]<br>
+                        Differenza (set1 - set2): [1, 2]<br>
+                        set2 contiene l'intersezione? true
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. TREESET ==================== -->
+            <div class="section-card" id="treeset">
+                <div class="card-header"><i class="fas fa-tree"></i><h2>TreeSet - Insieme Ordinato</h2></div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-sort-amount-up"></i> Mantiene l'ordine naturale o personalizzato</div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class DemoTreeSet {
+    public static void main(String[] args) {
+        // Ordinamento naturale (crescente)
+        Set&lt;Integer&gt; numeri = new TreeSet&lt;&gt;();
+        numeri.add(5);
+        numeri.add(2);
+        numeri.add(8);
+        numeri.add(1);
+        numeri.add(9);
+        System.out.println("Ordinamento naturale: " + numeri);
+        
+        // Ordinamento personalizzato (decrescente)
+        Set&lt;String&gt; parole = new TreeSet&lt;&gt;(Comparator.reverseOrder());
+        parole.add("casa");
+        parole.add("albero");
+        parole.add("sole");
+        parole.add("luna");
+        System.out.println("Ordinamento decrescente: " + parole);
+        
+        // Metodi specifici di TreeSet
+        TreeSet&lt;Integer&gt; ts = new TreeSet&lt;&gt;(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        
+        System.out.println("Primo elemento: " + ts.first());
+        System.out.println("Ultimo elemento: " + ts.last());
+        System.out.println("Elemento minore o uguale a 5: " + ts.floor(5));
+        System.out.println("Elemento maggiore o uguale a 5: " + ts.ceiling(5));
+        System.out.println("Elemento minore di 5: " + ts.lower(5));
+        System.out.println("Elemento maggiore di 5: " + ts.higher(5));
+        System.out.println("Subset (3-7): " + ts.subSet(3, true, 7, true));
+        System.out.println("HeadSet (&lt;5): " + ts.headSet(5));
+        System.out.println("TailSet (≥7): " + ts.tailSet(7));
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Ordinamento naturale: [1, 2, 5, 8, 9]<br>
+                        Ordinamento decrescente: [sole, luna, casa, albero]<br>
+                        Primo elemento: 1<br>
+                        Ultimo elemento: 10<br>
+                        Elemento minore o uguale a 5: 5<br>
+                        Elemento maggiore o uguale a 5: 5<br>
+                        Elemento minore di 5: 4<br>
+                        Elemento maggiore di 5: 6<br>
+                        Subset (3-7): [3, 4, 5, 6, 7]<br>
+                        HeadSet (<5): [1, 2, 3, 4]<br>
+                        TailSet (≥7): [7, 8, 9, 10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. HASHMAP ==================== -->
+            <div class="section-card" id="hashmap">
+                <div class="card-header"><i class="fas fa-map"></i><h2>HashMap - Mappa Chiave-Valore</h2></div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-key"></i> Coppie chiave-valore, performance O(1)</div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class DemoHashMap {
+    public static void main(String[] args) {
+        // Creazione HashMap
+        Map&lt;String, Integer&gt; etaPersone = new HashMap&lt;&gt;();
+        
+        // Inserimento
+        etaPersone.put("Alice", 25);
+        etaPersone.put("Bob", 30);
+        etaPersone.put("Charlie", 35);
+        etaPersone.put("Alice", 26);  // Sovrascrive il valore
+        
+        System.out.println("Mappa: " + etaPersone);
+        
+        // Accesso
+        System.out.println("Età di Bob: " + etaPersone.get("Bob"));
+        
+        // Verifica presenza
+        if (etaPersone.containsKey("Alice")) {
+            System.out.println("Alice è presente!");
+        }
+        
+        // Valori di default
+        Integer etaSconosciuta = etaPersone.getOrDefault("Mario", -1);
+        System.out.println("Età Mario: " + etaSconosciuta);
+        
+        // Iterazione su chiavi
+        System.out.println("\nTutte le persone:");
+        for (String nome : etaPersone.keySet()) {
+            System.out.println(nome + " ha " + etaPersone.get(nome) + " anni");
+        }
+        
+        // Iterazione su entry
+        System.out.println("\nEntry set:");
+        for (Map.Entry&lt;String, Integer&gt; entry : etaPersone.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
+        
+        // Iterazione su valori
+        System.out.println("\nValori (età):");
+        for (int eta : etaPersone.values()) {
+            System.out.print(eta + " ");
+        }
+        
+        // Rimozione
+        etaPersone.remove("Bob");
+        System.out.println("\nDopo rimozione Bob: " + etaPersone);
+        
+        // Sostituisci se presente
+        etaPersone.replace("Charlie", 36);
+        System.out.println("Dopo replace Charlie: " + etaPersone);
+        
+        // putIfAbsent - inserisce solo se la chiave non esiste
+        etaPersone.putIfAbsent("Diana", 28);
+        etaPersone.putIfAbsent("Alice", 100);  // Non fa nulla (Alice esiste)
+        System.out.println("Dopo putIfAbsent: " + etaPersone);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Mappa: {Alice=26, Bob=30, Charlie=35}<br>
+                        Età di Bob: 30<br>
+                        Alice è presente!<br>
+                        Età Mario: -1<br>
+                        Tutte le persone: Alice ha 26 anni, Bob ha 30 anni, Charlie ha 35 anni<br>
+                        Entry set: Alice -> 26, Bob -> 30, Charlie -> 35<br>
+                        Valori (età): 26 30 35<br>
+                        Dopo rimozione Bob: {Alice=26, Charlie=35}<br>
+                        Dopo replace Charlie: {Alice=26, Charlie=36}<br>
+                        Dopo putIfAbsent: {Alice=26, Charlie=36, Diana=28}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. TREEMAP ==================== -->
+            <div class="section-card" id="treemap">
+                <div class="card-header"><i class="fas fa-map"></i><h2>TreeMap - Mappa Ordinata per Chiave</h2></div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-sort-amount-up"></i> Chiavi ordinate naturalmente o per Comparator</div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class DemoTreeMap {
+    public static void main(String[] args) {
+        // TreeMap con ordinamento naturale
+        Map&lt;String, Integer&gt; studenti = new TreeMap&lt;&gt;();
+        
+        studenti.put("Marco", 85);
+        studenti.put("Anna", 92);
+        studenti.put("Luca", 78);
+        studenti.put("Sofia", 95);
+        studenti.put("Giulia", 88);
+        
+        System.out.println("TreeMap (ordinata per chiave): " + studenti);
+        
+        // Metodi specifici di TreeMap
+        TreeMap&lt;String, Integer&gt; tm = new TreeMap&lt;&gt;(studenti);
+        
+        System.out.println("Prima chiave: " + tm.firstKey());
+        System.out.println("Ultima chiave: " + tm.lastKey());
+        System.out.println("Prima entry: " + tm.firstEntry());
+        System.out.println("Ultima entry: " + tm.lastEntry());
+        System.out.println("Chiave inferiore a 'Luca': " + tm.lowerKey("Luca"));
+        System.out.println("Chiave superiore a 'Luca': " + tm.higherKey("Luca"));
+        System.out.println("SubMap (Anna-Giulia): " + tm.subMap("Anna", "Giulia"));
+        System.out.println("HeadMap (fino a Luca): " + tm.headMap("Luca"));
+        System.out.println("TailMap (da Marco): " + tm.tailMap("Marco"));
+        
+        // TreeMap con Comparator personalizzato (decrescente)
+        Map&lt;Integer, String&gt; reverseMap = new TreeMap&lt;&gt;(Comparator.reverseOrder());
+        reverseMap.put(1, "Uno");
+        reverseMap.put(2, "Due");
+        reverseMap.put(3, "Tre");
+        System.out.println("\nTreeMap decrescente: " + reverseMap);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        TreeMap (ordinata per chiave): {Anna=92, Giulia=88, Luca=78, Marco=85, Sofia=95}<br>
+                        Prima chiave: Anna<br>
+                        Ultima chiave: Sofia<br>
+                        Prima entry: Anna=92<br>
+                        Ultima entry: Sofia=95<br>
+                        Chiave inferiore a 'Luca': Giulia<br>
+                        Chiave superiore a 'Luca': Marco<br>
+                        SubMap (Anna-Giulia): {Anna=92, Giulia=88}<br>
+                        HeadMap (fino a Luca): {Anna=92, Giulia=88}<br>
+                        TailMap (da Marco): {Marco=85, Sofia=95}<br>
+                        TreeMap decrescente: {3=Tre, 2=Due, 1=Uno}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. PRIORITYQUEUE ==================== -->
+            <div class="section-card" id="priorityqueue">
+                <div class="card-header"><i class="fas fa-chart-line"></i><h2>PriorityQueue - Coda con Priorità</h2></div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-chart-line"></i> Estrae sempre l'elemento con priorità massima/minima</div>
+                    <pre><code class="language-java">import java.util.*;
+
+public class DemoPriorityQueue {
+    public static void main(String[] args) {
+        // PriorityQueue con ordinamento naturale (min-heap)
+        Queue&lt;Integer&gt; codaPriorita = new PriorityQueue&lt;&gt;();
+        
+        codaPriorita.offer(30);
+        codaPriorita.offer(10);
+        codaPriorita.offer(20);
+        codaPriorita.offer(5);
+        codaPriorita.offer(25);
+        
+        System.out.println("PriorityQueue: " + codaPriorita);
+        System.out.println("Elemento in testa: " + codaPriorita.peek());
+        
+        System.out.print("Estrazione elementi (poll): ");
+        while (!codaPriorita.isEmpty()) {
+            System.out.print(codaPriorita.poll() + " ");
+        }
+        System.out.println();
+        
+        // PriorityQueue con Comparator personalizzato (max-heap)
+        Queue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Comparator.reverseOrder());
+        maxHeap.offer(30);
+        maxHeap.offer(10);
+        maxHeap.offer(20);
+        maxHeap.offer(5);
+        maxHeap.offer(25);
+        
+        System.out.print("Max-heap (poll): ");
+        while (!maxHeap.isEmpty()) {
+            System.out.print(maxHeap.poll() + " ");
+        }
+        System.out.println();
+        
+        // PriorityQueue con oggetti personalizzati
+        Queue&lt;Task&gt; taskQueue = new PriorityQueue&lt;&gt;((t1, t2) -> t2.priorita - t1.priorita);
+        taskQueue.offer(new Task("Urgente", 10));
+        taskQueue.offer(new Task("Normale", 5));
+        taskQueue.offer(new Task("Critico", 15));
+        taskQueue.offer(new Task("Basso", 1));
+        
+        System.out.println("\nEsecuzione task per priorità:");
+        while (!taskQueue.isEmpty()) {
+            Task t = taskQueue.poll();
+            System.out.println("  " + t);
+        }
+    }
+    
+    static class Task {
+        String nome;
+        int priorita;
+        
+        Task(String nome, int priorita) {
+            this.nome = nome;
+            this.priorita = priorita;
+        }
+        
+        @Override
+        public String toString() {
+            return nome + " (priorità " + priorita + ")";
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        PriorityQueue: [5, 10, 20, 30, 25]<br>
+                        Elemento in testa: 5<br>
+                        Estrazione elementi (poll): 5 10 20 25 30 <br>
+                        Max-heap (poll): 30 25 20 10 5 <br>
+                        Esecuzione task per priorità:<br>
+                          Critico (priorità 15)<br>
+                          Urgente (priorità 10)<br>
+                          Normale (priorità 5)<br>
+                          Basso (priorità 1)
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 10. LAMBDA CON COLLECTIONS ==================== -->
+            <div class="section-card" id="lambda-collections" style="border-color: #6db33f;">
+                <div class="card-header" style="background: #1a2a1a;">
+                    <i class="fas fa-lambda" style="color: #6db33f;"></i>
+                    <h2 style="color: #6db33f;">Collection con Lambda Expressions</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fas fa-code"></i> Programmazione funzionale sulle Collection</div>
+                    
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+public class LambdaCollectionsDemo {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; numeri = new ArrayList&lt;&gt;(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        
+        // 1. forEach() - Iterazione funzionale
+        System.out.println("--- forEach ---");
+        numeri.forEach(n -> System.out.print(n + " "));
+        
+        // 2. removeIf() - Rimozione condizionale
+        System.out.println("\n\n--- removeIf ---");
+        numeri.removeIf(n -> n % 2 == 0);  // Rimuove i pari
+        System.out.println("Solo dispari: " + numeri);
+        
+        // 3. sort() - Ordinamento con lambda
+        System.out.println("\n--- sort ---");
+        List&lt;String&gt; parole = new ArrayList&lt;&gt;(Arrays.asList("casa", "albero", "sole", "montagna", "luna"));
+        parole.sort((a, b) -> b.length() - a.length());  // Per lunghezza decrescente
+        System.out.println("Ordinato per lunghezza decrescente: " + parole);
+        
+        // 4. replaceAll() - Trasformazione elementi
+        System.out.println("\n--- replaceAll ---");
+        List&lt;Integer&gt; numeri2 = new ArrayList&lt;&gt;(Arrays.asList(1, 2, 3, 4, 5));
+        numeri2.replaceAll(n -> n * n);
+        System.out.println("Quadrati: " + numeri2);
+        
+        // 5. compute/merge su Map
+        System.out.println("\n--- compute/merge ---");
+        Map&lt;String, Integer&gt; voti = new HashMap&lt;&gt;();
+        voti.put("Alice", 85);
+        voti.put("Bob", 70);
+        
+        voti.computeIfAbsent("Diana", k -> 0);
+        voti.compute("Alice", (k, v) -> v + 5);
+        voti.merge("Bob", 10, (oldVal, newVal) -> oldVal + newVal);
+        System.out.println("Map dopo operazioni: " + voti);
+        
+        // 6. Esempio pratico con oggetti
+        System.out.println("\n--- Esempio pratico ---");
+        List&lt;Prodotto&gt; prodotti = Arrays.asList(
+            new Prodotto("Laptop", 1200, "Elettronica"),
+            new Prodotto("Mouse", 25, "Elettronica"),
+            new Prodotto("Libro", 45, "Libri")
+        );
+        
+        // Filtraggio con lambda
+        List&lt;Prodotto&gt; costosi = new ArrayList&lt;&gt;();
+        prodotti.forEach(p -> {
+            if (p.prezzo > 50) costosi.add(p);
+        });
+        System.out.println("Prodotti costosi: " + costosi);
+        
+        // Raggruppamento con Map
+        Map&lt;String, List&lt;Prodotto&gt;&gt; perCategoria = new HashMap&lt;&gt;();
+        prodotti.forEach(p -> {
+            perCategoria.computeIfAbsent(p.categoria, k -> new ArrayList&lt;&gt;()).add(p);
+        });
+        System.out.println("Raggruppati per categoria: " + perCategoria);
+    }
+    
+    static class Prodotto {
+        String nome;
+        double prezzo;
+        String categoria;
+        
+        Prodotto(String nome, double prezzo, String categoria) {
+            this.nome = nome;
+            this.prezzo = prezzo;
+            this.categoria = categoria;
+        }
+        
+        @Override
+        public String toString() {
+            return nome + " (€" + prezzo + ")";
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        --- forEach ---<br>
+                        1 2 3 4 5 6 7 8 9 10 <br>
+                        --- removeIf ---<br>
+                        Solo dispari: [1, 3, 5, 7, 9]<br>
+                        --- sort ---<br>
+                        Ordinato per lunghezza decrescente: [montagna, albero, casa, luna, sole]<br>
+                        --- replaceAll ---<br>
+                        Quadrati: [1, 4, 9, 16, 25]<br>
+                        --- compute/merge ---<br>
+                        Map dopo operazioni: {Bob=80, Alice=90, Diana=0}<br>
+                        --- Esempio pratico ---<br>
+                        Prodotti costosi: [Laptop (€1200.0)]<br>
+                        Raggruppati per categoria: {Libri=[Libro (€45.0)], Elettronica=[Laptop (€1200.0), Mouse (€25.0)]}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. ESEMPI PRATICI ==================== -->
+            <div class="section-card" id="esempi-pratici">
+                <div class="card-header"><i class="fas fa-code-branch"></i><h2>Esempi Pratici</h2></div>
+                <div class="card-body">
+                    <div class="badge">Applicazioni reali delle Collection</div>
+                    
+                    <pre><code class="language-java">import java.util.*;
+
+public class EsempiPraticiCollection {
+    public static void main(String[] args) {
+        
+        // ==================== ESEMPIO 1: Conta occorrenze parole ====================
+        System.out.println("=== ESEMPIO 1: Conta occorrenze ===");
+        String testo = "java è fantastico java è potente java è ovunque";
+        String[] parole = testo.split(" ");
+        
+        Map&lt;String, Integer&gt; conteggio = new HashMap&lt;&gt;();
+        for (String p : parole) {
+            conteggio.put(p, conteggio.getOrDefault(p, 0) + 1);
+        }
+        System.out.println("Conteggio parole: " + conteggio);
+        
+        // ==================== ESEMPIO 2: Rimuovi duplicati ====================
+        System.out.println("\n=== ESEMPIO 2: Rimuovi duplicati ===");
+        List&lt;Integer&gt; conDuplicati = Arrays.asList(1, 2, 2, 3, 3, 3, 4, 5, 5);
+        Set&lt;Integer&gt; senzaDuplicati = new LinkedHashSet&lt;&gt;(conDuplicati);
+        System.out.println("Originale: " + conDuplicati);
+        System.out.println("Senza duplicati: " + senzaDuplicati);
+        
+        // ==================== ESEMPIO 3: Ordina studenti per voto ====================
+        System.out.println("\n=== ESEMPIO 3: Ordina studenti ===");
+        Map&lt;String, Integer&gt; studenti = new HashMap&lt;&gt;();
+        studenti.put("Marco", 85);
+        studenti.put("Anna", 92);
+        studenti.put("Luca", 78);
+        studenti.put("Sofia", 95);
+        
+        // Ordina per voto (valore)
+        List&lt;Map.Entry&lt;String, Integer&gt;&gt; listaOrdinata = new ArrayList&lt;&gt;(studenti.entrySet());
+        listaOrdinata.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+        
+        System.out.println("Classifica per voto:");
+        int pos = 1;
+        for (Map.Entry&lt;String, Integer&gt; entry : listaOrdinata) {
+            System.out.println(pos++ + ". " + entry.getKey() + " - " + entry.getValue());
+        }
+        
+        // ==================== ESEMPIO 4: Gestione coda priorità ====================
+        System.out.println("\n=== ESEMPIO 4: Gestione task ===");
+        Queue&lt;Task&gt; taskQueue = new PriorityQueue&lt;&gt;((t1, t2) -> t2.priorita - t1.priorita);
+        taskQueue.offer(new Task("Backup database", 8));
+        taskQueue.offer(new Task("Aggiornamento UI", 5));
+        taskQueue.offer(new Task("Bug critico", 10));
+        taskQueue.offer(new Task("Documentazione", 3));
+        
+        System.out.println("Task da eseguire (priorità decrescente):");
+        while (!taskQueue.isEmpty()) {
+            System.out.println("  " + taskQueue.poll());
+        }
+        
+        // ==================== ESEMPIO 5: Cache con LRU ====================
+        System.out.println("\n=== ESEMPIO 5: Cache LRU ===");
+        class LRUCache&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; {
+            private final int maxSize;
+            
+            public LRUCache(int maxSize) {
+                super(maxSize, 0.75f, true);
+                this.maxSize = maxSize;
+            }
+            
+            @Override
+            protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {
+                return size() > maxSize;
+            }
+        }
+        
+        LRUCache&lt;String, String&gt; cache = new LRUCache&lt;&gt;(3);
+        cache.put("A", "Valore A");
+        cache.put("B", "Valore B");
+        cache.put("C", "Valore C");
+        System.out.println("Cache: " + cache);
+        
+        cache.get("A");  // Accesso a A
+        cache.put("D", "Valore D");  // Dovrebbe rimuovere B (meno recente)
+        System.out.println("Cache dopo accesso A e inserimento D: " + cache);
+    }
+    
+    static class Task {
+        String descrizione;
+        int priorita;
+        
+        Task(String descrizione, int priorita) {
+            this.descrizione = descrizione;
+            this.priorita = priorita;
+        }
+        
+        @Override
+        public String toString() {
+            return descrizione + " (priorità " + priorita + ")";
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        === ESEMPIO 1: Conta occorrenze ===<br>
+                        Conteggio parole: {java=3, è=3, fantastico=1, potente=1, ovunque=1}<br>
+                        === ESEMPIO 2: Rimuovi duplicati ===<br>
+                        Originale: [1, 2, 2, 3, 3, 3, 4, 5, 5]<br>
+                        Senza duplicati: [1, 2, 3, 4, 5]<br>
+                        === ESEMPIO 3: Ordina studenti ===<br>
+                        Classifica per voto:<br>
+                        1. Sofia - 95<br>
+                        2. Anna - 92<br>
+                        3. Marco - 85<br>
+                        4. Luca - 78<br>
+                        === ESEMPIO 4: Gestione task ===<br>
+                        Task da eseguire (priorità decrescente):<br>
+                          Bug critico (priorità 10)<br>
+                          Backup database (priorità 8)<br>
+                          Aggiornamento UI (priorità 5)<br>
+                          Documentazione (priorità 3)<br>
+                        === ESEMPIO 5: Cache LRU ===<br>
+                        Cache: {A=Valore A, B=Valore B, C=Valore C}<br>
+                        Cache dopo accesso A e inserimento D: {C=Valore C, A=Valore A, D=Valore D}
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Collections Framework | Strutture dati e algoritmi
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Prism.js e Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+	<script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'confronto', 'arraylist', 'linkedlist', 'hashset', 'treeset', 'hashmap', 'treemap', 'priorityqueue', 'lambda-collections', 'esempi-pratici'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

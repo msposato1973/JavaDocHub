@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Include Navbar (generata da navbar.js) -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#principi-rest" class="toc-link" data-target="principi-rest">
+                    <i class="fas fa-check-double"></i> Principi REST
+                </a></li>
+                <li><a href="#annotazioni" class="toc-link" data-target="annotazioni">
+                    <i class="fas fa-tag"></i> Annotazioni Spring
+                </a></li>
+                <li><a href="#crud" class="toc-link" data-target="crud">
+                    <i class="fas fa-database"></i> CRUD Completo
+                </a></li>
+                <li><a href="#request-response" class="toc-link" data-target="request-response">
+                    <i class="fas fa-exchange-alt"></i> Request/Response
+                </a></li>
+                <li><a href="#validazione" class="toc-link" data-target="validazione">
+                    <i class="fas fa-check-circle"></i> Validazione
+                </a></li>
+                <li><a href="#paginazione" class="toc-link" data-target="paginazione">
+                    <i class="fas fa-list-ol"></i> Paginazione
+                </a></li>
+                <li><a href="#exception-handling" class="toc-link" data-target="exception-handling">
+                    <i class="fas fa-exclamation-triangle"></i> Exception Handling
+                </a></li>
+                <li><a href="#versioning" class="toc-link" data-target="versioning">
+                    <i class="fas fa-code-branch"></i> API Versioning
+                </a></li>
+                <li><a href="#documentazione" class="toc-link" data-target="documentazione">
+                    <i class="fas fa-file-alt"></i> Documentazione OpenAPI
+                </a></li>
+                <li><a href="#testing" class="toc-link" data-target="testing">
+                    <i class="fas fa-vial"></i> Testing API
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-plug"></i> REST API con Spring Boot</h1>
+                <p>Guida completa alla creazione di API RESTful con Spring Boot: CRUD, validazione, paginazione, exception handling e best practices</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è una REST API?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        <strong>REST</strong> (Representational State Transfer) è uno stile architetturale per la progettazione di API web.
+                        Le <strong>API RESTful</strong> utilizzano i metodi HTTP standard per eseguire operazioni CRUD su risorse.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi delle API REST:</strong><br>
+                        - <strong>Stateless</strong>: ogni richiesta contiene tutte le informazioni necessarie<br>
+                        - <strong>Cacheable</strong>: le risposte possono essere memorizzate nella cache<br>
+                        - <strong>Layered system</strong>: l'architettura può essere suddivisa in livelli<br>
+                        - <strong>Uniform interface</strong>: interfaccia standardizzata tra componenti
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. PRINCIPI REST ==================== -->
+            <div class="section-card" id="principi-rest">
+                <div class="card-header">
+                    <i class="fas fa-check-double"></i>
+                    <h2>Principi REST</h2>
+                </div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Metodo HTTP</th><th>CRUD</th><th>Endpoint esempio</th><th>Descrizione</th></tr>
+                        <tr><td style="color: #4caf50;">GET</td><td>Read</td><td><code>GET /api/utenti</code></td><td>Recupera tutte le risorse</td></tr>
+                        <tr><td style="color: #4caf50;">GET</td><td>Read</td><td><code>GET /api/utenti/{id}</code></td><td>Recupera una risorsa specifica</td></tr>
+                        <tr><td style="color: #ff9800;">POST</td><td>Create</td><td><code>POST /api/utenti</code></td><td>Crea una nuova risorsa</td></tr>
+                        <tr><td style="color: #2196f3;">PUT</td><td>Update</td><td><code>PUT /api/utenti/{id}</code></td><td>Aggiorna completamente una risorsa</td></tr>
+                        <tr><td style="color: #2196f3;">PATCH</td><td>Partial Update</td><td><code>PATCH /api/utenti/{id}</code></td><td>Aggiorna parzialmente una risorsa</td></tr>
+                        <tr><td style="color: #f44336;">DELETE</td><td>Delete</td><td><code>DELETE /api/utenti/{id}</code></td><td>Elimina una risorsa</td></tr>
+                    </table>
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-info-circle"></i> <strong>Codici di stato HTTP comuni:</strong><br>
+                        - <code>200 OK</code>: richiesta completata con successo<br>
+                        - <code>201 Created</code>: risorsa creata con successo<br>
+                        - <code>204 No Content</code>: richiesta completata, nessun contenuto da restituire<br>
+                        - <code>400 Bad Request</code>: richiesta malformata<br>
+                        - <code>401 Unauthorized</code>: autenticazione richiesta<br>
+                        - <code>403 Forbidden</code>: accesso negato<br>
+                        - <code>404 Not Found</code>: risorsa non trovata<br>
+                        - <code>500 Internal Server Error</code>: errore del server
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. ANNOTAZIONI SPRING ==================== -->
+            <div class="section-card" id="annotazioni">
+                <div class="card-header">
+                    <i class="fas fa-tag"></i>
+                    <h2>Annotazioni Spring per REST API</h2>
+                </div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Annotazione</th><th>Descrizione</th><th>Esempio</th></tr>
+                        <tr><td><code>@RestController</code></td><td>Combina @Controller e @ResponseBody</td><td><code>@RestController</code></td></tr>
+                        <tr><td><code>@RequestMapping</code></td><td>Mappa richieste HTTP a metodi</td><td><code>@RequestMapping("/api")</code></td></tr>
+                        <tr><td><code>@GetMapping</code></td><td>Mappa richieste GET</td><td><code>@GetMapping("/{id}")</code></td></tr>
+                        <tr><td><code>@PostMapping</code></td><td>Mappa richieste POST</td><td><code>@PostMapping</code></td></tr>
+                        <tr><td><code>@PutMapping</code></td><td>Mappa richieste PUT</td><td><code>@PutMapping("/{id}")</code></td></tr>
+                        <tr><td><code>@PatchMapping</code></td><td>Mappa richieste PATCH</td><td><code>@PatchMapping("/{id}")</code></td></tr>
+                        <tr><td><code>@DeleteMapping</code></td><td>Mappa richieste DELETE</td><td><code>@DeleteMapping("/{id}")</code></td></tr>
+                        <tr><td><code>@PathVariable</code></td><td>Estrae variabili dal path</td><td><code>@PathVariable Long id</code></td></tr>
+                        <tr><td><code>@RequestParam</code></td><td>Estrae parametri dalla query string</td><td><code>@RequestParam String nome</code></td></tr>
+                        <tr><td><code>@RequestBody</code></td><td>Mappa il body della richiesta</td><td><code>@RequestBody UtenteDTO utente</code></td></tr>
+                        <tr><td><code>@ResponseStatus</code></td><td>Specifica lo status code</td><td><code>@ResponseStatus(HttpStatus.CREATED)</code></td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ==================== 4. CRUD COMPLETO ==================== -->
+            <div class="section-card" id="crud">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>CRUD Completo</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Controller CRUD completo</h3>
+                    <pre><code class="language-java">package com.esempio.api.controller;
+
+import com.esempio.api.dto.UtenteDTO;
+import com.esempio.api.service.UtenteService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/utenti")
+@RequiredArgsConstructor
+public class UtenteController {
+    
+    private final UtenteService utenteService;
+    
+    // GET - Recupera tutti gli utenti
+    @GetMapping
+    public ResponseEntity&lt;List&lt;UtenteDTO&gt;&gt; getAll() {
+        return ResponseEntity.ok(utenteService.findAll());
+    }
+    
+    // GET - Recupera un utente per ID
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; getById(@PathVariable Long id) {
+        return ResponseEntity.ok(utenteService.findById(id));
+    }
+    
+    // GET - Cerca utenti per nome (query param)
+    @GetMapping("/search")
+    public ResponseEntity&lt;List&lt;UtenteDTO&gt;&gt; search(@RequestParam String nome) {
+        return ResponseEntity.ok(utenteService.findByNome(nome));
+    }
+    
+    // POST - Crea un nuovo utente
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity&lt;UtenteDTO&gt; create(@Valid @RequestBody UtenteDTO utente) {
+        UtenteDTO saved = utenteService.save(utente);
+        return ResponseEntity
+            .created(URI.create("/api/utenti/" + saved.getId()))
+            .body(saved);
+    }
+    
+    // PUT - Aggiornamento completo
+    @PutMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; update(
+            @PathVariable Long id,
+            @Valid @RequestBody UtenteDTO utente) {
+        return ResponseEntity.ok(utenteService.update(id, utente));
+    }
+    
+    // PATCH - Aggiornamento parziale
+    @PatchMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; patch(
+            @PathVariable Long id,
+            @RequestBody Map&lt;String, Object&gt; updates) {
+        return ResponseEntity.ok(utenteService.patch(id, updates));
+    }
+    
+    // DELETE - Elimina un utente
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
+        utenteService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 5. REQUEST/RESPONSE ==================== -->
+            <div class="section-card" id="request-response">
+                <div class="card-header">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h2>Request e Response</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Request DTO</h3>
+                    <pre><code class="language-java">package com.esempio.api.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UtenteRequestDTO {
+    
+    @NotBlank(message = "Il nome è obbligatorio")
+    @Size(min = 2, max = 100, message = "Il nome deve avere tra 2 e 100 caratteri")
+    private String nome;
+    
+    @NotBlank(message = "L'email è obbligatoria")
+    @Email(message = "Formato email non valido")
+    private String email;
+    
+    @NotNull(message = "L'età è obbligatoria")
+    @Min(value = 0, message = "L'età non può essere negativa")
+    @Max(value = 150, message = "L'età non può superare 150")
+    private Integer eta;
+    
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Formato telefono non valido")
+    private String telefono;
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Response DTO</h3>
+                    <pre><code class="language-java">package com.esempio.api.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UtenteResponseDTO {
+    
+    private Long id;
+    private String nome;
+    private String email;
+    private Integer eta;
+    private String telefono;
+    private boolean attivo;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 ResponseEntity personalizzata</h3>
+                    <pre><code class="language-java">@GetMapping("/{id}")
+public ResponseEntity&lt;UtenteResponseDTO&gt; getById(@PathVariable Long id) {
+    return utenteService.findById(id)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+}
+
+@PostMapping
+public ResponseEntity&lt;UtenteResponseDTO&gt; create(@Valid @RequestBody UtenteRequestDTO request) {
+    UtenteResponseDTO response = utenteService.create(request);
+    return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .header("X-Custom-Header", "Valore")
+        .body(response);
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 6. VALIDAZIONE ==================== -->
+            <div class="section-card" id="validazione">
+                <div class="card-header">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Validazione degli Input</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Bean Validation con Jakarta Validation</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Annotazioni di validazione</h3>
+                    <pre><code class="language-java">import jakarta.validation.constraints.*;
+import jakarta.validation.Valid;
+
+public class UtenteRequestDTO {
+    
+    @NotBlank(message = "Il nome è obbligatorio")
+    @Size(min = 2, max = 100)
+    private String nome;
+    
+    @NotBlank
+    @Email(regexp = ".+@.+\\..+", message = "Email non valida")
+    private String email;
+    
+    @NotNull
+    @Min(0)
+    @Max(150)
+    private Integer eta;
+    
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$")
+    private String telefono;
+    
+    @Past(message = "La data di nascita deve essere nel passato")
+    private LocalDate dataNascita;
+    
+    @Future(message = "La data di scadenza deve essere nel futuro")
+    private LocalDate dataScadenza;
+    
+    @Pattern(regexp = "^[A-Z]{6}[0-9]{2}[A-Z0-9]{2}[0-9]{3}[A-Z]$", 
+             message = "Codice fiscale non valido")
+    private String codiceFiscale;
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Validazione nel Controller</h3>
+                    <pre><code class="language-java">@PostMapping
+public ResponseEntity&lt;UtenteResponseDTO&gt; create(
+        @Valid @RequestBody UtenteRequestDTO request) {
+    // Se la validazione fallisce, viene lanciata MethodArgumentNotValidException
+    return ResponseEntity.ok(service.create(request));
+}
+
+@PutMapping("/{id}")
+public ResponseEntity&lt;UtenteResponseDTO&gt; update(
+        @PathVariable Long id,
+        @Valid @RequestBody UtenteRequestDTO request) {
+    return ResponseEntity.ok(service.update(id, request));
+}
+
+// Validazione di gruppo
+@PostMapping("/batch")
+public ResponseEntity&lt;List&lt;UtenteResponseDTO&gt;&gt; createBatch(
+        @Valid @RequestBody List&lt;UtenteRequestDTO&gt; requests) {
+    return ResponseEntity.ok(service.createBatch(requests));
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Validazione personalizzata</h3>
+                    <pre><code class="language-java">// Annotation personalizzata
+@Target({ElementType.FIELD})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = UniqueEmailValidator.class)
+public @interface UniqueEmail {
+    String message() default "Email già utilizzata";
+    Class&lt;?&gt;[] groups() default {};
+    Class&lt;? extends Payload&gt;[] payload() default {};
+}
+
+// Validator
+public class UniqueEmailValidator implements ConstraintValidator&lt;UniqueEmail, String&gt; {
+    
+    @Autowired
+    private UtenteRepository utenteRepository;
+    
+    @Override
+    public boolean isValid(String email, ConstraintValidatorContext context) {
+        return email != null && !utenteRepository.existsByEmail(email);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 7. PAGINAZIONE ==================== -->
+            <div class="section-card" id="paginazione">
+                <div class="card-header">
+                    <i class="fas fa-list-ol"></i>
+                    <h2>Paginazione e Ordinamento</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Spring Data JPA Pageable</div>
+                    
+                    <pre><code class="language-java">import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+
+@RestController
+@RequestMapping("/api/utenti")
+public class UtenteController {
+    
+    // Paginazione con parametri di default
+    @GetMapping
+    public ResponseEntity&lt;Page&lt;UtenteResponseDTO&gt;&gt; getAll(
+            @PageableDefault(size = 20, sort = "nome", direction = Sort.Direction.ASC) 
+            Pageable pageable) {
+        return ResponseEntity.ok(utenteService.findAll(pageable));
+    }
+    
+    // Paginazione personalizzata
+    @GetMapping("/custom")
+    public ResponseEntity&lt;Page&lt;UtenteResponseDTO&gt;&gt; getCustom(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+        
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("desc") 
+            ? Sort.Direction.DESC : Sort.Direction.ASC;
+        
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortBy));
+        return ResponseEntity.ok(utenteService.findAll(pageable));
+    }
+    
+    // Paginazione con filtri
+    @GetMapping("/filter")
+    public ResponseEntity&lt;Page&lt;UtenteResponseDTO&gt;&gt; filter(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) Integer etaMin,
+            @RequestParam(required = false) Integer etaMax,
+            @PageableDefault(size = 20) Pageable pageable) {
+        return ResponseEntity.ok(utenteService.filter(nome, etaMin, etaMax, pageable));
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Service con paginazione</h3>
+                    <pre><code class="language-java">@Service
+@RequiredArgsConstructor
+public class UtenteService {
+    
+    private final UtenteRepository utenteRepository;
+    
+    public Page&lt;UtenteResponseDTO&gt; findAll(Pageable pageable) {
+        return utenteRepository.findAll(pageable)
+            .map(this::toResponseDTO);
+    }
+    
+    public Page&lt;UtenteResponseDTO&gt; filter(String nome, Integer etaMin, Integer etaMax, Pageable pageable) {
+        // Implementazione con Specification o QueryDSL
+        return utenteRepository.findAll(specification, pageable)
+            .map(this::toResponseDTO);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 8. EXCEPTION HANDLING ==================== -->
+            <div class="section-card" id="exception-handling">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>Exception Handling</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Global Exception Handler con @RestControllerAdvice</div>
+                    
+                    <pre><code class="language-java">package com.esempio.api.exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+@Data
+@AllArgsConstructor
+class ErrorResponse {
+    private String code;
+    private String message;
+    private LocalDateTime timestamp;
+    private Map&lt;String, String&gt; details;
+}
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    
+    // 404 - Risorsa non trovata
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFound(ResourceNotFoundException ex) {
+        return new ErrorResponse(
+            "NOT_FOUND",
+            ex.getMessage(),
+            LocalDateTime.now(),
+            new HashMap&lt;&gt;()
+        );
+    }
+    
+    // 400 - Validazione fallita
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidation(MethodArgumentNotValidException ex) {
+        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        
+        return new ErrorResponse(
+            "VALIDATION_ERROR",
+            "Errore di validazione",
+            LocalDateTime.now(),
+            errors
+        );
+    }
+    
+    // 400 - Bad request (parametri mancanti, formato errato)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMissingParams(MissingServletRequestParameterException ex) {
+        return new ErrorResponse(
+            "MISSING_PARAMETER",
+            "Parametro mancante: " + ex.getParameterName(),
+            LocalDateTime.now(),
+            new HashMap&lt;&gt;()
+        );
+    }
+    
+    // 409 - Conflitto (email già esistente, ecc.)
+    @ExceptionHandler(DuplicateResourceException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleDuplicate(DuplicateResourceException ex) {
+        return new ErrorResponse(
+            "DUPLICATE_RESOURCE",
+            ex.getMessage(),
+            LocalDateTime.now(),
+            new HashMap&lt;&gt;()
+        );
+    }
+    
+    // 500 - Errore interno del server
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleGeneric(Exception ex) {
+        return new ErrorResponse(
+            "INTERNAL_ERROR",
+            "Errore interno del server",
+            LocalDateTime.now(),
+            new HashMap&lt;&gt;()
+        );
+    }
+}
+
+// Eccezioni personalizzate
+class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}
+
+class DuplicateResourceException extends RuntimeException {
+    public DuplicateResourceException(String message) {
+        super(message);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 9. API VERSIONING ==================== -->
+            <div class="section-card" id="versioning">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>API Versioning</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Strategie di versionamento delle API</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 URI Versioning</h3>
+                    <pre><code class="language-java">@RestController
+@RequestMapping("/api/v1/utenti")
+public class UtenteControllerV1 {
+    
+    @GetMapping("/{id}")
+    public UtenteDTOv1 getUtente(@PathVariable Long id) {
+        // Versione 1 dell'API
+        return utenteService.findByIdV1(id);
+    }
+}
+
+@RestController
+@RequestMapping("/api/v2/utenti")
+public class UtenteControllerV2 {
+    
+    @GetMapping("/{id}")
+    public UtenteDTOv2 getUtente(@PathVariable Long id) {
+        // Versione 2 dell'API (campi aggiuntivi)
+        return utenteService.findByIdV2(id);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Header Versioning</h3>
+                    <pre><code class="language-java">@RestController
+@RequestMapping("/api/utenti")
+public class UtenteController {
+    
+    @GetMapping(value = "/{id}", headers = "API-Version=1")
+    public UtenteDTOv1 getUtenteV1(@PathVariable Long id) {
+        return utenteService.findByIdV1(id);
+    }
+    
+    @GetMapping(value = "/{id}", headers = "API-Version=2")
+    public UtenteDTOv2 getUtenteV2(@PathVariable Long id) {
+        return utenteService.findByIdV2(id);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Content Negotiation Versioning</h3>
+                    <pre><code class="language-java">@RestController
+@RequestMapping("/api/utenti")
+public class UtenteController {
+    
+    @GetMapping(value = "/{id}", produces = "application/vnd.company.app-v1+json")
+    public UtenteDTOv1 getUtenteV1(@PathVariable Long id) {
+        return utenteService.findByIdV1(id);
+    }
+    
+    @GetMapping(value = "/{id}", produces = "application/vnd.company.app-v2+json")
+    public UtenteDTOv2 getUtenteV2(@PathVariable Long id) {
+        return utenteService.findByIdV2(id);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 10. DOCUMENTAZIONE OPENAPI ==================== -->
+            <div class="section-card" id="documentazione">
+                <div class="card-header">
+                    <i class="fas fa-file-alt"></i>
+                    <h2>Documentazione API con OpenAPI (SpringDoc)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Generazione automatica della documentazione</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenza</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springdoc&lt;/groupId&gt;
+    &lt;artifactId&gt;springdoc-openapi-starter-webmvc-ui&lt;/artifactId&gt;
+    &lt;version&gt;2.3.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione</h3>
+                    <pre><code class="language-yaml">springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+  show-actuator: true
+  packages-to-scan: com.esempio.api.controller</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Annotazioni per la documentazione</h3>
+                    <pre><code class="language-java">import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+@RestController
+@RequestMapping("/api/utenti")
+@Tag(name = "Utenti", description = "API per la gestione degli utenti")
+public class UtenteController {
+    
+    @Operation(summary = "Recupera tutti gli utenti", description = "Restituisce una lista paginata di utenti")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Lista recuperata con successo"),
+        @ApiResponse(responseCode = "401", description = "Non autorizzato")
+    })
+    @GetMapping
+    public ResponseEntity&lt;List&lt;UtenteDTO&gt;&gt; getAll() {
+        return ResponseEntity.ok(utenteService.findAll());
+    }
+    
+    @Operation(summary = "Recupera un utente per ID")
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; getById(@PathVariable Long id) {
+        return ResponseEntity.ok(utenteService.findById(id));
+    }
+    
+    @Operation(summary = "Crea un nuovo utente")
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity&lt;UtenteDTO&gt; create(@Valid @RequestBody UtenteDTO utente) {
+        return ResponseEntity.ok(utenteService.save(utente));
+    }
+}</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> <strong>Endpoint di documentazione:</strong><br>
+                        - <code>GET /swagger-ui.html</code> → Interfaccia Swagger UI<br>
+                        - <code>GET /api-docs</code> → Specifica OpenAPI in formato JSON
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. TESTING API ==================== -->
+            <div class="section-card" id="testing">
+                <div class="card-header">
+                    <i class="fas fa-vial"></i>
+                    <h2>Testing delle API</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Test con MockMvc</h3>
+                    <pre><code class="language-java">package com.esempio.api.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.esempio.api.dto.UtenteRequestDTO;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class UtenteControllerTest {
+    
+    @Autowired
+    private MockMvc mockMvc;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
+    
+    @Test
+    void getAll_ShouldReturnListOfUtenti() throws Exception {
+        mockMvc.perform(get("/api/utenti")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
+    }
+    
+    @Test
+    void getById_ShouldReturnUtente_WhenIdExists() throws Exception {
+        mockMvc.perform(get("/api/utenti/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.nome").exists());
+    }
+    
+    @Test
+    void getById_ShouldReturn404_WhenIdDoesNotExist() throws Exception {
+        mockMvc.perform(get("/api/utenti/999")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+    
+    @Test
+    void create_ShouldReturnCreatedUtente() throws Exception {
+        UtenteRequestDTO request = UtenteRequestDTO.builder()
+            .nome("Mario")
+            .email("mario@email.com")
+            .eta(30)
+            .build();
+        
+        mockMvc.perform(post("/api/utenti")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.nome").value("Mario"));
+    }
+    
+    @Test
+    void create_ShouldReturn400_WhenValidationFails() throws Exception {
+        UtenteRequestDTO request = UtenteRequestDTO.builder()
+            .nome("")  // Nome vuoto - validazione fallisce
+            .email("email_invalida")
+            .eta(-5)
+            .build();
+        
+        mockMvc.perform(post("/api/utenti")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void delete_ShouldReturn204_WhenIdExists() throws Exception {
+        mockMvc.perform(delete("/api/utenti/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Test con TestRestTemplate</h3>
+                    <pre><code class="language-java">package com.esempio.api;
+
+import com.esempio.api.dto.UtenteRequestDTO;
+import com.esempio.api.dto.UtenteResponseDTO;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class ApiIntegrationTest {
+    
+    @Autowired
+    private TestRestTemplate restTemplate;
+    
+    @Test
+    void createAndGetUtente() {
+        // Crea utente
+        UtenteRequestDTO request = UtenteRequestDTO.builder()
+            .nome("Mario")
+            .email("mario@email.com")
+            .eta(30)
+            .build();
+        
+        ResponseEntity&lt;UtenteResponseDTO&gt; createResponse = restTemplate
+            .postForEntity("/api/utenti", request, UtenteResponseDTO.class);
+        
+        assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        Long id = createResponse.getBody().getId();
+        
+        // Recupera utente
+        ResponseEntity&lt;UtenteResponseDTO&gt; getResponse = restTemplate
+            .getForEntity("/api/utenti/" + id, UtenteResponseDTO.class);
+        
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getResponse.getBody().getNome()).isEqualTo("Mario");
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 12. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices per REST API</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Regole fondamentali per API di qualità</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. USA NOMI SIGNIFICATIVI ====================
+// ✅ Buona pratica
+GET    /api/utenti           // Recupera utenti
+GET    /api/utenti/{id}      // Recupera utente specifico
+POST   /api/utenti           // Crea utente
+PUT    /api/utenti/{id}      // Aggiorna utente
+DELETE /api/utenti/{id}      // Elimina utente
+
+// ❌ Pratica scorretta
+GET    /api/getAllUsers
+POST   /api/saveUser
+
+// ==================== 2. USA I CODICI DI STATO HTTP CORRETTI ====================
+@PostMapping
+public ResponseEntity&lt;UtenteDTO&gt; create(@Valid @RequestBody UtenteDTO utente) {
+    UtenteDTO saved = service.save(utente);
+    return ResponseEntity
+        .created(URI.create("/api/utenti/" + saved.getId()))  // 201 Created
+        .body(saved);
+}
+
+@DeleteMapping("/{id}")
+public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
+    service.delete(id);
+    return ResponseEntity.noContent().build();  // 204 No Content
+}
+
+// ==================== 3. GESTISCI GLI ERRORI IN MODO CONSISTENTE ====================
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFound(ResourceNotFoundException ex) {
+        return new ErrorResponse("NOT_FOUND", ex.getMessage(), LocalDateTime.now());
+    }
+}
+
+// ==================== 4. USA VERSIONING ====================
+@RequestMapping("/api/v1/utenti")  // Versione esplicita nell'URL
+
+// ==================== 5. VALIDA GLI INPUT ====================
+@PostMapping
+public ResponseEntity&lt;UtenteDTO&gt; create(@Valid @RequestBody UtenteDTO utente) { }
+
+// ==================== 6. USA PAGINAZIONE PER LE LISTE ====================
+@GetMapping
+public ResponseEntity&lt;Page&lt;UtenteDTO&gt;&gt; getAll(Pageable pageable) { }
+
+// ==================== 7. RESTITUISCI SOLO I DATI NECESSARI ====================
+// Usa DTO specifici invece di esporre le entity direttamente
+public class UtenteResponseDTO {
+    // Solo i campi necessari, non l'intera entity
+}
+
+// ==================== 8. DOCUMENTA LE API ====================
+// Usa OpenAPI/Swagger per la documentazione
+
+// ==================== 9. USA HATEOAS QUANDO APPROPRIATO ====================
+@GetMapping("/{id}")
+public EntityModel&lt;UtenteDTO&gt; getById(@PathVariable Long id) {
+    UtenteDTO utente = service.findById(id);
+    
+    EntityModel&lt;UtenteDTO&gt; resource = EntityModel.of(utente);
+    resource.add(linkTo(methodOn(UtenteController.class).getById(id)).withSelfRel());
+    resource.add(linkTo(methodOn(UtenteController.class).getAll()).withRel("all"));
+    
+    return resource;
+}
+
+// ==================== 10. USA FILTRAGGIO, ORDINAMENTO ====================
+@GetMapping
+public ResponseEntity&lt;List&lt;UtenteDTO&gt;&gt; getAll(
+        @RequestParam(required = false) String nome,
+        @RequestParam(required = false) Integer etaMin,
+        @RequestParam(defaultValue = "id") String sortBy,
+        @RequestParam(defaultValue = "asc") String direction) {
+    // Implementazione
+}</code></pre>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist per API REST di qualità:</strong><br>
+                        ✓ Usa nomi significativi e consistenti per gli endpoint<br>
+                        ✓ Utilizza i codici di stato HTTP appropriati<br>
+                        ✓ Gestisci gli errori in modo consistente<br>
+                        ✓ Implementa versioning per le API<br>
+                        ✓ Valida tutti gli input<br>
+                        ✓ Usa paginazione per le liste<br>
+                        ✓ Restituisci DTO invece di entity<br>
+                        ✓ Documenta le API con OpenAPI/Swagger<br>
+                        ✓ Implementa filtraggio e ordinamento<br>
+                        ✓ Scrivi test per le API
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - REST API | Guida completa alla creazione di API RESTful
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'principi-rest', 'annotazioni', 'crud', 'request-response', 'validazione', 'paginazione', 'exception-handling', 'versioning', 'documentazione', 'testing', 'best-practices'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

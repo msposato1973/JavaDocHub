@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes per Java | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Include Navbar (generata da navbar.js) -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#architettura" class="toc-link" data-target="architettura">
+                    <i class="fas fa-project-diagram"></i> Architettura Kubernetes
+                </a></li>
+                <li><a href="#docker" class="toc-link" data-target="docker">
+                    <i class="fab fa-docker"></i> Containerizzazione
+                </a></li>
+                <li><a href="#pod" class="toc-link" data-target="pod">
+                    <i class="fas fa-cube"></i> Pod
+                </a></li>
+                <li><a href="#deployment" class="toc-link" data-target="deployment">
+                    <i class="fas fa-rocket"></i> Deployment
+                </a></li>
+                <li><a href="#service" class="toc-link" data-target="service">
+                    <i class="fas fa-network-wired"></i> Service
+                </a></li>
+                <li><a href="#configmap" class="toc-link" data-target="configmap">
+                    <i class="fas fa-cog"></i> ConfigMap e Secret
+                </a></li>
+                <li><a href="#ingress" class="toc-link" data-target="ingress">
+                    <i class="fas fa-globe"></i> Ingress
+                </a></li>
+                <li><a href="#persistent" class="toc-link" data-target="persistent">
+                    <i class="fas fa-database"></i> Persistent Volume
+                </a></li>
+                <li><a href="#helm" class="toc-link" data-target="helm">
+                    <i class="fas fa-chart-simple"></i> Helm
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+                <li><a href="#comandi" class="toc-link" data-target="comandi">
+                    <i class="fas fa-terminal"></i> Comandi Utili
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fab fa-kubernetes"></i> Kubernetes per Java</h1>
+                <p>Guida completa all'orchestrazione di applicazioni Java su Kubernetes: deployment, service, ingress, configmap e best practices</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è Kubernetes?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        <strong>Kubernetes (K8s)</strong> è una piattaforma open-source per l'orchestrazione di container. 
+                        Automatizza il deployment, lo scaling e la gestione di applicazioni containerizzate.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Perché Kubernetes per Java?</strong><br>
+                        - <strong>Scalabilità automatica</strong>: scala le applicazioni Java in base al carico<br>
+                        - <strong>Self-healing</strong>: riavvia container falliti automaticamente<br>
+                        - <strong>Rollout e rollback</strong>: deploy zero-downtime delle applicazioni<br>
+                        - <strong>Service discovery</strong>: comunicazione automatica tra microservizi<br>
+                        - <strong>Gestione configurazioni</strong>: ConfigMap e Secrets per configurazioni esterne
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. ARCHITETTURA KUBERNETES ==================== -->
+            <div class="section-card" id="architettura">
+                <div class="card-header">
+                    <i class="fas fa-project-diagram"></i>
+                    <h2>Architettura Kubernetes</h2>
+                </div>
+                <div class="card-body">
+                    <pre><code class="language-text">┌─────────────────────────────────────────────────────────────────────────────┐
+│                           CONTROL PLANE                                      │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐           │
+│  │ API Server  │ │ etcd        │ │ Scheduler   │ │ Controller  │           │
+│  │             │ │ (Database)  │ │             │ │ Manager     │           │
+│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                              WORKER NODES                                    │
+│  ┌─────────────────────────────────────────────────────────────────────┐    │
+│  │                         NODE 1                                       │    │
+│  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐                   │    │
+│  │  │   Pod A     │ │   Pod B     │ │   Pod C     │                   │    │
+│  │  │ ┌─────────┐ │ │ ┌─────────┐ │ │ ┌─────────┐ │                   │    │
+│  │  │ │Container│ │ │ │Container│ │ │ │Container│ │                   │    │
+│  │  │ │ (Java)  │ │ │ │ (Java)  │ │ │ │ (Java)  │ │                   │    │
+│  │  │ └─────────┘ │ │ └─────────┘ │ │ └─────────┘ │                   │    │
+│  │  └─────────────┘ └─────────────┘ └─────────────┘                   │    │
+│  │  ┌─────────────────────────────────────────────────────────────┐   │    │
+│  │  │                    kubelet / kube-proxy                      │   │    │
+│  │  └─────────────────────────────────────────────────────────────┘   │    │
+│  └─────────────────────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────────────────────┘</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 3. DOCKER ==================== -->
+            <div class="section-card" id="docker">
+                <div class="card-header">
+                    <i class="fab fa-docker"></i>
+                    <h2>Containerizzazione dell'App Java</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dockerfile multi-stage per Spring Boot</h3>
+                    <pre><code class="language-dockerfile"># Stage 1: Build
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src src
+RUN mvn package -DskipTests
+
+# Stage 2: Runtime
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+# Ottimizzazione JVM per container
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+
+# Utente non-root per sicurezza
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+EXPOSE 8080
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Build e push dell'immagine</h3>
+                    <pre><code class="language-bash"># Build dell'immagine
+docker build -t myapp:1.0.0 .
+
+# Tag per Docker Hub
+docker tag myapp:1.0.0 myusername/myapp:1.0.0
+
+# Push su registry
+docker push myusername/myapp:1.0.0
+
+# Test locale
+docker run -p 8080:8080 myapp:1.0.0</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 4. POD ==================== -->
+            <div class="section-card" id="pod">
+                <div class="card-header">
+                    <i class="fas fa-cube"></i>
+                    <h2>Pod - L'unità base di Kubernetes</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Un Pod è il più piccolo deployable unit in Kubernetes. Contiene uno o più container che condividono 
+                        rete e storage.
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 pod.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: Pod
+metadata:
+  name: java-app-pod
+  labels:
+    app: java-app
+    version: v1
+spec:
+  containers:
+  - name: java-app
+    image: myusername/myapp:1.0.0
+    ports:
+    - containerPort: 8080
+    env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: "k8s"
+    - name: DB_HOST
+      value: "postgres-service"
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "250m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+    livenessProbe:
+      httpGet:
+        path: /actuator/health
+        port: 8080
+      initialDelaySeconds: 30
+      periodSeconds: 10
+    readinessProbe:
+      httpGet:
+        path: /actuator/health
+        port: 8080
+      initialDelaySeconds: 20
+      periodSeconds: 5</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Comandi Pod:<br>
+                        <code>kubectl apply -f pod.yaml</code> - Crea il Pod<br>
+                        <code>kubectl get pods</code> - Lista Pod<br>
+                        <code>kubectl logs java-app-pod</code> - Log del Pod<br>
+                        <code>kubectl exec -it java-app-pod -- sh</code> - Shell nel container<br>
+                        <code>kubectl delete pod java-app-pod</code> - Elimina Pod
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. DEPLOYMENT ==================== -->
+            <div class="section-card" id="deployment">
+                <div class="card-header">
+                    <i class="fas fa-rocket"></i>
+                    <h2>Deployment - Gestione dei Pod</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Un Deployment gestisce il ciclo di vita dei Pod: scaling, rolling updates, rollback.
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 deployment.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-deployment
+  namespace: default
+  labels:
+    app: java-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+      - name: java-app
+        image: myusername/myapp:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: spring.profiles.active
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 5</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Horizontal Pod Autoscaler (HPA)</h3>
+                    <pre><code class="language-yaml">apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: java-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: java-app-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Comandi Deployment:<br>
+                        <code>kubectl apply -f deployment.yaml</code> - Crea Deployment<br>
+                        <code>kubectl rollout status deployment/java-app-deployment</code> - Stato rollout<br>
+                        <code>kubectl rollout history deployment/java-app-deployment</code> - Storico versioni<br>
+                        <code>kubectl rollout undo deployment/java-app-deployment</code> - Rollback<br>
+                        <code>kubectl scale deployment java-app-deployment --replicas=5</code> - Scaling manuale
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. SERVICE ==================== -->
+            <div class="section-card" id="service">
+                <div class="card-header">
+                    <i class="fas fa-network-wired"></i>
+                    <h2>Service - Esposizione dei Pod</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Un Service fornisce un endpoint stabile per comunicare con i Pod, gestendo il load balancing.
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 service.yaml (ClusterIP)</h3>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-service
+spec:
+  selector:
+    app: java-app
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+  type: ClusterIP</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 service-nodeport.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-nodeport
+spec:
+  selector:
+    app: java-app
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30080
+    protocol: TCP
+  type: NodePort</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 service-loadbalancer.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-lb
+spec:
+  selector:
+    app: java-app
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: LoadBalancer</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Comandi Service:<br>
+                        <code>kubectl get services</code> - Lista Service<br>
+                        <code>kubectl describe service java-app-service</code> - Dettagli Service<br>
+                        <code>kubectl port-forward service/java-app-service 8080:8080</code> - Port forwarding locale
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. CONFIGMAP E SECRET ==================== -->
+            <div class="section-card" id="configmap">
+                <div class="card-header">
+                    <i class="fas fa-cog"></i>
+                    <h2>ConfigMap e Secret</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 configmap.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  application.yml: |
+    spring:
+      datasource:
+        url: jdbc:postgresql://postgres-service:5432/mydb
+        username: myuser
+      jpa:
+        hibernate:
+          ddl-auto: update
+    app:
+      feature:
+        enabled: true
+  spring.profiles.active: "k8s"</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 secret.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+type: Opaque
+data:
+  password: cGFzc3dvcmQxMjM=  # echo -n 'password123' | base64
+  api-key: YWJjMTIzCg==
+---
+# Secret letterale (non base64)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret-plain
+type: Opaque
+stringData:
+  password: password123
+  api-key: abc123</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Utilizzo in Spring Boot</h3>
+                    <pre><code class="language-java">@RestController
+@RequestMapping("/api/config")
+@Slf4j
+public class ConfigController {
+    
+    @Value("${app.feature.enabled:false}")
+    private boolean featureEnabled;
+    
+    @Value("${spring.profiles.active:default}")
+    private String profile;
+    
+    @Value("${DB_PASSWORD:not-set}")
+    private String dbPassword;
+    
+    @GetMapping("/info")
+    public Map&lt;String, String&gt; getConfig() {
+        return Map.of(
+            "profile", profile,
+            "featureEnabled", String.valueOf(featureEnabled),
+            "dbPassword", "****"  // Non esporre mai le password!
+        );
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 8. INGRESS ==================== -->
+            <div class="section-card" id="ingress">
+                <div class="card-header">
+                    <i class="fas fa-globe"></i>
+                    <h2>Ingress - Routing HTTP/HTTPS</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Ingress espone servizi HTTP/HTTPS all'esterno del cluster, con routing basato su host e path.
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 ingress.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: java-app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - api.myapp.com
+    secretName: tls-secret
+  rules:
+  - host: api.myapp.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: java-app-service
+            port:
+              number: 8080
+      - path: /api/v2
+        pathType: Prefix
+        backend:
+          service:
+            name: java-app-v2-service
+            port:
+              number: 8080</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 9. PERSISTENT VOLUME ==================== -->
+            <div class="section-card" id="persistent">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>Persistent Volume e Persistent Volume Claim</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 persistent-volume.yaml</h3>
+                    <pre><code class="language-yaml">apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgres-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/postgres
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Utilizzo in Deployment</h3>
+                    <pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 10. HELM ==================== -->
+            <div class="section-card" id="helm">
+                <div class="card-header">
+                    <i class="fas fa-chart-simple"></i>
+                    <h2>Helm - Package Manager per Kubernetes</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Helm è il package manager di Kubernetes. Permette di definire, installare e aggiornare applicazioni complesse.
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Struttura di un Chart Helm</h3>
+                    <pre><code class="language-text">myapp-chart/
+├── Chart.yaml          # Metadata del chart
+├── values.yaml         # Valori di default
+├── templates/          # Template Kubernetes
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── configmap.yaml
+│   └── ingress.yaml
+└── charts/             # Dipendenze</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 values.yaml</h3>
+                    <pre><code class="language-yaml">replicaCount: 3
+image:
+  repository: myusername/myapp
+  tag: "1.0.0"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  host: api.myapp.com
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+config:
+  springProfilesActive: "k8s"
+  featureEnabled: true</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 template/deployment.yaml (con Go template)</h3>
+                    <pre><code class="language-yaml">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+      - name: {{ .Values.appName }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: {{ .Values.config.springProfilesActive }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Comandi Helm:<br>
+                        <code>helm create myapp-chart</code> - Crea nuovo chart<br>
+                        <code>helm install myapp ./myapp-chart</code> - Installa chart<br>
+                        <code>helm upgrade myapp ./myapp-chart</code> - Aggiorna<br>
+                        <code>helm rollback myapp 1</code> - Rollback alla revisione 1<br>
+                        <code>helm uninstall myapp</code> - Disinstalla<br>
+                        <code>helm repo add bitnami https://charts.bitnami.com/bitnami</code> - Aggiunge repo
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices per Java su Kubernetes</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Regole fondamentali per applicazioni Java su K8s</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. JVM PER CONTAINER ====================
+// Configura la JVM per rispettare i limiti del container
+// -XX:+UseContainerSupport (attivo di default in Java 10+)
+// -XX:MaxRAMPercentage=75.0 (usa il 75% della memoria del container)
+
+// In Dockerfile
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+
+// ==================== 2. GESTIONE DELLA MEMORIA ====================
+// In deployment.yaml
+resources:
+  requests:
+    memory: "512Mi"   # Minimo garantito
+    cpu: "250m"
+  limits:
+    memory: "1024Mi"  # Massimo utilizzabile
+    cpu: "1000m"
+
+// ==================== 3. LIVENESS E READINESS PROBE ====================
+// Spring Boot Actuator endpoints
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 8080
+  initialDelaySeconds: 60
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 5
+
+// ==================== 4. GRACEFUL SHUTDOWN ====================
+// Spring Boot 2.3+ supporta graceful shutdown
+# application.yml
+server:
+  shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+// ==================== 5. DISTRIBUTED TRACING ====================
+// Aggiungi correlation ID per tracing distribuito
+@Component
+public class CorrelationIdFilter implements Filter {
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, 
+                         FilterChain chain) throws IOException {
+        String correlationId = UUID.randomUUID().toString();
+        MDC.put("correlationId", correlationId);
+        chain.doFilter(request, response);
+        MDC.clear();
+    }
+}
+
+// ==================== 6. LOGGING STRUTTURATO ====================
+// Usa JSON logging per integrazione con ELK/Loki
+# application.yml
+logging:
+  pattern:
+    console: "{\"timestamp\":\"%d{ISO8601}\",\"level\":\"%p\",\"thread\":\"%t\",\"logger\":\"%c\",\"message\":\"%m\",\"correlationId\":\"%X{correlationId}\"}"
+  level:
+    com.myapp: DEBUG</code></pre>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist per Java su Kubernetes:</strong><br>
+                        ✓ Usa immagini base leggere (Alpine, Distroless)<br>
+                        ✓ Configura JVM con -XX:+UseContainerSupport<br>
+                        ✓ Imposta limiti di memoria e CPU<br>
+                        ✓ Configura liveness e readiness probe<br>
+                        ✓ Usa ConfigMap e Secret per configurazioni<br>
+                        ✓ Implementa graceful shutdown<br>
+                        ✓ Usa structured logging (JSON)<br>
+                        ✓ Aggiungi correlation ID per tracing<br>
+                        ✓ Usa Helm per gestire configurazioni<br>
+                        ✓ Monitora con Prometheus e Grafana
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 12. COMANDI UTILI ==================== -->
+            <div class="section-card" id="comandi">
+                <div class="card-header">
+                    <i class="fas fa-terminal"></i>
+                    <h2>Comandi Kubernetes Utili</h2>
+                </div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Categoria</th><th>Comando</th><th>Descrizione</th></tr>
+                        <tr><td rowspan="5">Gestione资源</td>
+                            <td><code>kubectl get pods</code></td>
+                            <td>Lista tutti i Pod</td>
+                        </tr>
+                        <tr><td><code>kubectl get deployments</code></td><td>Lista Deployment</td></tr>
+                        <tr><td><code>kubectl get services</code></td><td>Lista Service</td></tr>
+                        <tr><td><code>kubectl get configmap</code></td><td>Lista ConfigMap</td></tr>
+                        <tr><td><code>kubectl get secrets</code></td><td>Lista Secret</td></tr>
+                        <tr><td rowspan="4">Debugging</td>
+                            <td><code>kubectl logs &lt;pod&gt;</code></td>
+                            <td>Log del Pod</td>
+                        </tr>
+                        <tr><td><code>kubectl logs -f &lt;pod&gt;</code></td><td>Stream log</td></tr>
+                        <tr><td><code>kubectl describe pod &lt;pod&gt;</code></td><td>Dettagli Pod</td></tr>
+                        <tr><td><code>kubectl exec -it &lt;pod&gt; -- sh</code></td><td>Shell nel container</td></tr>
+                        <tr><td rowspan="4">Scaling</td>
+                            <td><code>kubectl scale deployment &lt;name&gt; --replicas=5</code></td>
+                            <td>Scala il deployment</td>
+                        </tr>
+                        <tr><td><code>kubectl autoscale deployment &lt;name&gt; --min=2 --max=10 --cpu-percent=70</code></td><td>Auto-scaling</td></tr>
+                        <tr><td><code>kubectl rollout status deployment &lt;name&gt;</code></td><td>Stato rollout</td></tr>
+                        <tr><td><code>kubectl rollout undo deployment &lt;name&gt;</code></td><td>Rollback</td></tr>
+                        <tr><td rowspan="3">Namespace</td>
+                            <td><code>kubectl get namespaces</code></td>
+                            <td>Lista namespace</td>
+                        </tr>
+                        <tr><td><code>kubectl create namespace myns</code></td><td>Crea namespace</td></tr>
+                        <tr><td><code>kubectl get pods -n myns</code></td><td>Pod in namespace</td></tr>
+                        <tr><td rowspan="3">Port Forwarding</td>
+                            <td><code>kubectl port-forward pod/&lt;pod&gt; 8080:8080</code></td>
+                            <td>Forward porta Pod</td>
+                        </tr>
+                        <tr><td><code>kubectl port-forward service/&lt;service&gt; 8080:8080</code></td><td>Forward porta Service</td></tr>
+                        <tr><td><code>kubectl port-forward deployment/&lt;deployment&gt; 8080:8080</code></td><td>Forward porta Deployment</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Kubernetes per Java | Orchestrazione di container per applicazioni Java
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'architettura', 'docker', 'pod', 'deployment', 'service', 'configmap', 'ingress', 'persistent', 'helm', 'best-practices', 'comandi'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

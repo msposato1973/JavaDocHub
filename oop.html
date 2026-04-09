@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream API | JavaDoc Hub</title>
+    
+     <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+					 <br>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#classi-oggetti" class="toc-link" data-target="classi-oggetti">
+                    <i class="fas fa-cube"></i> Classi e Oggetti
+                </a></li>
+                <li><a href="#incapsulamento" class="toc-link" data-target="incapsulamento">
+                    <i class="fas fa-lock"></i> Incapsulamento
+                </a></li>
+                <li><a href="#ereditarieta" class="toc-link" data-target="ereditarieta">
+                    <i class="fas fa-sitemap"></i> Ereditarietà
+                </a></li>
+                <li><a href="#polimorfismo" class="toc-link" data-target="polimorfismo">
+                    <i class="fas fa-mask"></i> Polimorfismo
+                </a></li>
+                <li><a href="#astrazione" class="toc-link" data-target="astrazione">
+                    <i class="fas fa-file-alt"></i> Astrazione
+                </a></li>
+                <li><a href="#interfacce" class="toc-link" data-target="interfacce">
+                    <i class="fas fa-plug"></i> Interfacce
+                </a></li>
+                <li><a href="#costruttori" class="toc-link" data-target="costruttori">
+                    <i class="fas fa-tools"></i> Costruttori
+                </a></li>
+                <li><a href="#membri-statici" class="toc-link" data-target="membri-statici">
+                    <i class="fas fa-chart-simple"></i> Membri Statici
+                </a></li>
+                <li><a href="#esempi-pratici" class="toc-link" data-target="esempi-pratici">
+                    <i class="fas fa-code-branch"></i> Esempi Pratici
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-project-diagram"></i> Programmazione Orientata agli Oggetti in Java</h1>
+                <p>Classi, oggetti, incapsulamento, ereditarietà, polimorfismo, astrazione e interfacce</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è la Programmazione Orientata agli Oggetti?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        La <strong>Programmazione Orientata agli Oggetti (OOP)</strong> è un paradigma di programmazione che organizza il codice
+                        in "oggetti" che contengono dati (attributi) e comportamenti (metodi). I quattro pilastri fondamentali dell'OOP sono:
+                    </div>
+                    <table class="comparison-table">
+                        <tr><th>Pilastro</th><th>Descrizione</th><th>Beneficio</th></tr>
+                        <tr><td style="color: #ff9800;">Incapsulamento</td>
+                            <td>Nascondere i dettagli interni, esporre solo ciò che serve</td>
+                            <td>Sicurezza e manutenibilità</td>
+                        </tr>
+                        <tr><td style="color: #ff9800;">Ereditarietà</td>
+                            <td>Riutilizzare codice da classi esistenti</td>
+                            <td>Riutilizzo e gerarchie</td>
+                        </tr>
+                        <tr><td style="color: #ff9800;">Polimorfismo</td>
+                            <td>Un oggetto può assumere molte forme</td>
+                            <td>Flessibilità e estensibilità</td>
+                        </tr>
+                        <tr><td style="color: #ff9800;">Astrazione</td>
+                            <td>Nascondere la complessità, mostrare solo l'essenziale</td>
+                            <td>Semplicità e chiarezza</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ==================== 2. CLASSI E OGGETTI ==================== -->
+            <div class="section-card" id="classi-oggetti">
+                <div class="card-header">
+                    <i class="fas fa-cube"></i>
+                    <h2>Classi e Oggetti</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Il cuore della programmazione OOP</div>
+                    <div class="desc">
+                        Una <strong>classe</strong> è un modello (blueprint) per creare oggetti. Un <strong>oggetto</strong> è un'istanza di una classe,
+                        con stato (attributi) e comportamento (metodi).
+                    </div>
+                    <pre><code class="language-java">// Definizione di una classe
+public class Automobile {
+    // Attributi (stato)
+    private String marca;
+    private String modello;
+    private int anno;
+    private double velocita;
+    
+    // Costruttore
+    public Automobile(String marca, String modello, int anno) {
+        this.marca = marca;
+        this.modello = modello;
+        this.anno = anno;
+        this.velocita = 0;
+    }
+    
+    // Metodi (comportamento)
+    public void accelera(double incremento) {
+        velocita += incremento;
+        System.out.println(marca + " " + modello + " accelera a " + velocita + " km/h");
+    }
+    
+    public void frena(double decremento) {
+        velocita = Math.max(0, velocita - decremento);
+        System.out.println(marca + " " + modello + " frena a " + velocita + " km/h");
+    }
+    
+    public void stampaInfo() {
+        System.out.println("Auto: " + marca + " " + modello + " (" + anno + ")");
+    }
+    
+    // Getter e Setter
+    public String getMarca() { return marca; }
+    public String getModello() { return modello; }
+    public int getAnno() { return anno; }
+    public double getVelocita() { return velocita; }
+}
+
+// Utilizzo degli oggetti
+public class Main {
+    public static void main(String[] args) {
+        // Creazione oggetti
+        Automobile auto1 = new Automobile("Fiat", "Panda", 2020);
+        Automobile auto2 = new Automobile("Tesla", "Model 3", 2023);
+        
+        auto1.stampaInfo();
+        auto1.accelera(50);
+        auto1.frena(20);
+        
+        auto2.stampaInfo();
+        auto2.accelera(80);
+        
+        System.out.println("Velocità auto1: " + auto1.getVelocita() + " km/h");
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Auto: Fiat Panda (2020)<br>
+                        Fiat Panda accelera a 50.0 km/h<br>
+                        Fiat Panda frena a 30.0 km/h<br>
+                        Auto: Tesla Model 3 (2023)<br>
+                        Tesla Model 3 accelera a 80.0 km/h<br>
+                        Velocità auto1: 30.0 km/h
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Concetti chiave:</strong><br>
+                        - <code>new</code> crea un nuovo oggetto in memoria<br>
+                        - <code>this</code> si riferisce all'oggetto corrente<br>
+                        - Ogni oggetto ha la propria copia degli attributi
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. INCAPSULAMENTO ==================== -->
+            <div class="section-card" id="incapsulamento">
+                <div class="card-header">
+                    <i class="fas fa-lock"></i>
+                    <h2>Incapsulamento (Encapsulation)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Nascondere i dettagli implementativi, esporre solo ciò che serve</div>
+                    <div class="desc">
+                        L'incapsulamento protegge i dati interni di una classe, permettendo l'accesso solo attraverso metodi pubblici
+                        (getter e setter). Questo garantisce controllo sulle modifiche e mantiene l'integrità dei dati.
+                    </div>
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fas fa-times-circle"></i> ❌ SENZA INCAPSULAMENTO</div>
+                            <pre><code class="language-java">public class ContoBancario {
+    public double saldo;  // Accesso diretto - pericoloso!
+}
+
+ContoBancario conto = new ContoBancario();
+conto.saldo = -100;  // Saldo negativo possibile!</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fas fa-check-circle"></i> ✅ CON INCAPSULAMENTO</div>
+                            <pre><code class="language-java">public class ContoBancario {
+    private double saldo;  // Accesso solo tramite metodi
+    
+    public void deposita(double importo) {
+        if (importo > 0) saldo += importo;
+    }
+    
+    public boolean preleva(double importo) {
+        if (importo > 0 && importo <= saldo) {
+            saldo -= importo;
+            return true;
+        }
+        return false;
+    }
+    
+    public double getSaldo() { return saldo; }
+}</code></pre>
+                        </div>
+                    </div>
+                    <pre><code class="language-java">public class Persona {
+    // Attributi privati
+    private String nome;
+    private int eta;
+    private String email;
+    
+    // Costruttore
+    public Persona(String nome, int eta, String email) {
+        this.nome = nome;
+        setEta(eta);  // Usa il setter per la validazione
+        setEmail(email);
+    }
+    
+    // Getter (accesso controllato)
+    public String getNome() { return nome; }
+    public int getEta() { return eta; }
+    public String getEmail() { return email; }
+    
+    // Setter con validazione
+    public void setNome(String nome) {
+        if (nome != null && !nome.isEmpty()) {
+            this.nome = nome;
+        }
+    }
+    
+    public void setEta(int eta) {
+        if (eta >= 0 && eta <= 150) {
+            this.eta = eta;
+        } else {
+            throw new IllegalArgumentException("Età non valida: " + eta);
+        }
+    }
+    
+    public void setEmail(String email) {
+        if (email != null && email.contains("@")) {
+            this.email = email;
+        } else {
+            throw new IllegalArgumentException("Email non valida");
+        }
+    }
+    
+    public void stampaInfo() {
+        System.out.println("Nome: " + nome + ", Età: " + eta + ", Email: " + email);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Persona p = new Persona("Mario", 30, "mario@email.com");<br>
+                        p.stampaInfo();  // Nome: Mario, Età: 30, Email: mario@email.com<br>
+                        p.setEta(31);<br>
+                        System.out.println("Nuova età: " + p.getEta());  // Nuova età: 31
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi dell'incapsulamento:</strong><br>
+                        - Protezione dei dati (nessun accesso diretto)<br>
+                        - Validazione degli input (nei setter)<br>
+                        - Flessibilità (puoi cambiare implementazione interna senza impattare i client)<br>
+                        - Manutenibilità del codice
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. EREDITARIETÀ ==================== -->
+            <div class="section-card" id="ereditarieta">
+                <div class="card-header">
+                    <i class="fas fa-sitemap"></i>
+                    <h2>Ereditarietà (Inheritance)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Riutilizzo del codice attraverso gerarchie di classi</div>
+                    <div class="desc">
+                        L'ereditarietà permette a una classe (sottoclasse) di ereditare attributi e metodi da un'altra classe (superclasse),
+                        promuovendo il riutilizzo del codice e stabilendo relazioni "è-un" (is-a).
+                    </div>
+                    <pre><code class="language-java">// Classe base (superclasse)
+class Animale {
+    protected String nome;
+    protected int eta;
+    
+    public Animale(String nome, int eta) {
+        this.nome = nome;
+        this.eta = eta;
+    }
+    
+    public void mangia() {
+        System.out.println(nome + " sta mangiando");
+    }
+    
+    public void dormi() {
+        System.out.println(nome + " sta dormendo");
+    }
+    
+    public void faiVerso() {
+        System.out.println(nome + " fa un verso generico");
+    }
+    
+    public void stampaInfo() {
+        System.out.println("Animale: " + nome + ", Età: " + eta);
+    }
+}
+
+// Sottoclasse Cane
+class Cane extends Animale {
+    private String razza;
+    
+    public Cane(String nome, int eta, String razza) {
+        super(nome, eta);  // Chiamata al costruttore della superclasse
+        this.razza = razza;
+    }
+    
+    @Override
+    public void faiVerso() {
+        System.out.println(nome + " abbaia: Bau Bau!");
+    }
+    
+    public void corri() {
+        System.out.println(nome + " sta correndo felice!");
+    }
+    
+    public void setRazza(String razza) { this.razza = razza; }
+    public String getRazza() { return razza; }
+}
+
+// Sottoclasse Gatto
+class Gatto extends Animale {
+    private String colore;
+    
+    public Gatto(String nome, int eta, String colore) {
+        super(nome, eta);
+        this.colore = colore;
+    }
+    
+    @Override
+    public void faiVerso() {
+        System.out.println(nome + " miagola: Miao Miao!");
+    }
+    
+    public void faiLeGrinfie() {
+        System.out.println(nome + " fa le grinfie sul divano!");
+    }
+    
+    public void setColore(String colore) { this.colore = colore; }
+    public String getColore() { return colore; }
+}
+
+// Sottoclasse Pesce
+class Pesce extends Animale {
+    public Pesce(String nome, int eta) {
+        super(nome, eta);
+    }
+    
+    @Override
+    public void faiVerso() {
+        System.out.println(nome + " fa bolle...");
+    }
+    
+    public void nuota() {
+        System.out.println(nome + " sta nuotando!");
+    }
+}
+
+public class EreditarietaDemo {
+    public static void main(String[] args) {
+        Cane cane = new Cane("Buddy", 3, "Labrador");
+        Gatto gatto = new Gatto("Luna", 2, "Nero");
+        Pesce pesce = new Pesce("Nemo", 1);
+        
+        // Metodi ereditati
+        cane.mangia();      // Ereditato da Animale
+        gatto.dormi();      // Ereditato da Animale
+        pesce.stampaInfo(); // Ereditato da Animale
+        
+        // Metodi override
+        cane.faiVerso();    // Override in Cane
+        gatto.faiVerso();   // Override in Gatto
+        pesce.faiVerso();   // Override in Pesce
+        
+        // Metodi specifici
+        cane.corri();
+        gatto.faiLeGrinfie();
+        pesce.nuota();
+        
+        System.out.println("Razza di " + cane.nome + ": " + cane.getRazza());
+        System.out.println("Colore di " + gatto.nome + ": " + gatto.getColore());
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Buddy sta mangiando<br>
+                        Luna sta dormendo<br>
+                        Animale: Nemo, Età: 1<br>
+                        Buddy abbaia: Bau Bau!<br>
+                        Luna miagola: Miao Miao!<br>
+                        Nemo fa bolle...<br>
+                        Buddy sta correndo felice!<br>
+                        Luna fa le grinfie sul divano!<br>
+                        Nemo sta nuotando!<br>
+                        Razza di Buddy: Labrador<br>
+                        Colore di Luna: Nero
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Concetti chiave sull'ereditarietà:</strong><br>
+                        - Usa <code>extends</code> per ereditare da una classe<br>
+                        - <code>super()</code> chiama il costruttore della superclasse<br>
+                        - <code>@Override</code> indica che stai sovrascrivendo un metodo<br>
+                        - Java supporta ereditarietà singola (una sola superclasse)<br>
+                        - <code>protected</code> permette accesso alle sottoclassi
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. POLIMORFISMO ==================== -->
+            <div class="section-card" id="polimorfismo">
+                <div class="card-header">
+                    <i class="fas fa-mask"></i>
+                    <h2>Polimorfismo (Polymorphism)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-purple">Un oggetto può assumere molte forme</div>
+                    <div class="desc">
+                        Il polimorfismo permette a oggetti di classi diverse di rispondere allo stesso messaggio (metodo) in modi diversi.
+                        Esistono due tipi: polimorfismo a tempo di compilazione (overloading) e a tempo di esecuzione (overriding).
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Overloading (Compile-time polymorphism)</h3>
+                    <pre><code class="language-java">class Calcolatrice {
+    // Stesso nome, parametri diversi
+    public int somma(int a, int b) {
+        return a + b;
+    }
+    
+    public int somma(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    public double somma(double a, double b) {
+        return a + b;
+    }
+    
+    public String somma(String a, String b) {
+        return a + b;
+    }
+}
+
+// Utilizzo
+Calcolatrice calc = new Calcolatrice();
+System.out.println(calc.somma(5, 3));       // 8
+System.out.println(calc.somma(5, 3, 2));    // 10
+System.out.println(calc.somma(5.5, 3.2));   // 8.7
+System.out.println(calc.somma("Ciao ", "Mondo")); // "Ciao Mondo"</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Overriding (Runtime polymorphism)</h3>
+                    <pre><code class="language-java">// Interfaccia comune
+interface Forma {
+    double calcolaArea();
+    void stampaInfo();
+}
+
+class Rettangolo implements Forma {
+    private double base, altezza;
+    
+    public Rettangolo(double base, double altezza) {
+        this.base = base;
+        this.altezza = altezza;
+    }
+    
+    @Override
+    public double calcolaArea() {
+        return base * altezza;
+    }
+    
+    @Override
+    public void stampaInfo() {
+        System.out.println("Rettangolo: base=" + base + ", altezza=" + altezza);
+    }
+}
+
+class Cerchio implements Forma {
+    private double raggio;
+    
+    public Cerchio(double raggio) {
+        this.raggio = raggio;
+    }
+    
+    @Override
+    public double calcolaArea() {
+        return Math.PI * raggio * raggio;
+    }
+    
+    @Override
+    public void stampaInfo() {
+        System.out.println("Cerchio: raggio=" + raggio);
+    }
+}
+
+class Triangolo implements Forma {
+    private double base, altezza;
+    
+    public Triangolo(double base, double altezza) {
+        this.base = base;
+        this.altezza = altezza;
+    }
+    
+    @Override
+    public double calcolaArea() {
+        return (base * altezza) / 2;
+    }
+    
+    @Override
+    public void stampaInfo() {
+        System.out.println("Triangolo: base=" + base + ", altezza=" + altezza);
+    }
+}
+
+public class PolimorfismoDemo {
+    public static void main(String[] args) {
+        // Polimorfismo: trattiamo oggetti diversi in modo uniforme
+        Forma[] forme = {
+            new Rettangolo(5, 3),
+            new Cerchio(4),
+            new Triangolo(6, 4)
+        };
+        
+        System.out.println("--- Aree delle forme ---");
+        for (Forma forma : forme) {
+            forma.stampaInfo();
+            System.out.println("Area: " + String.format("%.2f", forma.calcolaArea()));
+            System.out.println();
+        }
+        
+        // Polimorfismo con classi astratte
+        Animale[] animali = {
+            new Cane("Buddy", 3, "Labrador"),
+            new Gatto("Luna", 2, "Nero"),
+            new Pesce("Nemo", 1)
+        };
+        
+        System.out.println("--- Versi degli animali ---");
+        for (Animale animale : animali) {
+            animale.faiVerso();  // Comportamento polimorfico!
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        --- Aree delle forme ---<br>
+                        Rettangolo: base=5.0, altezza=3.0<br>
+                        Area: 15.00<br>
+                        Cerchio: raggio=4.0<br>
+                        Area: 50.27<br>
+                        Triangolo: base=6.0, altezza=4.0<br>
+                        Area: 12.00<br>
+                        --- Versi degli animali ---<br>
+                        Buddy abbaia: Bau Bau!<br>
+                        Luna miagola: Miao Miao!<br>
+                        Nemo fa bolle...
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. ASTRAZIONE ==================== -->
+            <div class="section-card" id="astrazione">
+                <div class="card-header">
+                    <i class="fas fa-file-alt"></i>
+                    <h2>Astrazione e Classi Astratte</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Definire contratti senza implementazione</div>
+                    <div class="desc">
+                        L'astrazione permette di definire metodi senza implementazione (metodi astratti) che devono essere
+                        implementati dalle sottoclassi. Le classi astratte non possono essere istanziate direttamente.
+                    </div>
+                    <pre><code class="language-java">// Classe astratta - non può essere istanziata
+abstract class Dipendente {
+    protected String nome;
+    protected String cognome;
+    protected String matricola;
+    
+    public Dipendente(String nome, String cognome, String matricola) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.matricola = matricola;
+    }
+    
+    // Metodo concreto (implementato)
+    public void stampaInfoBase() {
+        System.out.println("Dipendente: " + nome + " " + cognome);
+        System.out.println("Matricola: " + matricola);
+    }
+    
+    // Metodo astratto - deve essere implementato dalle sottoclassi
+    public abstract double calcolaStipendio();
+    
+    // Metodo astratto
+    public abstract String getRuolo();
+}
+
+// Sottoclasse concreta - Sviluppatore
+class Sviluppatore extends Dipendente {
+    private double stipendioBase;
+    private int oreStraordinario;
+    private final double TARIFFA_STRAORDINARIO = 25.0;
+    
+    public Sviluppatore(String nome, String cognome, String matricola, double stipendioBase) {
+        super(nome, cognome, matricola);
+        this.stipendioBase = stipendioBase;
+    }
+    
+    public void setOreStraordinario(int ore) {
+        this.oreStraordinario = ore;
+    }
+    
+    @Override
+    public double calcolaStipendio() {
+        return stipendioBase + (oreStraordinario * TARIFFA_STRAORDINARIO);
+    }
+    
+    @Override
+    public String getRuolo() {
+        return "Sviluppatore Software";
+    }
+}
+
+// Sottoclasse concreta - Manager
+class Manager extends Dipendente {
+    private double stipendioBase;
+    private double bonus;
+    private double percentualeObiettivi;
+    
+    public Manager(String nome, String cognome, String matricola, double stipendioBase) {
+        super(nome, cognome, matricola);
+        this.stipendioBase = stipendioBase;
+    }
+    
+    public void setBonus(double bonus) {
+        this.bonus = bonus;
+    }
+    
+    public void setPercentualeObiettivi(double percentuale) {
+        this.percentualeObiettivi = percentuale;
+    }
+    
+    @Override
+    public double calcolaStipendio() {
+        double bonusObiettivi = stipendioBase * (percentualeObiettivi / 100);
+        return stipendioBase + bonus + bonusObiettivi;
+    }
+    
+    @Override
+    public String getRuolo() {
+        return "Manager";
+    }
+}
+
+// Sottoclasse concreta - Venditore
+class Venditore extends Dipendente {
+    private double stipendioBase;
+    private double provvigioni;
+    
+    public Venditore(String nome, String cognome, String matricola, double stipendioBase) {
+        super(nome, cognome, matricola);
+        this.stipendioBase = stipendioBase;
+    }
+    
+    public void setProvvigioni(double provvigioni) {
+        this.provvigioni = provvigioni;
+    }
+    
+    @Override
+    public double calcolaStipendio() {
+        return stipendioBase + provvigioni;
+    }
+    
+    @Override
+    public String getRuolo() {
+        return "Venditore";
+    }
+}
+
+public class AstrazioneDemo {
+    public static void main(String[] args) {
+        Sviluppatore dev = new Sviluppatore("Mario", "Rossi", "DEV001", 2500);
+        dev.setOreStraordinario(10);
+        
+        Manager mgr = new Manager("Laura", "Bianchi", "MGR001", 4000);
+        mgr.setBonus(1500);
+        mgr.setPercentualeObiettivi(10);
+        
+        Venditore vend = new Venditore("Giuseppe", "Verdi", "VND001", 1200);
+        vend.setProvvigioni(3500);
+        
+        // Polimorfismo con classe astratta
+        Dipendente[] dipendenti = {dev, mgr, vend};
+        
+        System.out.println("=== LISTA DIPENDENTI ===\n");
+        for (Dipendente d : dipendenti) {
+            d.stampaInfoBase();
+            System.out.println("Ruolo: " + d.getRuolo());
+            System.out.printf("Stipendio: €%.2f\n", d.calcolaStipendio());
+            System.out.println("---");
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        === LISTA DIPENDENTI ===<br>
+                        Dipendente: Mario Rossi<br>
+                        Matricola: DEV001<br>
+                        Ruolo: Sviluppatore Software<br>
+                        Stipendio: €2750.00<br>
+                        ---<br>
+                        Dipendente: Laura Bianchi<br>
+                        Matricola: MGR001<br>
+                        Ruolo: Manager<br>
+                        Stipendio: €5900.00<br>
+                        ---<br>
+                        Dipendente: Giuseppe Verdi<br>
+                        Matricola: VND001<br>
+                        Ruolo: Venditore<br>
+                        Stipendio: €4700.00<br>
+                        ---
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Classe astratta vs Interfaccia:</strong><br>
+                        - Classe astratta: può avere stato (attributi) e metodi concreti<br>
+                        - Interfaccia: solo metodi astratti (fino a Java 7), default/static da Java 8<br>
+                        - Una classe può estendere UNA sola classe astratta<br>
+                        - Una classe può implementare PIÙ interfacce
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. INTERFACCE ==================== -->
+            <div class="section-card" id="interfacce">
+                <div class="card-header">
+                    <i class="fas fa-plug"></i>
+                    <h2>Interfacce (Interfaces)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Contratti che definiscono "cosa fare" non "come fare"</div>
+                    <div class="desc">
+                        Un'interfaccia definisce un contratto che le classi devono rispettare. A differenza delle classi astratte,
+                        una classe può implementare più interfacce (ereditarietà multipla).
+                    </div>
+                    <pre><code class="language-java">// Definizione di interfacce
+interface Volante {
+    void vola();
+    
+    // Metodi default (Java 8+)
+    default void plana() {
+        System.out.println("Sta planando...");
+    }
+    
+    // Metodi statici (Java 8+)
+    static void decolla() {
+        System.out.println("Decollo in corso...");
+    }
+}
+
+interface Nuotante {
+    void nuota();
+}
+
+interface Predatore {
+    void caccia();
+    
+    default void avvistaPreda() {
+        System.out.println("Preda avvistata!");
+    }
+}
+
+interface Riproducibile {
+    void riproduci();
+}
+
+// Classe che implementa più interfacce
+class Aquila implements Volante, Predatore, Riproducibile {
+    private String nome;
+    
+    public Aquila(String nome) {
+        this.nome = nome;
+    }
+    
+    @Override
+    public void vola() {
+        System.out.println(nome + " vola maestosamente nel cielo!");
+    }
+    
+    @Override
+    public void caccia() {
+        System.out.println(nome + " scende in picchiata per catturare la preda!");
+    }
+    
+    @Override
+    public void riproduci() {
+        System.out.println(nome + " costruisce un nido e depone le uova.");
+    }
+}
+
+class Pinguino implements Volante, Nuotante {
+    private String nome;
+    
+    public Pinguino(String nome) {
+        this.nome = nome;
+    }
+    
+    @Override
+    public void vola() {
+        System.out.println(nome + " non può volare, ma fa delle belle nuotate!");
+    }
+    
+    @Override
+    public void nuota() {
+        System.out.println(nome + " nuota rapidamente nell'acqua!");
+    }
+}
+
+class Squalo implements Nuotante, Predatore {
+    private String nome;
+    
+    public Squalo(String nome) {
+        this.nome = nome;
+    }
+    
+    @Override
+    public void nuota() {
+        System.out.println(nome + " nuota minacciosamente!");
+    }
+    
+    @Override
+    public void caccia() {
+        System.out.println(nome + " cerca la sua preda!");
+    }
+}
+
+// Interfaccia funzionale (un solo metodo astratto) - per lambda
+@FunctionalInterface
+interface OperazioneMatematica {
+    int esegui(int a, int b);
+}
+
+// Interfaccia con ereditarietà multipla tra interfacce
+interface AnimaleMarino extends Nuotante, Riproducibile {
+    void respiraSottAcqua();
+}
+
+class Delfino implements AnimaleMarino {
+    private String nome;
+    
+    public Delfino(String nome) {
+        this.nome = nome;
+    }
+    
+    @Override
+    public void nuota() {
+        System.out.println(nome + " nuota elegantemente!");
+    }
+    
+    @Override
+    public void riproduci() {
+        System.out.println(nome + " partorisce un cucciolo.");
+    }
+    
+    @Override
+    public void respiraSottAcqua() {
+        System.out.println(nome + " risale in superficie per respirare.");
+    }
+}
+
+public class InterfacceDemo {
+    public static void main(String[] args) {
+        System.out.println("=== ESEMPI INTERFACCE ===\n");
+        
+        Aquila aquila = new Aquila("Aquila reale");
+        Pinguino pinguino = new Pinguino("Pinguino imperatore");
+        Squalo squalo = new Squalo("Grande squalo bianco");
+        Delfino delfino = new Delfino("Delfino");
+        
+        aquila.vola();
+        aquila.caccia();
+        aquila.plana();      // Metodo default
+        aquila.riproduci();
+        Volante.decolla();    // Metodo statico
+        
+        System.out.println();
+        pinguino.vola();
+        pinguino.nuota();
+        
+        System.out.println();
+        squalo.nuota();
+        squalo.caccia();
+        
+        System.out.println();
+        delfino.nuota();
+        delfino.riproduci();
+        delfino.respiraSottAcqua();
+        
+        // ========== INTERFACCIA FUNZIONALE CON LAMBDA ==========
+        System.out.println("\n=== Interfacce funzionali e Lambda ===");
+        
+        OperazioneMatematica somma = (a, b) -> a + b;
+        OperazioneMatematica moltiplica = (a, b) -> a * b;
+        OperazioneMatematica massimo = (a, b) -> a > b ? a : b;
+        
+        System.out.println("Somma: " + somma.esegui(10, 5));
+        System.out.println("Moltiplicazione: " + moltiplica.esegui(10, 5));
+        System.out.println("Massimo: " + massimo.esegui(10, 5));
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        === ESEMPI INTERFACCE ===<br>
+                        Aquila reale vola maestosamente nel cielo!<br>
+                        Aquila reale scende in picchiata per catturare la preda!<br>
+                        Aquila reale sta planando...<br>
+                        Aquila reale costruisce un nido e depone le uova.<br>
+                        Decollo in corso...<br>
+                        Pinguino imperatore non può volare, ma fa delle belle nuotate!<br>
+                        Pinguino imperatore nuota rapidamente nell'acqua!<br>
+                        Grande squalo bianco nuota minacciosamente!<br>
+                        Grande squalo bianco cerca la sua preda!<br>
+                        Delfino nuota elegantemente!<br>
+                        Delfino partorisce un cucciolo.<br>
+                        Delfino risale in superficie per respirare.<br>
+                        === Interfacce funzionali e Lambda ===<br>
+                        Somma: 15<br>
+                        Moltiplicazione: 50<br>
+                        Massimo: 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. COSTRUTTORI ==================== -->
+            <div class="section-card" id="costruttori">
+                <div class="card-header">
+                    <i class="fas fa-tools"></i>
+                    <h2>Costruttori</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Inizializzazione degli oggetti</div>
+                    <pre><code class="language-java">public class Studente {
+    private String nome;
+    private String cognome;
+    private int matricola;
+    private double mediaVoti;
+    private static int contatoreMatricole = 1000;
+    
+    // Blocco di inizializzazione (eseguito prima del costruttore)
+    {
+        System.out.println("Blocco di inizializzazione eseguito");
+        this.matricola = ++contatoreMatricole;
+    }
+    
+    // Blocco statico (eseguito una sola volta quando la classe viene caricata)
+    static {
+        System.out.println("Blocco statico - caricamento classe Studente");
+        contatoreMatricole = 1000;
+    }
+    
+    // Costruttore senza parametri (default)
+    public Studente() {
+        this("Sconosciuto", "Sconosciuto");
+        System.out.println("Costruttore default chiamato");
+    }
+    
+    // Costruttore con parametri
+    public Studente(String nome, String cognome) {
+        this(nome, cognome, 0.0);
+        System.out.println("Costruttore con 2 parametri chiamato");
+    }
+    
+    // Costruttore completo
+    public Studente(String nome, String cognome, double mediaVoti) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.mediaVoti = mediaVoti;
+        System.out.println("Costruttore completo chiamato");
+    }
+    
+    // Costruttore di copia
+    public Studente(Studente altro) {
+        this(altro.nome, altro.cognome, altro.mediaVoti);
+        System.out.println("Costruttore di copia chiamato");
+    }
+    
+    // Costruttore privato (pattern Singleton)
+    private Studente(int matricolaSpeciale) {
+        this.matricola = matricolaSpeciale;
+        this.nome = "Speciale";
+        this.cognome = "Speciale";
+    }
+    
+    public static Studente creaStudenteSpeciale() {
+        return new Studente(9999);
+    }
+    
+    public void stampaInfo() {
+        System.out.println("Studente: " + nome + " " + cognome);
+        System.out.println("Matricola: " + matricola);
+        System.out.println("Media voti: " + mediaVoti);
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("--- Creazione oggetti ---\n");
+        
+        Studente s1 = new Studente();
+        System.out.println();
+        
+        Studente s2 = new Studente("Mario", "Rossi");
+        System.out.println();
+        
+        Studente s3 = new Studente("Laura", "Bianchi", 28.5);
+        System.out.println();
+        
+        Studente s4 = new Studente(s3);  // Costruttore di copia
+        System.out.println();
+        
+        Studente s5 = Studente.creaStudenteSpeciale();
+        
+        System.out.println("\n--- Informazioni studenti ---\n");
+        s1.stampaInfo();
+        System.out.println();
+        s2.stampaInfo();
+        System.out.println();
+        s3.stampaInfo();
+        System.out.println();
+        s4.stampaInfo();
+        System.out.println();
+        s5.stampaInfo();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Blocco statico - caricamento classe Studente<br>
+                        --- Creazione oggetti ---<br>
+                        Blocco di inizializzazione eseguito<br>
+                        Costruttore completo chiamato<br>
+                        Costruttore con 2 parametri chiamato<br>
+                        Costruttore default chiamato<br>
+                        Blocco di inizializzazione eseguito<br>
+                        Costruttore completo chiamato<br>
+                        Costruttore con 2 parametri chiamato<br>
+                        Blocco di inizializzazione eseguito<br>
+                        Costruttore completo chiamato<br>
+                        Blocco di inizializzazione eseguito<br>
+                        Costruttore completo chiamato<br>
+                        Costruttore di copia chiamato<br>
+                        --- Informazioni studenti ---<br>
+                        Studente: Sconosciuto Sconosciuto<br>
+                        Matricola: 1001<br>
+                        Media voti: 0.0<br>
+                        ...
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. MEMBRI STATICI ==================== -->
+            <div class="section-card" id="membri-statici">
+                <div class="card-header">
+                    <i class="fas fa-chart-simple"></i>
+                    <h2>Membri Statici</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Appartengono alla classe, non alle istanze</div>
+                    <pre><code class="language-java">public class Contatore {
+    // Variabile di istanza (ogni oggetto ha la sua copia)
+    private int contatoreIstanza;
+    
+    // Variabile statica (una sola copia condivisa tra tutti gli oggetti)
+    private static int contatoreGlobale = 0;
+    
+    // Costante statica (public static final)
+    public static final String NOME_CLASSE = "Contatore";
+    public static final int VALORE_MASSIMO = 100;
+    
+    // Costruttore
+    public Contatore() {
+        contatoreIstanza = 0;
+        contatoreGlobale++;
+        System.out.println("Creato oggetto #" + contatoreGlobale);
+    }
+    
+    // Metodo di istanza
+    public void incrementaIstanza() {
+        if (contatoreIstanza < VALORE_MASSIMO) {
+            contatoreIstanza++;
+        }
+    }
+    
+    public int getContatoreIstanza() {
+        return contatoreIstanza;
+    }
+    
+    // Metodo statico (può accedere solo a membri statici)
+    public static int getContatoreGlobale() {
+        return contatoreGlobale;
+    }
+    
+    public static String getNomeClasse() {
+        return NOME_CLASSE;
+    }
+    
+    public static void resetContatoreGlobale() {
+        contatoreGlobale = 0;
+    }
+    
+    // Esempio di classe statica interna (nested class)
+    public static class Utility {
+        public static void stampaInfo() {
+            System.out.println("Classe: " + NOME_CLASSE);
+            System.out.println("Valore massimo: " + VALORE_MASSIMO);
+            System.out.println("Contatori creati: " + contatoreGlobale);
+        }
+    }
+}
+
+public class StaticDemo {
+    public static void main(String[] args) {
+        // Accesso a membri statici senza creare oggetti
+        System.out.println("Nome classe: " + Contatore.getNomeClasse());
+        System.out.println("Valore massimo: " + Contatore.VALORE_MASSIMO);
+        
+        // Creazione oggetti
+        Contatore c1 = new Contatore();
+        Contatore c2 = new Contatore();
+        Contatore c3 = new Contatore();
+        
+        // Operazioni sulle istanze
+        c1.incrementaIstanza();
+        c1.incrementaIstanza();
+        c2.incrementaIstanza();
+        
+        System.out.println("\n--- Contatori istanza ---");
+        System.out.println("c1: " + c1.getContatoreIstanza());
+        System.out.println("c2: " + c2.getContatoreIstanza());
+        System.out.println("c3: " + c3.getContatoreIstanza());
+        
+        // Accesso a membri statici
+        System.out.println("\n--- Membri statici ---");
+        System.out.println("Totale oggetti creati: " + Contatore.getContatoreGlobale());
+        
+        // Classe statica interna
+        System.out.println("\n--- Classe statica interna ---");
+        Contatore.Utility.stampaInfo();
+        
+        // Esempio pratico: contatore condiviso
+        System.out.println("\n--- Contatore condiviso tra thread ---");
+        Runnable task = () -> {
+            for (int i = 0; i < 100; i++) {
+                Contatore.getContatoreGlobale();  // solo lettura
+            }
+            System.out.println(Thread.currentThread().getName() + " completato");
+        };
+        
+        Thread t1 = new Thread(task, "Thread-1");
+        Thread t2 = new Thread(task, "Thread-2");
+        t1.start();
+        t2.start();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Nome classe: Contatore<br>
+                        Valore massimo: 100<br>
+                        Creato oggetto #1<br>
+                        Creato oggetto #2<br>
+                        Creato oggetto #3<br>
+                        --- Contatori istanza ---<br>
+                        c1: 2<br>
+                        c2: 1<br>
+                        c3: 0<br>
+                        --- Membri statici ---<br>
+                        Totale oggetti creati: 3<br>
+                        --- Classe statica interna ---<br>
+                        Classe: Contatore<br>
+                        Valore massimo: 100<br>
+                        Contatori creati: 3
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Regole dei membri statici:</strong><br>
+                        - I membri statici appartengono alla classe, non alle istanze<br>
+                        - Si accede tramite <code>Classe.membro</code> (non serve un oggetto)<br>
+                        - I metodi statici possono accedere solo a membri statici<br>
+                        - <code>static final</code> definisce costanti (convenzione: NOME_MAIUSCOLO)<br>
+                        - Le classi statiche interne possono essere istanziate senza un'istanza della classe esterna
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 10. ESEMPI PRATICI ==================== -->
+            <div class="section-card" id="esempi-pratici">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>Esempio Pratico: Sistema di Gestione Biblioteca</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Applicazione completa dei principi OOP</div>
+                    <pre><code class="language-java">import java.util.*;
+
+// ==================== CLASSE ASTRATTA ====================
+abstract class MaterialeBibliotecario {
+    protected String titolo;
+    protected String codice;
+    protected boolean disponibile;
+    protected LocalDate dataInserimento;
+    
+    public MaterialeBibliotecario(String titolo, String codice) {
+        this.titolo = titolo;
+        this.codice = codice;
+        this.disponibile = true;
+        this.dataInserimento = LocalDate.now();
+    }
+    
+    public abstract String getTipo();
+    public abstract int getGiorniPrestito();
+    
+    public void presta() {
+        if (disponibile) {
+            disponibile = false;
+            System.out.println("📖 " + titolo + " è stato prestato");
+        } else {
+            System.out.println("❌ " + titolo + " non è disponibile");
+        }
+    }
+    
+    public void restituisci() {
+        disponibile = true;
+        System.out.println("📚 " + titolo + " è stato restituito");
+    }
+    
+    public void stampaInfo() {
+        System.out.println("[" + getTipo() + "] " + titolo + " (Codice: " + codice + ")");
+        System.out.println("  Disponibile: " + (disponibile ? "✅ Sì" : "❌ No"));
+        System.out.println("  Inserito il: " + dataInserimento);
+        System.out.println("  Giorni prestito: " + getGiorniPrestito());
+    }
+}
+
+// ==================== INTERFACCIA ====================
+interface Digitale {
+    String getFormato();
+    int getDimensioneMB();
+    default void scarica() {
+        System.out.println("Download di " + getDimensioneMB() + "MB in corso...");
+    }
+}
+
+interface ConsultabileInSede {
+    void consulta();
+}
+
+// ==================== CLASSE LIBRO ====================
+class Libro extends MaterialeBibliotecario {
+    private String autore;
+    private int pagine;
+    private String editore;
+    
+    public Libro(String titolo, String codice, String autore, int pagine, String editore) {
+        super(titolo, codice);
+        this.autore = autore;
+        this.pagine = pagine;
+        this.editore = editore;
+    }
+    
+    @Override
+    public String getTipo() {
+        return "Libro";
+    }
+    
+    @Override
+    public int getGiorniPrestito() {
+        return 30;
+    }
+    
+    @Override
+    public void stampaInfo() {
+        super.stampaInfo();
+        System.out.println("  Autore: " + autore);
+        System.out.println("  Pagine: " + pagine);
+        System.out.println("  Editore: " + editore);
+    }
+}
+
+// ==================== CLASSE DVD ====================
+class DVD extends MaterialeBibliotecario implements Digitale {
+    private int durataMinuti;
+    private String formato;
+    private String regista;
+    
+    public DVD(String titolo, String codice, int durataMinuti, String formato, String regista) {
+        super(titolo, codice);
+        this.durataMinuti = durataMinuti;
+        this.formato = formato;
+        this.regista = regista;
+    }
+    
+    @Override
+    public String getTipo() {
+        return "DVD";
+    }
+    
+    @Override
+    public int getGiorniPrestito() {
+        return 7;
+    }
+    
+    @Override
+    public String getFormato() {
+        return formato;
+    }
+    
+    @Override
+    public int getDimensioneMB() {
+        return durataMinuti * 50;
+    }
+    
+    @Override
+    public void stampaInfo() {
+        super.stampaInfo();
+        System.out.println("  Regista: " + regista);
+        System.out.println("  Durata: " + durataMinuti + " minuti");
+        System.out.println("  Formato: " + formato);
+        System.out.println("  Dimensione digitale: ~" + getDimensioneMB() + " MB");
+    }
+}
+
+// ==================== CLASSE RIVISTA ====================
+class Rivista extends MaterialeBibliotecario implements ConsultabileInSede {
+    private int numero;
+    private String periodicità;
+    
+    public Rivista(String titolo, String codice, int numero, String periodicità) {
+        super(titolo, codice);
+        this.numero = numero;
+        this.periodicità = periodicità;
+    }
+    
+    @Override
+    public String getTipo() {
+        return "Rivista";
+    }
+    
+    @Override
+    public int getGiorniPrestito() {
+        return 14;
+    }
+    
+    @Override
+    public void consulta() {
+        System.out.println("📰 Consultazione in sede di " + titolo + " (n°" + numero + ")");
+    }
+    
+    @Override
+    public void stampaInfo() {
+        super.stampaInfo();
+        System.out.println("  Numero: " + numero);
+        System.out.println("  Periodicità: " + periodicità);
+    }
+}
+
+// ==================== CLASSE BIBLIOTECA ====================
+class Biblioteca {
+    private String nome;
+    private String indirizzo;
+    private List&lt;MaterialeBibliotecario&gt; materiali;
+    private Map&lt;String, Utente&gt; utentiRegistrati;
+    
+    public Biblioteca(String nome, String indirizzo) {
+        this.nome = nome;
+        this.indirizzo = indirizzo;
+        this.materiali = new ArrayList&lt;&gt;();
+        this.utentiRegistrati = new HashMap&lt;&gt;();
+    }
+    
+    public void aggiungiMateriale(MaterialeBibliotecario materiale) {
+        materiali.add(materiale);
+        System.out.println("✅ Aggiunto: " + materiale.titolo);
+    }
+    
+    public void rimuoviMateriale(String codice) {
+        materiali.removeIf(m -> m.codice.equals(codice));
+        System.out.println("🗑️ Rimosso materiale con codice: " + codice);
+    }
+    
+    public MaterialeBibliotecario cercaPerCodice(String codice) {
+        for (MaterialeBibliotecario m : materiali) {
+            if (m.codice.equals(codice)) {
+                return m;
+            }
+        }
+        return null;
+    }
+    
+    public List&lt;MaterialeBibliotecario&gt; cercaPerTitolo(String titolo) {
+        List&lt;MaterialeBibliotecario&gt; risultati = new ArrayList&lt;&gt;();
+        for (MaterialeBibliotecario m : materiali) {
+            if (m.titolo.toLowerCase().contains(titolo.toLowerCase())) {
+                risultati.add(m);
+            }
+        }
+        return risultati;
+    }
+    
+    public List&lt;MaterialeBibliotecario&gt; getMaterialiDisponibili() {
+        List&lt;MaterialeBibliotecario&gt; disponibili = new ArrayList&lt;&gt;();
+        for (MaterialeBibliotecario m : materiali) {
+            if (m.disponibile) {
+                disponibili.add(m);
+            }
+        }
+        return disponibili;
+    }
+    
+    public void stampaCatalogo() {
+        System.out.println("\n📚 CATALOGO DELLA BIBLIOTECA '" + nome + "' 📚");
+        System.out.println("Indirizzo: " + indirizzo);
+        System.out.println("Totale materiali: " + materiali.size());
+        System.out.println("Disponibili: " + getMaterialiDisponibili().size());
+        System.out.println("\n--- Elenco materiali ---");
+        
+        for (MaterialeBibliotecario m : materiali) {
+            m.stampaInfo();
+            System.out.println();
+        }
+    }
+    
+    public void registraUtente(Utente utente) {
+        utentiRegistrati.put(utente.getCodiceFiscale(), utente);
+        System.out.println("✅ Utente registrato: " + utente.getNome() + " " + utente.getCognome());
+    }
+}
+
+// ==================== CLASSE UTENTE ====================
+class Utente {
+    private String nome;
+    private String cognome;
+    private String codiceFiscale;
+    private String email;
+    private List&lt;MaterialeBibliotecario&gt; prestitiAttivi;
+    
+    public Utente(String nome, String cognome, String codiceFiscale, String email) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.codiceFiscale = codiceFiscale;
+        this.email = email;
+        this.prestitiAttivi = new ArrayList&lt;&gt;();
+    }
+    
+    public void prendiInPrestito(MaterialeBibliotecario materiale) {
+        if (materiale.disponibile) {
+            materiale.presta();
+            prestitiAttivi.add(materiale);
+        } else {
+            System.out.println("❌ " + materiale.titolo + " non è disponibile per il prestito");
+        }
+    }
+    
+    public void restituisci(MaterialeBibliotecario materiale) {
+        if (prestitiAttivi.remove(materiale)) {
+            materiale.restituisci();
+        } else {
+            System.out.println("❌ " + materiale.titolo + " non è in prestito da questo utente");
+        }
+    }
+    
+    public void stampaPrestiti() {
+        System.out.println("\n📋 Prestiti attivi di " + nome + " " + cognome + ":");
+        if (prestitiAttivi.isEmpty()) {
+            System.out.println("  Nessun prestito attivo");
+        } else {
+            for (MaterialeBibliotecario m : prestitiAttivi) {
+                System.out.println("  - " + m.titolo + " (scadenza: " + 
+                    LocalDate.now().plusDays(m.getGiorniPrestito()) + ")");
+            }
+        }
+    }
+    
+    // Getter
+    public String getNome() { return nome; }
+    public String getCognome() { return cognome; }
+    public String getCodiceFiscale() { return codiceFiscale; }
+    public String getEmail() { return email; }
+}
+
+// ==================== CLASSE PRINCIPALE ====================
+public class BibliotecaDemo {
+    public static void main(String[] args) {
+        // Creazione biblioteca
+        Biblioteca biblioteca = new Biblioteca("Biblioteca Centrale", "Via Roma 1, Milano");
+        
+        // Creazione materiali
+        Libro libro1 = new Libro("Il Nome della Rosa", "L001", "Umberto Eco", 560, "Bompiani");
+        Libro libro2 = new Libro("1984", "L002", "George Orwell", 328, "Mondadori");
+        Libro libro3 = new Libro("Java la guida completa", "L003", "Herbert Schildt", 1200, "McGraw-Hill");
+        
+        DVD dvd1 = new DVD("Inception", "D001", 148, "MP4", "Christopher Nolan");
+        DVD dvd2 = new DVD("Interstellar", "D002", 169, "MKV", "Christopher Nolan");
+        
+        Rivista rivista1 = new Rivista("National Geographic", "R001", 45, "Mensile");
+        
+        // Aggiunta alla biblioteca
+        System.out.println("=== AGGIUNTA MATERIALI ===\n");
+        biblioteca.aggiungiMateriale(libro1);
+        biblioteca.aggiungiMateriale(libro2);
+        biblioteca.aggiungiMateriale(libro3);
+        biblioteca.aggiungiMateriale(dvd1);
+        biblioteca.aggiungiMateriale(dvd2);
+        biblioteca.aggiungiMateriale(rivista1);
+        
+        // Stampa catalogo
+        biblioteca.stampaCatalogo();
+        
+        // Creazione utente
+        Utente utente = new Utente("Mario", "Rossi", "RSSMRA80A01H501U", "mario.rossi@email.com");
+        biblioteca.registraUtente(utente);
+        
+        // Operazioni di prestito
+        System.out.println("\n=== OPERAZIONI DI PRESTITO ===\n");
+        utente.prendiInPrestito(libro1);
+        utente.prendiInPrestito(dvd1);
+        
+        // Tentativo di prestito di un libro già prestato
+        utente.prendiInPrestito(libro1);
+        
+        // Stampa prestiti attivi
+        utente.stampaPrestiti();
+        
+        // Restituzione
+        System.out.println("\n=== RESTITUZIONE ===\n");
+        utente.restituisci(libro1);
+        
+        // Stampa prestiti dopo restituzione
+        utente.stampaPrestiti();
+        
+        // Cerca per titolo
+        System.out.println("\n=== RICERCA PER TITOLO ===\n");
+        List&lt;MaterialeBibliotecario&gt; risultati = biblioteca.cercaPerTitolo("Java");
+        System.out.println("Risultati per 'Java':");
+        for (MaterialeBibliotecario m : risultati) {
+            System.out.println("  - " + m.titolo + " (" + m.getTipo() + ")");
+        }
+        
+        // Polimorfismo con interfaccia Digitale
+        System.out.println("\n=== MATERIALI DIGITALI ===\n");
+        for (MaterialeBibliotecario m : biblioteca.getMaterialiDisponibili()) {
+            if (m instanceof Digitale) {
+                Digitale d = (Digitale) m;
+                System.out.println("📱 " + m.titolo + " - Formato: " + d.getFormato());
+                d.scarica();
+            }
+        }
+        
+        // Polimorfismo con interfaccia ConsultabileInSede
+        System.out.println("\n=== CONSULTAZIONE IN SEDE ===\n");
+        for (MaterialeBibliotecario m : biblioteca.getMaterialiDisponibili()) {
+            if (m instanceof ConsultabileInSede) {
+                ((ConsultabileInSede) m).consulta();
+            }
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output (parziale):<br>
+                        === AGGIUNTA MATERIALI ===<br>
+                        ✅ Aggiunto: Il Nome della Rosa<br>
+                        ✅ Aggiunto: 1984<br>
+                        ✅ Aggiunto: Java la guida completa<br>
+                        ✅ Aggiunto: Inception<br>
+                        ✅ Aggiunto: Interstellar<br>
+                        ✅ Aggiunto: National Geographic<br>
+                        📚 CATALOGO DELLA BIBLIOTECA 'Biblioteca Centrale' 📚<br>
+                        ...<br>
+                        === OPERAZIONI DI PRESTITO ===<br>
+                        📖 Il Nome della Rosa è stato prestato<br>
+                        📖 Inception è stato prestato<br>
+                        ❌ Il Nome della Rosa non è disponibile<br>
+                        📋 Prestiti attivi di Mario Rossi:<br>
+                          - Il Nome della Rosa (scadenza: ...)<br>
+                          - Inception (scadenza: ...)<br>
+                        === RESTITUZIONE ===<br>
+                        📚 Il Nome della Rosa è stato restituito<br>
+                        📋 Prestiti attivi di Mario Rossi:<br>
+                          - Inception (scadenza: ...)<br>
+                        === RICERCA PER TITOLO ===<br>
+                        Risultati per 'Java':<br>
+                          - Java la guida completa (Libro)<br>
+                        === MATERIALI DIGITALI ===<br>
+                        📱 Inception - Formato: MP4<br>
+                        Download di 7400MB in corso...<br>
+                        📱 Interstellar - Formato: MKV<br>
+                        Download di 8450MB in corso...<br>
+                        === CONSULTAZIONE IN SEDE ===<br>
+                        📰 Consultazione in sede di National Geographic (n°45)
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Programmazione OOP | I pilastri dell'OOP in Java
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Prism.js e Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'classi-oggetti', 'incapsulamento', 'ereditarieta', 'polimorfismo', 'astrazione', 'interfacce', 'costruttori', 'membri-statici', 'esempi-pratici'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

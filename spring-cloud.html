@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Cloud | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Include Navbar (generata da navbar.js) -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#service-discovery" class="toc-link" data-target="service-discovery">
+                    <i class="fas fa-globe"></i> Service Discovery (Eureka)
+                </a></li>
+                <li><a href="#api-gateway" class="toc-link" data-target="api-gateway">
+                    <i class="fas fa-gateway"></i> API Gateway (Spring Cloud Gateway)
+                </a></li>
+                <li><a href="#feign" class="toc-link" data-target="feign">
+                    <i class="fas fa-exchange-alt"></i> Feign Client
+                </a></li>
+                <li><a href="#circuit-breaker" class="toc-link" data-target="circuit-breaker">
+                    <i class="fas fa-shield-alt"></i> Circuit Breaker (Resilience4j)
+                </a></li>
+                <li><a href="#config-server" class="toc-link" data-target="config-server">
+                    <i class="fas fa-cogs"></i> Config Server
+                </a></li>
+                <li><a href="#load-balancer" class="toc-link" data-target="load-balancer">
+                    <i class="fas fa-balance-scale"></i> Load Balancer
+                </a></li>
+                <li><a href="#tracing" class="toc-link" data-target="tracing">
+                    <i class="fas fa-chart-line"></i> Distributed Tracing (Sleuth + Zipkin)
+                </a></li>
+                <li><a href="#bus" class="toc-link" data-target="bus">
+                    <i class="fas fa-bus"></i> Spring Cloud Bus
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-cloud"></i> Spring Cloud</h1>
+                <p>Framework per lo sviluppo di microservizi distribuiti: service discovery, API gateway, circuit breaker, config server e distributed tracing</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è Spring Cloud?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        <strong>Spring Cloud</strong> fornisce strumenti per sviluppare pattern comuni nei sistemi distribuiti:
+                        service discovery, API gateway, circuit breaker, configuration management, distributed tracing e altro.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Componenti principali di Spring Cloud:</strong><br>
+                        - <strong>Netflix Eureka</strong>: Service Discovery<br>
+                        - <strong>Spring Cloud Gateway</strong>: API Gateway<br>
+                        - <strong>OpenFeign</strong>: Client HTTP dichiarativo<br>
+                        - <strong>Resilience4j</strong>: Circuit Breaker<br>
+                        - <strong>Config Server</strong>: Configurazione centralizzata<br>
+                        - <strong>Sleuth + Zipkin</strong>: Distributed Tracing<br>
+                        - <strong>Spring Cloud Bus</strong>: Event bus distribuito
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. SERVICE DISCOVERY (EUREKA) ==================== -->
+            <div class="section-card" id="service-discovery">
+                <div class="card-header">
+                    <i class="fas fa-globe"></i>
+                    <h2>Service Discovery con Netflix Eureka</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Registrazione e scoperta automatica dei servizi</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenze (pom.xml)</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Server</h3>
+                    <pre><code class="language-java">package com.esempio.discovery;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+
+@SpringBootApplication
+@EnableEurekaServer
+public class DiscoveryServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DiscoveryServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml (Eureka Server)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-service
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+    enable-self-preservation: false</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Client (Microservizio)</h3>
+                    <pre><code class="language-java">package com.esempio.userservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class UserServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UserServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml (Eureka Client)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 0  # Porta casuale
+
+spring:
+  application:
+    name: user-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Eureka Dashboard: <code>http://localhost:8761</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. API GATEWAY ==================== -->
+            <div class="section-card" id="api-gateway">
+                <div class="card-header">
+                    <i class="fas fa-gateway"></i>
+                    <h2>API Gateway con Spring Cloud Gateway</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Punto d'ingresso unico, routing, filtri, rate limiting</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenze</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione routing (application.yml)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/utenti/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: userService
+                fallbackUri: forward:/fallback/users
+            - AddRequestHeader=X-Request-Source, Gateway
+            - AddRequestParameter=gateway, true
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/ordini/**
+          filters:
+            - StripPrefix=1
+            - Retry=3
+            
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/prodotti/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health,info</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Custom Gateway Filter</h3>
+                    <pre><code class="language-java">package com.esempio.gateway.filter;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+import java.util.UUID;
+
+@Slf4j
+@Component
+public class LoggingGlobalFilter implements GlobalFilter, Ordered {
+    
+    @Override
+    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        
+        // Aggiungi Correlation ID
+        String correlationId = UUID.randomUUID().toString();
+        ServerHttpRequest mutatedRequest = request.mutate()
+            .header("X-Correlation-Id", correlationId)
+            .build();
+        
+        long startTime = System.currentTimeMillis();
+        
+        log.info("Request: {} {} - CorrelationId: {}",
+            request.getMethod(), request.getURI(), correlationId);
+        
+        return chain.filter(exchange.mutate().request(mutatedRequest).build())
+            .then(Mono.fromRunnable(() -> {
+                long duration = System.currentTimeMillis() - startTime;
+                log.info("Response: {} - Duration: {}ms - CorrelationId: {}",
+                    exchange.getResponse().getStatusCode(), duration, correlationId);
+            }));
+    }
+    
+    @Override
+    public int getOrder() {
+        return -1;
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 4. FEIGN CLIENT ==================== -->
+            <div class="section-card" id="feign">
+                <div class="card-header">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h2>Feign Client - Comunicazione tra Servizi</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Client HTTP dichiarativo con load balancing integrato</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenza</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Abilitare Feign Client</h3>
+                    <pre><code class="language-java">@SpringBootApplication
+@EnableFeignClients
+@EnableDiscoveryClient
+public class OrderServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(OrderServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Definire il Client Feign</h3>
+                    <pre><code class="language-java">package com.esempio.order.client;
+
+import com.esempio.order.dto.UtenteDTO;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@FeignClient(name = "user-service")
+public interface UtenteServiceClient {
+    
+    @GetMapping("/api/utenti/{id}")
+    UtenteDTO getUtenteById(@PathVariable("id") Long id);
+    
+    @GetMapping("/api/utenti")
+    List&lt;UtenteDTO&gt; getAllUtenti();
+    
+    @PostMapping("/api/utenti")
+    UtenteDTO createUtente(@RequestBody UtenteDTO utente);
+    
+    @DeleteMapping("/api/utenti/{id}")
+    void deleteUtente(@PathVariable("id") Long id);
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione Feign (con fallback)</h3>
+                    <pre><code class="language-java">@FeignClient(
+    name = "user-service",
+    fallback = UtenteServiceFallback.class,
+    configuration = FeignConfig.class
+)
+public interface UtenteServiceClient {
+    // metodi...
+}
+
+@Component
+class UtenteServiceFallback implements UtenteServiceClient {
+    
+    @Override
+    public UtenteDTO getUtenteById(Long id) {
+        return UtenteDTO.builder()
+            .id(id)
+            .nome("Utente non disponibile")
+            .email("unknown@example.com")
+            .build();
+    }
+    
+    @Override
+    public List&lt;UtenteDTO&gt; getAllUtenti() {
+        return List.of();
+    }
+    
+    @Override
+    public UtenteDTO createUtente(UtenteDTO utente) {
+        throw new RuntimeException("Servizio non disponibile");
+    }
+    
+    @Override
+    public void deleteUtente(Long id) {
+        log.warn("Impossibile eliminare utente {}: servizio non disponibile", id);
+    }
+}
+
+@Configuration
+public class FeignConfig {
+    
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return requestTemplate -> {
+            requestTemplate.header("X-Correlation-Id", UUID.randomUUID().toString());
+            requestTemplate.header("User-Agent", "Microservice-Client");
+        };
+    }
+    
+    @Bean
+    public Decoder feignDecoder() {
+        return new JacksonDecoder();
+    }
+    
+    @Bean
+    public Encoder feignEncoder() {
+        return new JacksonEncoder();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 5. CIRCUIT BREAKER ==================== -->
+            <div class="section-card" id="circuit-breaker">
+                <div class="card-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>Circuit Breaker con Resilience4j</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Tolleranza ai guasti e resilienza</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenze</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-circuitbreaker-resilience4j&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Service con Circuit Breaker</h3>
+                    <pre><code class="language-java">package com.esempio.order.service;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import java.util.concurrent.CompletableFuture;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ResilientService {
+    
+    private final UtenteServiceClient utenteClient;
+    
+    // Circuit Breaker
+    @CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetUtente")
+    public UtenteDTO getUtenteWithCircuitBreaker(Long id) {
+        log.info("Chiamata a user-service per ID: {}", id);
+        return utenteClient.getUtenteById(id);
+    }
+    
+    // Retry
+    @Retry(name = "userService", fallbackMethod = "fallbackGetUtente")
+    public UtenteDTO getUtenteWithRetry(Long id) {
+        log.info("Tentativo di chiamata per ID: {}", id);
+        return utenteClient.getUtenteById(id);
+    }
+    
+    // Time Limiter
+    @TimeLimiter(name = "userService")
+    @CircuitBreaker(name = "userService")
+    public CompletableFuture&lt;UtenteDTO&gt; getUtenteAsync(Long id) {
+        return CompletableFuture.supplyAsync(() -> utenteClient.getUtenteById(id));
+    }
+    
+    // Combinazione di annotazioni
+    @Retry(name = "userService")
+    @CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetUtente")
+    public UtenteDTO getUtenteResiliente(Long id) {
+        return utenteClient.getUtenteById(id);
+    }
+    
+    // Fallback method
+    private UtenteDTO fallbackGetUtente(Long id, Exception e) {
+        log.warn("Circuit breaker attivato per id: {} - Errore: {}", id, e.getMessage());
+        return UtenteDTO.builder()
+            .id(id)
+            .nome("Utente non disponibile (fallback)")
+            .email("unknown@example.com")
+            .eta(0)
+            .attivo(false)
+            .build();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione application.yml</h3>
+                    <pre><code class="language-yaml">resilience4j:
+  circuitbreaker:
+    instances:
+      userService:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+        permitted-number-of-calls-in-half-open-state: 3
+        minimum-number-of-calls: 5
+        slow-call-rate-threshold: 100
+        slow-call-duration-threshold: 5000
+  retry:
+    instances:
+      userService:
+        max-attempts: 3
+        wait-duration: 1000
+        retry-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+  timelimiter:
+    instances:
+      userService:
+        timeout-duration: 2s</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 6. CONFIG SERVER ==================== -->
+            <div class="section-card" id="config-server">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h2>Configurazione Centralizzata con Config Server</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Gestione centralizzata delle configurazioni</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Server</h3>
+                    <pre><code class="language-java">package com.esempio.config;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.config.server.EnableConfigServer;
+
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigServerApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml (Config Server)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/mio-utente/config-repo
+          default-label: main
+          search-paths: '{application}'
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
+      fail-fast: true
+
+encrypt:
+  key: ${ENCRYPT_KEY:my-secret-key}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Client (bootstrap.yml)</h3>
+                    <pre><code class="language-yaml">spring:
+  application:
+    name: user-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+        max-attempts: 6
+        initial-interval: 1000
+        multiplier: 1.1
+      enabled: true
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Repository Git esempio</h3>
+                    <pre><code class="language-yaml"># user-service.yml
+database:
+  url: jdbc:mysql://localhost:3306/users
+  username: ${DB_USERNAME:root}
+  password: ${DB_PASSWORD:secret}
+
+app:
+  feature:
+    enable-notifications: true
+    max-users: 1000
+    
+logging:
+  level:
+    com.esempio: DEBUG
+
+# user-service-dev.yml (sovrascrive per ambiente dev)
+database:
+  url: jdbc:h2:mem:testdb
+
+app:
+  feature:
+    enable-notifications: false</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Utilizzo in Spring Boot</h3>
+                    <pre><code class="language-java">@RestController
+@RequestMapping("/api/config")
+@RefreshScope  // Permette refresh senza riavvio
+public class ConfigController {
+    
+    @Value("${app.feature.enable-notifications:false}")
+    private boolean notificationsEnabled;
+    
+    @Value("${app.feature.max-users:100}")
+    private int maxUsers;
+    
+    @GetMapping("/info")
+    public Map&lt;String, Object&gt; getConfig() {
+        return Map.of(
+            "notificationsEnabled", notificationsEnabled,
+            "maxUsers", maxUsers
+        );
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 7. LOAD BALANCER ==================== -->
+            <div class="section-card" id="load-balancer">
+                <div class="card-header">
+                    <i class="fas fa-balance-scale"></i>
+                    <h2>Load Balancer Client-Side</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Distribuzione del carico tra istanze dei servizi</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione Load Balancer</h3>
+                    <pre><code class="language-java">@Configuration
+public class LoadBalancerConfig {
+    
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Utilizzo con RestTemplate</h3>
+                    <pre><code class="language-java">@Service
+@RequiredArgsConstructor
+public class UserService {
+    
+    private final RestTemplate restTemplate;
+    
+    public UtenteDTO getUserById(Long id) {
+        // user-service viene risolto tramite Service Discovery
+        String url = "http://user-service/api/utenti/" + id;
+        return restTemplate.getForObject(url, UtenteDTO.class);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Strategie di Load Balancing</h3>
+                    <pre><code class="language-yaml"># application.yml
+user-service:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+    # Alternative:
+    # - RoundRobinRule: round robin
+    # - RandomRule: random
+    # - WeightedResponseTimeRule: basato su tempo di risposta
+    # - AvailabilityFilteringRule: evita istanze non disponibili</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Load Balancer Personalizzato</h3>
+                    <pre><code class="language-java">@Configuration
+public class CustomLoadBalancerConfig {
+    
+    @Bean
+    public ReactorLoadBalancer&lt;ServiceInstance&gt; reactorLoadBalancer(
+            Environment environment,
+            LoadBalancerClientFactory loadBalancerClientFactory) {
+        
+        String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        
+        return new RoundRobinLoadBalancer(
+            loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class),
+            name
+        );
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 8. DISTRIBUTED TRACING ==================== -->
+            <div class="section-card" id="tracing">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>Distributed Tracing con Sleuth e Zipkin</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Tracciamento delle richieste attraverso i microservizi</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenze</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-sleuth&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-sleuth-zipkin&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione</h3>
+                    <pre><code class="language-yaml">spring:
+  zipkin:
+    base-url: http://localhost:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1.0  # Campiona tutte le richieste
+    trace-id128: true
+    supports-beans: true
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Utilizzo in codice</h3>
+                    <pre><code class="language-java">@RestController
+@RequestMapping("/api/utenti")
+@Slf4j
+public class UtenteController {
+    
+    @GetMapping("/{id}")
+    public UtenteDTO getUtente(@PathVariable Long id) {
+        // traceId e spanId vengono aggiunti automaticamente ai log
+        log.info("Richiesta utente con ID: {}", id);
+        return utenteService.findById(id);
+    }
+}</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> <strong>Zipkin UI:</strong> <code>http://localhost:9411</code><br>
+                        I log includeranno automaticamente traceId e spanId:<br>
+                        <code>INFO [user-service,abc123def456,xyz789] Richiesta utente con ID: 1</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. SPRING CLOUD BUS ==================== -->
+            <div class="section-card" id="bus">
+                <div class="card-header">
+                    <i class="fas fa-bus"></i>
+                    <h2>Spring Cloud Bus</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Propagazione degli eventi tra microservizi</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenze</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-bus-amqp&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione</h3>
+                    <pre><code class="language-yaml">spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh, busenv</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Aggiornamento configurazione distribuito</h3>
+                    <pre><code class="language-bash"># Aggiorna tutti i servizi
+curl -X POST http://localhost:8080/actuator/busrefresh
+
+# Aggiorna solo un servizio specifico
+curl -X POST http://localhost:8080/actuator/busrefresh/user-service
+
+# Aggiorna con destinazione specifica
+curl -X POST http://localhost:8080/actuator/busrefresh?destination=user-service:**</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 10. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices per Spring Cloud</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Regole fondamentali per microservizi con Spring Cloud</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. CORRELATION ID ====================
+@Component
+public class CorrelationIdFilter implements Filter {
+    private static final String CORRELATION_ID_HEADER = "X-Correlation-Id";
+    
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, 
+                         FilterChain chain) throws IOException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String correlationId = httpRequest.getHeader(CORRELATION_ID_HEADER);
+        
+        if (correlationId == null) {
+            correlationId = UUID.randomUUID().toString();
+        }
+        
+        MDC.put("correlationId", correlationId);
+        chain.doFilter(request, response);
+        MDC.clear();
+    }
+}
+
+// ==================== 2. FEIGN CLIENT INTERCEPTOR ====================
+@Configuration
+public class FeignCorrelationConfig {
+    
+    @Bean
+    public RequestInterceptor correlationIdInterceptor() {
+        return requestTemplate -> {
+            String correlationId = MDC.get("correlationId");
+            if (correlationId != null) {
+                requestTemplate.header("X-Correlation-Id", correlationId);
+            }
+        };
+    }
+}
+
+// ==================== 3. GESTIONE ERRORI CENTRALIZZATA ====================
+@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(FeignException.class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ErrorResponse handleFeignException(FeignException ex) {
+        log.error("Errore chiamata servizio esterno: {}", ex.getMessage());
+        return new ErrorResponse("SERVICE_UNAVAILABLE", 
+            "Servizio esterno non disponibile", LocalDateTime.now());
+    }
+}
+
+// ==================== 4. TIME OUT CONFIGURAZIONE ====================
+# application.yml
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  circuitbreaker:
+    enabled: true
+
+// ==================== 5. METRICHE E MONITORAGGIO ====================
+@Configuration
+public class MetricsConfig {
+    
+    @Bean
+    public MeterRegistryCustomizer&lt;MeterRegistry&gt; metricsCommonTags() {
+        return registry -> registry.config().commonTags(
+            "application", "spring-cloud-microservice",
+            "environment", "${spring.profiles.active:default}"
+        );
+    }
+}</code></pre>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist per Spring Cloud:</strong><br>
+                        ✓ Usa Service Discovery (Eureka) per localizzazione servizi<br>
+                        ✓ Implementa API Gateway per routing centralizzato<br>
+                        ✓ Usa Feign Client per comunicazione dichiarativa<br>
+                        ✓ Configura Circuit Breaker per resilienza<br>
+                        ✓ Centralizza configurazioni con Config Server<br>
+                        ✓ Implementa Distributed Tracing (Sleuth + Zipkin)<br>
+                        ✓ Usa Correlation ID per tracing distribuito<br>
+                        ✓ Configura timeout appropriati per Feign<br>
+                        ✓ Implementa fallback per servizi critici<br>
+                        ✓ Monitora con metriche e health check
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Spring Cloud | Microservizi distribuiti
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'service-discovery', 'api-gateway', 'feign', 'circuit-breaker', 'config-server', 'load-balancer', 'tracing', 'bus', 'best-practices'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

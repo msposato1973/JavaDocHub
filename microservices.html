@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservizi Spring Boot | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#dipendenze" class="toc-link" data-target="dipendenze">
+                    <i class="fas fa-cube"></i> Dipendenze
+                </a></li>
+                <li><a href="#rest-controller" class="toc-link" data-target="rest-controller">
+                    <i class="fas fa-code-branch"></i> REST Controller
+                </a></li>
+                <li><a href="#entity-repository" class="toc-link" data-target="entity-repository">
+                    <i class="fas fa-database"></i> Entity e Repository
+                </a></li>
+                <li><a href="#feign-client" class="toc-link" data-target="feign-client">
+                    <i class="fas fa-exchange-alt"></i> Feign Client
+                </a></li>
+                <li><a href="#circuit-breaker" class="toc-link" data-target="circuit-breaker">
+                    <i class="fas fa-shield-alt"></i> Circuit Breaker
+                </a></li>
+                <li><a href="#service-discovery" class="toc-link" data-target="service-discovery">
+                    <i class="fas fa-globe"></i> Service Discovery
+                </a></li>
+                <li><a href="#api-gateway" class="toc-link" data-target="api-gateway">
+                    <i class="fas fa-gateway"></i> API Gateway
+                </a></li>
+                <li><a href="#config-server" class="toc-link" data-target="config-server">
+                    <i class="fas fa-cogs"></i> Config Server
+                </a></li>
+                <li><a href="#tracing" class="toc-link" data-target="tracing">
+                    <i class="fas fa-chart-line"></i> Distributed Tracing
+                </a></li>
+                <li><a href="#docker" class="toc-link" data-target="docker">
+                    <i class="fab fa-docker"></i> Docker
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-microchip"></i> Microservizi con Spring Boot</h1>
+                <p>Architettura, REST API, Spring Cloud, comunicazione tra servizi e Docker</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è un Microservizio?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-building"></i> Architettura distribuita</div>
+                    <div class="desc">
+                        I microservizi sono un'architettura in cui un'applicazione viene suddivisa in piccoli servizi indipendenti,
+                        ciascuno con una propria responsabilità, database e ciclo di vita. Ogni servizio comunica con gli altri
+                        attraverso API ben definite (solitamente REST).
+                    </div>
+                    <table class="comparison-table">
+                        <tr><th>Caratteristica</th><th>Monolite</th><th>Microservizi</th></tr>
+                        <tr><td>Deploy</td><td>Singolo artefatto</td><td>Indipendente per servizio</td></tr>
+                        <tr><td>Scalabilità</td><td>Totale applicazione</td><td>Per singolo servizio</td></tr>
+                        <tr><td>Tecnologie</td><td>Unico stack</td><td>Misti (polyglot)</td></tr>
+                        <tr><td>Database</td><td>Condiviso</td><td>Database per servizio</td></tr>
+                        <tr><td>Team size</td><td>Grande team</td><td>Team piccoli (2 pizza team)</td></tr>
+                    </table>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi dei microservizi:</strong><br>
+                        - <strong>Scalabilità indipendente</strong>: scala solo i servizi che ne hanno bisogno<br>
+                        - <strong>Resilienza</strong>: un servizio down non blocca l'intero sistema<br>
+                        - <strong>Deploy frequenti</strong>: si può deployare un singolo servizio<br>
+                        - <strong>Tecnologie diverse</strong>: ogni servizio può usare il linguaggio migliore
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. DIPENDENZE ==================== -->
+            <div class="section-card" id="dipendenze">
+                <div class="card-header">
+                    <i class="fas fa-cube"></i>
+                    <h2>Dependency per Spring Boot Microservizi</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Maven pom.xml</div>
+                    <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;3.2.0&lt;/version&gt;
+    &lt;/parent&gt;
+    
+    &lt;groupId&gt;com.esempio&lt;/groupId&gt;
+    &lt;artifactId&gt;microservizio-demo&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    
+    &lt;properties&gt;
+        &lt;java.version&gt;17&lt;/java.version&gt;
+        &lt;spring-cloud.version&gt;2023.0.0&lt;/spring-cloud.version&gt;
+    &lt;/properties&gt;
+    
+    &lt;dependencies&gt;
+        &lt;!-- Web/REST API --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- JPA / Database --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- MySQL Driver --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-j&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Service Discovery (Eureka Client) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- OpenFeign (comunicazione tra servizi) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Circuit Breaker (Resilience4j) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-circuitbreaker-resilience4j&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Actuator (monitoraggio) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Lombok --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Validation --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    
+    &lt;dependencyManagement&gt;
+        &lt;dependencies&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
+                &lt;version&gt;${spring-cloud.version}&lt;/version&gt;
+                &lt;type&gt;pom&lt;/type&gt;
+                &lt;scope&gt;import&lt;/scope&gt;
+            &lt;/dependency&gt;
+        &lt;/dependencies&gt;
+    &lt;/dependencyManagement&gt;
+&lt;/project&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 3. REST CONTROLLER ==================== -->
+            <div class="section-card" id="rest-controller">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>REST Controller - Endpoint Base</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">@RestController, @RequestMapping, @Valid</div>
+                    <pre><code class="language-java">package com.esempio.microservizio.controller;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequestMapping("/api/utenti")
+@RequiredArgsConstructor
+public class UtenteController {
+    
+    private final UtenteService utenteService;
+    
+    // GET - Recupera tutti gli utenti
+    @GetMapping
+    public ResponseEntity&lt;List&lt;UtenteDTO&gt;&gt; getAllUtenti(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        log.info("Richiesta GET /api/utenti - page={}, size={}", page, size);
+        return ResponseEntity.ok(utenteService.findAll(page, size));
+    }
+    
+    // GET by ID
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; getUtenteById(@PathVariable Long id) {
+        log.info("Richiesta GET /api/utenti/{}", id);
+        return utenteService.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // POST - Crea nuovo utente
+    @PostMapping
+    public ResponseEntity&lt;UtenteDTO&gt; createUtente(@Valid @RequestBody UtenteDTO utente) {
+        log.info("Richiesta POST /api/utenti - body: {}", utente);
+        UtenteDTO saved = utenteService.save(utente);
+        return ResponseEntity
+            .created(URI.create("/api/utenti/" + saved.getId()))
+            .body(saved);
+    }
+    
+    // PUT - Aggiorna utente
+    @PutMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; updateUtente(
+            @PathVariable Long id,
+            @Valid @RequestBody UtenteDTO utente) {
+        log.info("Richiesta PUT /api/utenti/{} - body: {}", id, utente);
+        return ResponseEntity.ok(utenteService.update(id, utente));
+    }
+    
+    // PATCH - Aggiornamento parziale
+    @PatchMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; patchUtente(
+            @PathVariable Long id,
+            @RequestBody Map&lt;String, Object&gt; updates) {
+        log.info("Richiesta PATCH /api/utenti/{} - updates: {}", id, updates);
+        return ResponseEntity.ok(utenteService.patch(id, updates));
+    }
+    
+    // DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity&lt;Void&gt; deleteUtente(@PathVariable Long id) {
+        log.info("Richiesta DELETE /api/utenti/{}", id);
+        utenteService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    // GET con ricerca
+    @GetMapping("/search")
+    public ResponseEntity&lt;List&lt;UtenteDTO&gt;&gt; searchUtenti(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String email) {
+        log.info("Richiesta GET /api/utenti/search - nome={}, email={}", nome, email);
+        return ResponseEntity.ok(utenteService.search(nome, email));
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 4. ENTITY E REPOSITORY ==================== -->
+            <div class="section-card" id="entity-repository">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>Entity, DTO e Repository</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Spring Data JPA, Lombok, MapStruct</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Entity</h3>
+                    <pre><code class="language-java">package com.esempio.microservizio.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "utenti", indexes = {
+    @Index(name = "idx_email", columnList = "email"),
+    @Index(name = "idx_nome", columnList = "nome")
+})
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class Utente {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, length = 100)
+    private String nome;
+    
+    @Column(nullable = false, unique = true, length = 150)
+    private String email;
+    
+    @Column(nullable = false)
+    private Integer eta;
+    
+    @Column(length = 20)
+    private String telefono;
+    
+    @Column(nullable = false)
+    private boolean attivo = true;
+    
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+    
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+    
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+    
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 DTO (Data Transfer Object)</h3>
+                    <pre><code class="language-java">package com.esempio.microservizio.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UtenteDTO {
+    
+    private Long id;
+    
+    @NotBlank(message = "Il nome è obbligatorio")
+    @Size(min = 2, max = 100, message = "Il nome deve essere tra 2 e 100 caratteri")
+    private String nome;
+    
+    @NotBlank(message = "L'email è obbligatoria")
+    @Email(message = "Formato email non valido")
+    private String email;
+    
+    @NotNull(message = "L'età è obbligatoria")
+    @Min(value = 0, message = "L'età non può essere negativa")
+    @Max(value = 150, message = "L'età non può superare 150")
+    private Integer eta;
+    
+    @Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "Formato telefono non valido")
+    private String telefono;
+    
+    private boolean attivo;
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Repository</h3>
+                    <pre><code class="language-java">package com.esempio.microservizio.repository;
+
+import com.esempio.microservizio.entity.Utente;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface UtenteRepository extends JpaRepository&lt;Utente, Long&gt; {
+    
+    // Query method
+    Optional&lt;Utente&gt; findByEmail(String email);
+    
+    List&lt;Utente&gt; findByNomeContainingIgnoreCase(String nome);
+    
+    Page&lt;Utente&gt; findByAttivoTrue(Pageable pageable);
+    
+    // JPQL Query
+    @Query("SELECT u FROM Utente u WHERE u.eta BETWEEN :minAge AND :maxAge")
+    List&lt;Utente&gt; findByEtaBetween(@Param("minAge") int minAge, @Param("maxAge") int maxAge);
+    
+    @Query("SELECT u FROM Utente u WHERE " +
+           "(:nome IS NULL OR LOWER(u.nome) LIKE LOWER(CONCAT('%', :nome, '%'))) AND " +
+           "(:email IS NULL OR LOWER(u.email) LIKE LOWER(CONCAT('%', :email, '%')))")
+    List&lt;Utente&gt; search(@Param("nome") String nome, @Param("email") String email);
+    
+    // Native Query
+    @Query(value = "SELECT * FROM utenti WHERE YEAR(created_at) = :year", nativeQuery = true)
+    List&lt;Utente&gt; findUtentiByAnnoCreazione(@Param("year") int year);
+    
+    // Update query
+    @Modifying
+    @Transactional
+    @Query("UPDATE Utente u SET u.attivo = false WHERE u.id = :id")
+    void disattivaUtente(@Param("id") Long id);
+    
+    // Count query
+    long countByAttivoTrue();
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 5. FEIGN CLIENT ==================== -->
+            <div class="section-card" id="feign-client">
+                <div class="card-header">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h2>Comunicazione tra Microservizi - OpenFeign</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue"><i class="fas fa-plug"></i> Feign Client + Load Balancing</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Abilitare Feign Client</h3>
+                    <pre><code class="language-java">package com.esempio.ordine;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableFeignClients
+@EnableDiscoveryClient
+public class OrdineServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(OrdineServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Definire il Client Feign</h3>
+                    <pre><code class="language-java">package com.esempio.ordine.client;
+
+import com.esempio.ordine.dto.UtenteDTO;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@FeignClient(name = "user-service", url = "${user.service.url:http://localhost:8081}")
+public interface UtenteServiceClient {
+    
+    @GetMapping("/api/utenti/{id}")
+    UtenteDTO getUtenteById(@PathVariable("id") Long id);
+    
+    @GetMapping("/api/utenti")
+    List&lt;UtenteDTO&gt; getAllUtenti();
+    
+    @GetMapping("/api/utenti/search")
+    List&lt;UtenteDTO&gt; searchUtenti(@RequestParam("nome") String nome);
+    
+    @PostMapping("/api/utenti")
+    UtenteDTO createUtente(@RequestBody UtenteDTO utente);
+    
+    @PutMapping("/api/utenti/{id}")
+    UtenteDTO updateUtente(@PathVariable("id") Long id, @RequestBody UtenteDTO utente);
+    
+    @DeleteMapping("/api/utenti/{id}")
+    void deleteUtente(@PathVariable("id") Long id);
+}
+
+// Con configurazione personalizzata
+@FeignClient(
+    name = "product-service",
+    url = "${product.service.url}",
+    configuration = FeignConfig.class,
+    fallback = ProductServiceFallback.class
+)
+public interface ProductServiceClient {
+    @GetMapping("/api/prodotti/{id}")
+    ProdottoDTO getProdotto(@PathVariable("id") Long id);
+}
+
+// Configurazione Feign
+@Configuration
+public class FeignConfig {
+    
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return requestTemplate -> {
+            requestTemplate.header("X-Correlation-Id", UUID.randomUUID().toString());
+            requestTemplate.header("User-Agent", "Microservice-Client");
+        };
+    }
+    
+    @Bean
+    public Decoder feignDecoder() {
+        return new JacksonDecoder();
+    }
+    
+    @Bean
+    public Encoder feignEncoder() {
+        return new JacksonEncoder();
+    }
+}
+
+// Fallback per resilienza
+@Component
+public class ProductServiceFallback implements ProductServiceClient {
+    
+    @Override
+    public ProdottoDTO getProdotto(Long id) {
+        return ProdottoDTO.builder()
+            .id(id)
+            .nome("Prodotto non disponibile")
+            .prezzo(0.0)
+            .build();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Utilizzare il client in un Service</h3>
+                    <pre><code class="language-java">package com.esempio.ordine.service;
+
+import com.esempio.ordine.client.UtenteServiceClient;
+import com.esempio.ordine.dto.OrdineDTO;
+import com.esempio.ordine.dto.UtenteDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class OrdineService {
+    
+    private final UtenteServiceClient utenteClient;
+    
+    public OrdineDTO creaOrdinePerUtente(Long utenteId, OrdineDTO ordine) {
+        log.info("Creazione ordine per utente ID: {}", utenteId);
+        
+        try {
+            // Verifica che l'utente esista
+            UtenteDTO utente = utenteClient.getUtenteById(utenteId);
+            log.info("Utente trovato: {} {}", utente.getNome(), utente.getEmail());
+            
+            // Associa l'ordine all'utente
+            ordine.setUtenteId(utenteId);
+            ordine.setUtenteNome(utente.getNome());
+            
+            // Salva l'ordine...
+            return ordine;
+            
+        } catch (Exception e) {
+            log.error("Errore durante la comunicazione con user-service: {}", e.getMessage());
+            throw new RuntimeException("Servizio utenti non disponibile");
+        }
+    }
+    
+    public List&lt;UtenteDTO&gt; cercaUtenti(String nome) {
+        log.info("Ricerca utenti con nome: {}", nome);
+        return utenteClient.searchUtenti(nome);
+    }
+}</code></pre>
+
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Configurazione application.yml per Feign:</strong><br>
+                        <code>user.service.url: http://localhost:8081</code><br>
+                        Con Service Discovery (Eureka), l'URL viene risolto automaticamente.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. CIRCUIT BREAKER ==================== -->
+            <div class="section-card" id="circuit-breaker">
+                <div class="card-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>Resilienza - Circuit Breaker (Resilience4j)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fas fa-heartbeat"></i> Fault tolerance</div>
+                    
+                    <pre><code class="language-java">package com.esempio.ordine.service;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import java.util.concurrent.CompletableFuture;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ResilientService {
+    
+    private final UtenteServiceClient utenteClient;
+    
+    // ========== CIRCUIT BREAKER ==========
+    // Impedisce chiamate continue a un servizio down
+    @CircuitBreaker(name = "utenteService", fallbackMethod = "fallbackGetUtente")
+    public UtenteDTO getUtenteWithCircuitBreaker(Long id) {
+        log.info("Chiamata a utente-service per ID: {}", id);
+        return utenteClient.getUtenteById(id);
+    }
+    
+    // ========== RETRY ==========
+    // Riprova automaticamente in caso di fallimento
+    @Retry(name = "utenteService", fallbackMethod = "fallbackGetUtente")
+    public UtenteDTO getUtenteWithRetry(Long id) {
+        log.info("Tentativo di chiamata per ID: {}", id);
+        return utenteClient.getUtenteById(id);
+    }
+    
+    // ========== TIME LIMITER ==========
+    // Timeout sulle operazioni
+    @TimeLimiter(name = "utenteService")
+    @CircuitBreaker(name = "utenteService")
+    public CompletableFuture&lt;UtenteDTO&gt; getUtenteAsync(Long id) {
+        return CompletableFuture.supplyAsync(() -> utenteClient.getUtenteById(id));
+    }
+    
+    // ========== COMBINAZIONE DI ANNOTAZIONI ==========
+    @Retry(name = "utenteService")
+    @CircuitBreaker(name = "utenteService", fallbackMethod = "fallbackGetUtente")
+    public UtenteDTO getUtenteResiliente(Long id) {
+        return utenteClient.getUtenteById(id);
+    }
+    
+    // ========== FALLBACK METHOD ==========
+    private UtenteDTO fallbackGetUtente(Long id, Exception e) {
+        log.warn("Circuit breaker attivato per id: {} - Errore: {}", id, e.getMessage());
+        return UtenteDTO.builder()
+            .id(id)
+            .nome("Utente non disponibile (fallback)")
+            .email("unknown@example.com")
+            .eta(0)
+            .attivo(false)
+            .build();
+    }
+    
+    // ========== METODO PER TESTARE IL CIRCUIT BREAKER ==========
+    public void testCircuitBreaker() {
+        for (int i = 0; i < 20; i++) {
+            try {
+                UtenteDTO utente = getUtenteWithCircuitBreaker(1L);
+                log.info("Risultato: {}", utente);
+            } catch (Exception e) {
+                log.error("Errore nella chiamata {}", i, e);
+            }
+        }
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione application.yml</h3>
+                    <pre><code class="language-yaml">resilience4j:
+  circuitbreaker:
+    instances:
+      utenteService:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+        permitted-number-of-calls-in-half-open-state: 3
+        minimum-number-of-calls: 5
+        slow-call-rate-threshold: 100
+        slow-call-duration-threshold: 5000
+  retry:
+    instances:
+      utenteService:
+        max-attempts: 3
+        wait-duration: 1000
+        retry-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+  timelimiter:
+    instances:
+      utenteService:
+        timeout-duration: 2s</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 7. SERVICE DISCOVERY ==================== -->
+            <div class="section-card" id="service-discovery">
+                <div class="card-header">
+                    <i class="fas fa-globe"></i>
+                    <h2>Service Discovery con Netflix Eureka</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-server"></i> Registrazione e scoperta servizi</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Server (Discovery Service)</h3>
+                    <pre><code class="language-java">package com.esempio.discovery;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+
+@SpringBootApplication
+@EnableEurekaServer
+public class DiscoveryServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DiscoveryServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione Eureka Server (application.yml)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-service
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+    enable-self-preservation: false</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Client (Microservizio)</h3>
+                    <pre><code class="language-java">package com.esempio.userservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class UserServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UserServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione Eureka Client (application.yml)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 0  # Porta casuale
+
+spring:
+  application:
+    name: user-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      enabled: true</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 8. API GATEWAY ==================== -->
+            <div class="section-card" id="api-gateway">
+                <div class="card-header">
+                    <i class="fas fa-gateway"></i>
+                    <h2>API Gateway con Spring Cloud Gateway</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Punto d'ingresso unico, routing, autenticazione</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenza per API Gateway</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione routing (application.yml)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/utenti/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: userService
+                fallbackUri: forward:/fallback/users
+            - AddRequestHeader=X-Request-Source, Gateway
+            - AddRequestParameter=gateway, true
+            
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/ordini/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/prodotti/**
+          filters:
+            - Retry=3
+            
+        - id: fallback-route
+          uri: forward:/fallback
+          predicates:
+            - Path=/fallback/**
+            
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health,info</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Custom Gateway Filter</h3>
+                    <pre><code class="language-java">package com.esempio.gateway.filter;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+import java.util.UUID;
+
+@Slf4j
+@Component
+public class LoggingGlobalFilter implements GlobalFilter, Ordered {
+    
+    @Override
+    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        
+        // Aggiungi Correlation ID
+        String correlationId = UUID.randomUUID().toString();
+        ServerHttpRequest mutatedRequest = request.mutate()
+            .header("X-Correlation-Id", correlationId)
+            .build();
+        
+        log.info("Request: {} {} - CorrelationId: {}",
+            request.getMethod(), request.getURI(), correlationId);
+        
+        long startTime = System.currentTimeMillis();
+        
+        return chain.filter(exchange.mutate().request(mutatedRequest).build())
+            .then(Mono.fromRunnable(() -> {
+                long duration = System.currentTimeMillis() - startTime;
+                log.info("Response: {} - Duration: {}ms - CorrelationId: {}",
+                    exchange.getResponse().getStatusCode(), duration, correlationId);
+            }));
+    }
+    
+    @Override
+    public int getOrder() {
+        return -1;  // Eseguito per primo
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Fallback Controller</h3>
+                    <pre><code class="language-java">package com.esempio.gateway.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/fallback")
+public class FallbackController {
+    
+    @GetMapping("/users")
+    public Map&lt;String, String&gt; userFallback() {
+        return Map.of(
+            "status", "DOWN",
+            "message", "Il servizio utenti non è disponibile",
+            "timestamp", String.valueOf(System.currentTimeMillis())
+        );
+    }
+    
+    @GetMapping("/orders")
+    public Map&lt;String, String&gt; orderFallback() {
+        return Map.of(
+            "status", "DOWN",
+            "message", "Il servizio ordini non è disponibile"
+        );
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 9. CONFIGURAZIONE CENTRALIZZATA ==================== -->
+            <div class="section-card" id="config-server">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h2>Configurazione Centralizzata - Spring Cloud Config</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Config Server + Config Client</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Server</h3>
+                    <pre><code class="language-java">package com.esempio.config;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.config.server.EnableConfigServer;
+
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigServerApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Server application.yml</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/mio-utente/config-repo
+          default-label: main
+          search-paths: '{application}'
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
+      fail-fast: true
+
+encrypt:
+  key: ${ENCRYPT_KEY:my-secret-key}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Client (bootstrap.yml)</h3>
+                    <pre><code class="language-yaml">spring:
+  application:
+    name: user-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+        max-attempts: 6
+        initial-interval: 1000
+        multiplier: 1.1
+      enabled: true
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Repository Git con configurazioni</h3>
+                    <pre><code class="language-text">config-repo/
+├── application.yml
+├── application-dev.yml
+├── application-prod.yml
+├── user-service.yml
+├── user-service-dev.yml
+├── user-service-prod.yml
+└── order-service.yml
+
+# Esempio user-service.yml
+database:
+  url: jdbc:mysql://localhost:3306/users
+  username: ${DB_USERNAME:root}
+  password: ${DB_PASSWORD:secret}
+  driver-class-name: com.mysql.cj.jdbc.Driver
+
+app:
+  feature:
+    enable-notifications: true
+    max-users: 1000
+    
+logging:
+  level:
+    com.esempio: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 10. DISTRIBUTED TRACING ==================== -->
+            <div class="section-card" id="tracing">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>Distributed Tracing con Micrometer e Zipkin</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Monitoraggio e debugging distribuito</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenze</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.micrometer&lt;/groupId&gt;
+    &lt;artifactId&gt;micrometer-tracing-bridge-brave&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.zipkin.reporter2&lt;/groupId&gt;
+    &lt;artifactId&gt;zipkin-reporter-brave&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.micrometer&lt;/groupId&gt;
+    &lt;artifactId&gt;micrometer-registry-prometheus&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione application.yml</h3>
+                    <pre><code class="language-yaml">management:
+  tracing:
+    sampling:
+      probability: 1.0  # Campiona tutte le richieste
+    propagation:
+      type: w3c,b3
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+      tags:
+        application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Custom Metrics</h3>
+                    <pre><code class="language-java">package com.esempio.microservizio.metrics;
+
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Tags;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CustomMetrics {
+    
+    private final MeterRegistry meterRegistry;
+    private final Counter richiesteCounter;
+    private final Counter erroriCounter;
+    
+    public CustomMetrics(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+        
+        this.richiesteCounter = Counter.builder("api.richieste.totale")
+            .description("Numero totale di richieste API")
+            .tag("service", "user-service")
+            .register(meterRegistry);
+        
+        this.erroriCounter = Counter.builder("api.errori.totale")
+            .description("Numero totale di errori API")
+            .tag("service", "user-service")
+            .register(meterRegistry);
+    }
+    
+    public void incrementaRichieste() {
+        richiesteCounter.increment();
+    }
+    
+    public void incrementaErrori() {
+        erroriCounter.increment();
+    }
+    
+    public Timer.Sample startTimer() {
+        return Timer.start(meterRegistry);
+    }
+    
+    public void stopTimer(Timer.Sample sample, String endpoint, String method) {
+        sample.stop(Timer.builder("api.tempo.risposta")
+            .description("Tempo di risposta API")
+            .tags(Tags.of("endpoint", endpoint, "method", method))
+            .register(meterRegistry));
+    }
+}</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> <strong>Comandi utili:</strong><br>
+                        📊 <strong>Endpoint Actuator</strong>: http://localhost:8080/actuator/health<br>
+                        📈 <strong>Metriche Prometheus</strong>: http://localhost:8080/actuator/prometheus<br>
+                        🔍 <strong>Zipkin UI</strong>: http://localhost:9411 (tracing distribuito)
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. DOCKER ==================== -->
+            <div class="section-card" id="docker">
+                <div class="card-header">
+                    <i class="fab fa-docker"></i>
+                    <h2>Docker - Containerizzare un Microservizio</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fab fa-docker"></i> Dockerfile + docker-compose</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dockerfile (multi-stage build)</h3>
+                    <pre><code class="language-dockerfile"># Stage 1: Build
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src src
+RUN mvn package -DskipTests
+
+# Stage 2: Runtime
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+# Utente non-root per sicurezza
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 docker-compose.yml (orchestrazione)</h3>
+                    <pre><code class="language-yaml">version: '3.8'
+
+services:
+  # Service Discovery
+  eureka-server:
+    build: ./discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  # Config Server
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - microservices-net
+    depends_on:
+      - eureka-server
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+  # User Service
+  user-service:
+    build: ./user-service
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka
+      - CONFIG_URL=http://config-server:8888
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=user-db
+    depends_on:
+      - eureka-server
+      - config-server
+      - user-db
+    networks:
+      - microservices-net
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 512M
+
+  # User Database
+  user-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userdb
+    ports:
+      - "3306:3306"
+    networks:
+      - microservices-net
+    volumes:
+      - user-db-data:/var/lib/mysql
+
+  # API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - user-service
+    networks:
+      - microservices-net
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # Zipkin (Distributed Tracing)
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices-net
+
+  # Prometheus (Metrics)
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - microservices-net
+
+  # Grafana (Dashboard)
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  user-db-data:</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Comandi Docker utili</h3>
+                    <pre><code class="language-bash"># Build delle immagini
+docker build -t user-service:latest ./user-service
+
+# Avvio di tutti i servizi
+docker-compose up -d
+
+# Visualizzazione log
+docker-compose logs -f user-service
+
+# Scale di un servizio
+docker-compose up -d --scale user-service=3
+
+# Arresto di tutti i servizi
+docker-compose down
+
+# Arresto con rimozione volumi
+docker-compose down -v
+
+# Esecuzione comandi in un container
+docker exec -it user-service sh</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 12. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices per Microservizi</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Regole fondamentali per architetture a microservizi</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. DATABASE PER SERVIZIO ====================
+// Ogni microservizio deve avere il proprio database isolato
+// ❌ Condivisione database tra servizi
+// ✅ Ogni servizio ha il suo database
+
+// ==================== 2. API VERSIONING ====================
+@RestController
+@RequestMapping("/api/v1/utenti")
+public class UtenteControllerV1 {
+    // Versione 1 dell'API
+}
+
+@RestController
+@RequestMapping("/api/v2/utenti")
+public class UtenteControllerV2 {
+    // Versione 2 dell'API
+}
+
+// ==================== 3. HEALTH CHECK PERSONALIZZATE ====================
+@Component
+public class CustomHealthIndicator implements HealthIndicator {
+    
+    private final RestTemplate restTemplate;
+    
+    public CustomHealthIndicator(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+    
+    @Override
+    public Health health() {
+        try {
+            // Verifica dipendenze esterne
+            ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(
+                "http://external-service/health", String.class);
+            
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return Health.up()
+                    .withDetail("external-service", "available")
+                    .withDetail("timestamp", System.currentTimeMillis())
+                    .build();
+            }
+        } catch (Exception e) {
+            return Health.down()
+                .withDetail("external-service", "unavailable")
+                .withDetail("error", e.getMessage())
+                .build();
+        }
+        return Health.up().build();
+    }
+}
+
+// ==================== 4. CORRELATION ID PER TRACING ====================
+@Component
+public class CorrelationIdFilter implements Filter {
+    
+    private static final String CORRELATION_ID_HEADER = "X-Correlation-Id";
+    
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, 
+                         FilterChain chain) throws IOException, ServletException {
+        
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String correlationId = httpRequest.getHeader(CORRELATION_ID_HEADER);
+        
+        if (correlationId == null) {
+            correlationId = UUID.randomUUID().toString();
+        }
+        
+        MDC.put("correlationId", correlationId);
+        chain.doFilter(request, response);
+        MDC.clear();
+    }
+}
+
+// ==================== 5. GESTIONE ERRORI CENTRALIZZATA ====================
+@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFound(ResourceNotFoundException ex) {
+        log.error("Resource not found: {}", ex.getMessage());
+        return new ErrorResponse("NOT_FOUND", ex.getMessage(), LocalDateTime.now());
+    }
+    
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErrorResponse handleBusiness(BusinessException ex) {
+        log.error("Business error: {}", ex.getMessage());
+        return new ErrorResponse("BUSINESS_ERROR", ex.getMessage(), LocalDateTime.now());
+    }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidation(MethodArgumentNotValidException ex) {
+        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage())
+        );
+        return new ErrorResponse("VALIDATION_ERROR", "Errore di validazione", errors);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleGeneric(Exception ex) {
+        log.error("Unexpected error", ex);
+        return new ErrorResponse("INTERNAL_ERROR", "Errore interno del server", LocalDateTime.now());
+    }
+}
+
+// ==================== 6. CONFIGURAZIONE CORRELATION ID IN FEIGN ====================
+@Configuration
+public class FeignCorrelationConfig {
+    
+    @Bean
+    public RequestInterceptor correlationIdInterceptor() {
+        return requestTemplate -> {
+            String correlationId = MDC.get("correlationId");
+            if (correlationId != null) {
+                requestTemplate.header("X-Correlation-Id", correlationId);
+            }
+        };
+    }
+}
+
+// ==================== 7. RATE LIMITING ====================
+@Service
+public class RateLimitingService {
+    
+    private final Map&lt;String, AtomicInteger&gt; requestCounts = new ConcurrentHashMap&lt;&gt;();
+    private final int MAX_REQUESTS = 100;
+    private final long WINDOW_MS = 60000; // 1 minuto
+    
+    public boolean allowRequest(String clientId) {
+        long window = System.currentTimeMillis() / WINDOW_MS;
+        String key = clientId + ":" + window;
+        
+        AtomicInteger count = requestCounts.computeIfAbsent(key, k -> new AtomicInteger(0));
+        int current = count.incrementAndGet();
+        
+        // Pulizia vecchie finestre
+        requestCounts.keySet().removeIf(k -> !k.endsWith(":" + window));
+        
+        return current <= MAX_REQUESTS;
+    }
+}</code></pre>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist per microservizi:</strong><br>
+                        ✓ Database per servizio (isolamento dati)<br>
+                        ✓ API Versioning (compatibilità backward)<br>
+                        ✓ Health check personalizzate<br>
+                        ✓ Correlation ID per tracing distribuito<br>
+                        ✓ Gestione errori centralizzata<br>
+                        ✓ Rate limiting per prevenire abusi<br>
+                        ✓ Circuit Breaker per resilienza<br>
+                        ✓ Metriche e monitoring (Prometheus/Grafana)<br>
+                        ✓ Logging strutturato (JSON)<br>
+                        ✓ Containerizzazione (Docker)<br>
+                        ✓ Orchestrazione (Kubernetes/docker-compose)
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Microservizi Spring Boot | Architetture moderne
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Prism.js e Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="includes/include.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'dipendenze', 'rest-controller', 'entity-repository', 'feign-client', 'circuit-breaker', 'service-discovery', 'api-gateway', 'config-server', 'tracing', 'docker', 'best-practices'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

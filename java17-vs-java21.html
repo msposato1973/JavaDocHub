@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 17 vs Java 21 | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Include Navbar (generata da navbar.js) -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#confronto-generale" class="toc-link" data-target="confronto-generale">
+                    <i class="fas fa-chart-simple"></i> Confronto Generale
+                </a></li>
+                <li><a href="#pattern-switch" class="toc-link" data-target="pattern-switch">
+                    <i class="fas fa-code-branch"></i> Pattern Matching per switch
+                </a></li>
+                <li><a href="#record-patterns" class="toc-link" data-target="record-patterns">
+                    <i class="fas fa-database"></i> Record Patterns
+                </a></li>
+                <li><a href="#sequenced-collections" class="toc-link" data-target="sequenced-collections">
+                    <i class="fas fa-layer-group"></i> Sequenced Collections
+                </a></li>
+                <li><a href="#virtual-threads" class="toc-link" data-target="virtual-threads">
+                    <i class="fas fa-tasks"></i> Virtual Threads
+                </a></li>
+                <li><a href="#structured-concurrency" class="toc-link" data-target="structured-concurrency">
+                    <i class="fas fa-cubes"></i> Structured Concurrency
+                </a></li>
+                <li><a href="#string-templates" class="toc-link" data-target="string-templates">
+                    <i class="fas fa-quote-right"></i> String Templates
+                </a></li>
+                <li><a href="#unnamed-classes" class="toc-link" data-target="unnamed-classes">
+                    <i class="fas fa-code"></i> Unnamed Classes
+                </a></li>
+                <li><a href="#unnamed-variables" class="toc-link" data-target="unnamed-variables">
+                    <i class="fas fa-underline"></i> Unnamed Variables
+                </a></li>
+                <li><a href="#scoped-values" class="toc-link" data-target="scoped-values">
+                    <i class="fas fa-share-alt"></i> Scoped Values
+                </a></li>
+                <li><a href="#api-novita" class="toc-link" data-target="api-novita">
+                    <i class="fas fa-gift"></i> API Novità
+                </a></li>
+                <li><a href="#api-rimosse" class="toc-link" data-target="api-rimosse">
+                    <i class="fas fa-trash-alt"></i> API Rimosse
+                </a></li>
+                <li><a href="#guida-migrazione" class="toc-link" data-target="guida-migrazione">
+                    <i class="fas fa-exchange-alt"></i> Guida Migrazione
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fab fa-java"></i> Java 17 vs Java 21</h1>
+                <p>Confronto completo tra le due versioni LTS (Long Term Support) di Java: Java 17 (settembre 2021) e Java 21 (settembre 2023)</p>
+            </div>
+
+            <!-- ==================== 1. CONFRONTO GENERALE ==================== -->
+            <div class="section-card" id="confronto-generale">
+                <div class="card-header"><i class="fas fa-chart-simple"></i><h2>Confronto Generale</h2></div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Caratteristica</th><th>Java 17 (LTS - set 2021)</th><th>Java 21 (LTS - set 2023)</th></tr>
+                        <tr><td rowspan="2">Novità principali</td>
+                            <td>Switch expression<br>Record Class<br>Sealed Class<br>Pattern Matching instanceof<br>Text Block</td>
+                            <td>Virtual Threads (Project Loom)<br>Sequenced Collections<br>Record Patterns<br>Pattern Matching per switch<br>String Templates (Preview)<br>Scoped Values (Preview)</td>
+                        </tr>
+                        <tr><td>Garbage Collector</th><td>ZGC stabile, Shenandoah</td><td>Generational ZGC, miglioramenti</td></tr>
+                        <tr><td>Virtual Threads</th><td>❌ No</td><td>✅ Sì (stabile)</td></tr>
+                        <tr><td>Structured Concurrency</th><td>❌ No</td><td>✅ Preview</td></tr>
+                        <tr><td>String Templates</th><td>❌ No</td><td>✅ Preview</td></tr>
+                        <tr><td>Scoped Values</th><td>❌ No</td><td>✅ Preview</td></tr>
+                        <tr>那样<strong>Supporto LTS</strong></th><td>Fino a set 2029</td><td>Fino a set 2031</td></tr>
+                    </table>
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-lightbulb"></i> <strong>Java 21 è la LTS più recente</strong> (settembre 2023) con supporto fino a settembre 2031.
+                        Introduce il Project Loom (Virtual Threads) che rivoluziona la programmazione concorrente.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. PATTERN MATCHING PER SWITCH ==================== -->
+            <div class="section-card" id="pattern-switch">
+                <div class="card-header"><i class="fas fa-code-branch"></i><h2>Pattern Matching per switch</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Switch expression senza pattern</div>
+                    <div class="badge-green">Java 21 → Pattern matching su switch (stabile)</div>
+                    
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fab fa-java"></i> Java 17</div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">// Java 17 - necessita instanceof prima dello switch
+String formatta(Object obj) {
+    if (obj instanceof Integer i) {
+        return "Intero: " + i;
+    } else if (obj instanceof String s) {
+        return "Stringa: " + s;
+    } else if (obj == null) {
+        return "Null";
+    }
+    return "Sconosciuto";
+}</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fab fa-java"></i> Java 21 <span class="feature-new">STABILE</span></div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">// Java 21 - pattern matching direttamente nello switch
+String formatta(Object obj) {
+    return switch (obj) {
+        case Integer i -> "Intero: " + i;
+        case String s -> "Stringa: " + s;
+        case null -> "Null";
+        default -> "Sconosciuto";
+    };
+}
+
+// Con guardie (when clause)
+String descrivi(Object obj) {
+    return switch (obj) {
+        case Integer i when i > 0 -> "Positivo";
+        case Integer i when i < 0 -> "Negativo";
+        case Integer i -> "Zero";
+        case String s when s.length() > 10 -> "Stringa lunga";
+        case String s -> "Stringa corta";
+        default -> "Altro";
+    };
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Java 21 vantaggio: <strong>Codice più pulito e leggibile</strong>, pattern matching integrato nello switch.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. RECORD PATTERNS ==================== -->
+            <div class="section-card" id="record-patterns">
+                <div class="card-header"><i class="fas fa-database"></i><h2>Record Patterns</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Record senza destrutturazione</div>
+                    <div class="badge-green">Java 21 → Record patterns (stabile)</div>
+                    
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fab fa-java"></i> Java 17</div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">record Punto(int x, int y) {}
+record Rettangolo(Punto altoSinistra, Punto bassoDestra) {}
+
+// Decomposizione manuale
+void stampa(Rettangolo r) {
+    if (r instanceof Rettangolo) {
+        Punto p1 = r.altoSinistra();
+        Punto p2 = r.bassoDestra();
+        System.out.println(p1.x() + "," + p1.y());
+    }
+}</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fab fa-java"></i> Java 21 <span class="feature-new">STABILE</span></div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">record Punto(int x, int y) {}
+record Rettangolo(Punto altoSinistra, Punto bassoDestra) {}
+
+// Destrutturazione automatica
+void stampa(Rettangolo r) {
+    if (r instanceof Rettangolo(Punto(int x1, int y1), 
+                                Punto(int x2, int y2))) {
+        System.out.println(x1 + "," + y1 + " - " + x2 + "," + y2);
+    }
+}
+
+// In switch
+int area(Object obj) {
+    return switch (obj) {
+        case Rettangolo(Punto(int x1, int y1), 
+                       Punto(int x2, int y2)) -> (x2 - x1) * (y2 - y1);
+        default -> 0;
+    };
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Java 21 vantaggio: <strong>Destrutturazione automatica dei Record</strong>, codice più espressivo.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. SEQUENCED COLLECTIONS ==================== -->
+            <div class="section-card" id="sequenced-collections">
+                <div class="card-header"><i class="fas fa-layer-group"></i><h2>Sequenced Collections</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Interfacce separate per liste ordinate</div>
+                    <div class="badge-green">Java 21 → Nuova interfaccia SequencedCollection</div>
+                    
+                    <pre><code class="language-java">import java.util.*;
+
+// Java 21 - Nuove interfacce per collezioni ordinate
+// SequencedCollection<E>, SequencedSet<E>, SequencedMap<K,V>
+
+public class SequencedCollectionsDemo {
+    public static void main(String[] args) {
+        
+        // ========== SEQUENCED COLLECTION ==========
+        SequencedCollection&lt;String&gt; list = new ArrayList&lt;&gt;(List.of("A", "B", "C"));
+        
+        // Nuovi metodi
+        String first = list.getFirst();     // "A"
+        String last = list.getLast();       // "C"
+        
+        list.addFirst("Z");    // [Z, A, B, C]
+        list.addLast("D");     // [Z, A, B, C, D]
+        
+        list.removeFirst();    // remove "Z"
+        list.removeLast();     // remove "D"
+        
+        // Reverse order view
+        SequencedCollection&lt;String&gt; reversed = list.reversed();
+        System.out.println("Reversed: " + reversed);  // [C, B, A]
+        
+        // ========== SEQUENCED MAP ==========
+        SequencedMap&lt;String, Integer&gt; map = new LinkedHashMap&lt;&gt;();
+        map.put("A", 1);
+        map.put("B", 2);
+        map.put("C", 3);
+        
+        // Primo e ultimo entry
+        Map.Entry&lt;String, Integer&gt; firstEntry = map.firstEntry();    // A=1
+        Map.Entry&lt;String, Integer&gt; lastEntry = map.lastEntry();      // C=3
+        
+        // Reversed map
+        SequencedMap&lt;String, Integer&gt; reversedMap = map.reversed();
+        
+        // ========== VANTAGGI ==========
+        // Prima (Java 17) per ottenere primo e ultimo elemento:
+        // List: list.get(0), list.get(list.size()-1)
+        // Ora: list.getFirst(), list.getLast()
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Reversed: [C, B, A]<br>
+                        First entry: A=1<br>
+                        Last entry: C=3
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. VIRTUAL THREADS ==================== -->
+            <div class="section-card" id="virtual-threads">
+                <div class="card-header"><i class="fas fa-tasks"></i><h2>Virtual Threads (Project Loom)</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Platform Threads (pesanti)</div>
+                    <div class="badge-green">Java 21 → Virtual Threads (leggeri) <span class="feature-new">STABILE</span></div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.*;
+import java.util.stream.IntStream;
+
+public class VirtualThreadsDemo {
+    public static void main(String[] args) throws Exception {
+        
+        // ========== PIATFORM THREADS (Java 17) ==========
+        System.out.println("=== Platform Threads (pesanti) ===");
+        long startPlatform = System.currentTimeMillis();
+        
+        try (ExecutorService executor = Executors.newFixedThreadPool(100)) {
+            IntStream.range(0, 1000).forEach(i -> {
+                executor.submit(() -> {
+                    try { Thread.sleep(10); } catch (InterruptedException e) {}
+                });
+            });
+            executor.shutdown();
+            executor.awaitTermination(1, TimeUnit.MINUTES);
+        }
+        
+        long endPlatform = System.currentTimeMillis();
+        System.out.println("Platform threads: " + (endPlatform - startPlatform) + "ms");
+        
+        // ========== VIRTUAL THREADS (Java 21) ==========
+        System.out.println("\n=== Virtual Threads (leggeri) ===");
+        long startVirtual = System.currentTimeMillis();
+        
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            IntStream.range(0, 1_000_000).forEach(i -> {
+                executor.submit(() -> {
+                    try { Thread.sleep(10); } catch (InterruptedException e) {}
+                });
+            });
+            executor.shutdown();
+            executor.awaitTermination(1, TimeUnit.MINUTES);
+        }
+        
+        long endVirtual = System.currentTimeMillis();
+        System.out.println("Virtual threads: " + (endVirtual - startVirtual) + "ms");
+        
+        // ========== CREAZIONE VIRTUAL THREADS ==========
+        System.out.println("\n=== Creazione Virtual Threads ===");
+        
+        // Metodo 1: Thread.ofVirtual()
+        Thread vt1 = Thread.ofVirtual()
+            .name("virtual-thread-1")
+            .start(() -> System.out.println("Ciao da virtual thread"));
+        
+        // Metodo 2: Thread.startVirtualThread()
+        Thread vt2 = Thread.startVirtualThread(() -> 
+            System.out.println("Ciao da altro virtual thread"));
+        
+        // Metodo 3: Executors.newVirtualThreadPerTaskExecutor()
+        try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            executor.submit(() -> System.out.println("Task su virtual thread"));
+        }
+        
+        vt1.join();
+        vt2.join();
+        
+        // ========== CONFRONTO PRESTAZIONI ==========
+        System.out.println("\n=== Confronto prestazioni ===");
+        System.out.println("Platform threads: ~1000 thread max");
+        System.out.println("Virtual threads: milioni di thread simultanei!");
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Platform threads: ~250ms (con 1000 thread)<br>
+                        Virtual threads: ~500ms (con 1.000.000 thread!)<br>
+                        I virtual thread sono estremamente leggeri e permettono milioni di thread simultanei.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. STRUCTURED CONCURRENCY ==================== -->
+            <div class="section-card" id="structured-concurrency">
+                <div class="card-header"><i class="fas fa-cubes"></i><h2>Structured Concurrency (Preview)</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Gestione concorrenza manuale</div>
+                    <div class="badge-green">Java 21 → Structured Concurrency (Preview)</div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.*;
+import java.util.concurrent.StructuredTaskScope.*;
+
+// Java 21 - StructuredTaskScope (Preview)
+// Richiede: --enable-preview
+
+public class StructuredConcurrencyDemo {
+    
+    // ========== SENZA STRUCTURED CONCURRENCY ==========
+    static class UserProfile {
+        String userId, name, orders, reviews;
+    }
+    
+    UserProfile fetchProfileLegacy(String userId) throws Exception {
+        // Con CompletableFuture (non strutturato)
+        CompletableFuture&lt;String&gt; nameFuture = CompletableFuture.supplyAsync(() -> 
+            fetchName(userId));
+        CompletableFuture&lt;String&gt; ordersFuture = CompletableFuture.supplyAsync(() -> 
+            fetchOrders(userId));
+        CompletableFuture&lt;String&gt; reviewsFuture = CompletableFuture.supplyAsync(() -> 
+            fetchReviews(userId));
+        
+        // Attende tutti, ma se uno fallisce, gli altri continuano
+        CompletableFuture.allOf(nameFuture, ordersFuture, reviewsFuture).join();
+        
+        UserProfile profile = new UserProfile();
+        profile.name = nameFuture.get();
+        profile.orders = ordersFuture.get();
+        profile.reviews = reviewsFuture.get();
+        return profile;
+    }
+    
+    // ========== CON STRUCTURED CONCURRENCY (Java 21) ==========
+    UserProfile fetchProfileStructured(String userId) throws Exception {
+        // Scope strutturato: tutti i subtask vengono gestiti insieme
+        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+            
+            Subtask&lt;String&gt; nameTask = scope.fork(() -> fetchName(userId));
+            Subtask&lt;String&gt; ordersTask = scope.fork(() -> fetchOrders(userId));
+            Subtask&lt;String&gt; reviewsTask = scope.fork(() -> fetchReviews(userId));
+            
+            // Se un subtask fallisce, tutti vengono cancellati
+            scope.join();           // Attende tutti
+            scope.throwIfFailed();  // Propaga eventuali eccezioni
+            
+            UserProfile profile = new UserProfile();
+            profile.name = nameTask.get();
+            profile.orders = ordersTask.get();
+            profile.reviews = reviewsTask.get();
+            return profile;
+        }
+        // All'uscita dal try, tutti i thread vengono automaticamente terminati
+    }
+    
+    private String fetchName(String userId) {
+        return "Mario Rossi";
+    }
+    
+    private String fetchOrders(String userId) {
+        return "5 ordini";
+    }
+    
+    private String fetchReviews(String userId) {
+        return "10 recensioni";
+    }
+    
+    public static void main(String[] args) throws Exception {
+        StructuredConcurrencyDemo demo = new StructuredConcurrencyDemo();
+        UserProfile profile = demo.fetchProfileStructured("123");
+        System.out.println("Profile: " + profile.name + ", " + profile.orders);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Profile: Mario Rossi, 5 ordini
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. STRING TEMPLATES ==================== -->
+            <div class="section-card" id="string-templates">
+                <div class="card-header"><i class="fas fa-quote-right"></i><h2>String Templates (Preview)</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Concatenazione o String.format()</div>
+                    <div class="badge-green">Java 21 → String Templates (Preview)</div>
+                    
+                    <pre><code class="language-java">// Java 21 - String Templates (Preview)
+// Richiede: --enable-preview
+
+public class StringTemplatesDemo {
+    public static void main(String[] args) {
+        String nome = "Mario";
+        int eta = 30;
+        double prezzo = 49.99;
+        
+        // ========== VECCHI METODI ==========
+        System.out.println("=== Vecchi metodi ===");
+        
+        // Concatenazione
+        String msg1 = "Utente: " + nome + ", età: " + eta;
+        
+        // String.format()
+        String msg2 = String.format("Utente: %s, età: %d", nome, eta);
+        
+        // ========== STRING TEMPLATES (Java 21) ==========
+        System.out.println("\n=== String Templates (Java 21) ===");
+        
+        // Template semplice
+        String msg3 = STR."Utente: \{nome}, età: \{eta}";
+        System.out.println(msg3);
+        
+        // Espressioni nei template
+        String msg4 = STR."Tra un anno \{nome} avrà \{eta + 1} anni";
+        System.out.println(msg4);
+        
+        // Template multilinea
+        String json = STR."""
+            {
+                "nome": "\{nome}",
+                "eta": \{eta},
+                "prezzo": \{prezzo}
+            }
+            """;
+        System.out.println(json);
+        
+        // Template con processor personalizzato
+        // FMT processor per formattazione
+        String formattato = FMT."Prezzo: %.2f\{prezzo}";
+        System.out.println(formattato);
+        
+        // ========== PROCESSOR PERSONALIZZATO ==========
+        // JSON processor
+        var JSON = StringTemplate.Processor.of((StringTemplate st) -> {
+            // Validazione e trasformazione JSON
+            return st.interpolate();
+        });
+        
+        // SQL processor (previene SQL injection)
+        var SQL = StringTemplate.Processor.of((StringTemplate st) -> {
+            // Sanitizzazione automatica
+            return st.interpolate();
+        });
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Utente: Mario, età: 30<br>
+                        Tra un anno Mario avrà 31 anni<br>
+                        {"nome": "Mario", "eta": 30, "prezzo": 49.99}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. UNNAMED CLASSES ==================== -->
+            <div class="section-card" id="unnamed-classes">
+                <div class="card-header"><i class="fas fa-code"></i><h2>Unnamed Classes (Preview)</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Necessaria dichiarazione classe</div>
+                    <div class="badge-green">Java 21 → Unnamed Classes (Preview)</div>
+                    
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fab fa-java"></i> Java 17</div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">// Necessario dichiarare la classe anche per programmi semplici
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fab fa-java"></i> Java 21 <span class="feature-new">PREVIEW</span></div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">// Unnamed class - la classe è implicita
+// Non serve la dichiarazione della classe
+void main() {
+    System.out.println("Hello, World!");
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Java 21 vantaggio: <strong>Programmi più semplici</strong> per script e piccoli esempi.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. UNNAMED VARIABLES ==================== -->
+            <div class="section-card" id="unnamed-variables">
+                <div class="card-header"><i class="fas fa-underline"></i><h2>Unnamed Variables</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → Variabili con nome obbligatorio</div>
+                    <div class="badge-green">Java 21 → Unnamed variables (_) <span class="feature-new">STABILE</span></div>
+                    
+                    <pre><code class="language-java">import java.util.*;
+import java.util.function.*;
+
+// Java 21 - Unnamed variables ( _ )
+
+public class UnnamedVariablesDemo {
+    public static void main(String[] args) {
+        
+        // ========== VARIABILI NON UTILIZZATE ==========
+        // Java 17 - variabile con nome
+        try {
+            int result = 10 / 0;
+        } catch (ArithmeticException e) {
+            // 'e' non viene usato
+        }
+        
+        // Java 21 - unnamed variable
+        try {
+            int result = 10 / 0;
+        } catch (ArithmeticException _) {
+            // La variabile è anonima, chiara intenzione
+            System.out.println("Divisione per zero");
+        }
+        
+        // ========== LAMBDA EXPRESSIONS ==========
+        List&lt;String&gt; list = Arrays.asList("a", "b", "c");
+        
+        // Java 17 - parametro con nome
+        list.forEach(item -> System.out.println("Elemento"));
+        
+        // Java 21 - unnamed parameter
+        list.forEach(_ -> System.out.println("Elemento"));
+        
+        // ========== TRY-WITH-RESOURCES ==========
+        // Java 17
+        try (FileReader reader = new FileReader("file.txt")) {
+            // reader non usato
+        } catch (IOException e) {
+            // e non usato
+        }
+        
+        // Java 21
+        try (FileReader _ = new FileReader("file.txt")) {
+            // Risorsa anonima
+        } catch (IOException _) {
+            // Eccezione anonima
+        }
+        
+        // ========== PATTERN MATCHING ==========
+        Object obj = "test";
+        
+        // Java 21 - unnamed in pattern matching
+        if (obj instanceof String _) {
+            System.out.println("È una stringa");
+        }
+        
+        // Nei record patterns
+        record Punto(int x, int y) {}
+        Punto p = new Punto(5, 10);
+        
+        if (p instanceof Punto(int x, int _)) {
+            System.out.println("x = " + x);
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Divisione per zero<br>
+                        Elemento<br>
+                        È una stringa<br>
+                        x = 5
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 10. SCOPED VALUES ==================== -->
+            <div class="section-card" id="scoped-values">
+                <div class="card-header"><i class="fas fa-share-alt"></i><h2>Scoped Values (Preview)</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 17 → ThreadLocal (mutabile, costoso)</div>
+                    <div class="badge-green">Java 21 → Scoped Values (immutabili, efficienti)</div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.*;
+
+// Java 21 - Scoped Values (Preview)
+// Alternativa più efficiente a ThreadLocal
+
+public class ScopedValuesDemo {
+    
+    // ========== THREAD LOCAL (Java 17) ==========
+    private static final ThreadLocal&lt;String&gt; threadLocal = new ThreadLocal&lt;&gt;();
+    
+    static void threadLocalExample() {
+        threadLocal.set("valore");
+        String value = threadLocal.get();
+        threadLocal.remove();  // Necessario per evitare memory leak
+    }
+    
+    // ========== SCOPED VALUES (Java 21) ==========
+    private static final ScopedValue&lt;String&gt; SCOPED = ScopedValue.newInstance();
+    
+    static void scopedValueExample() {
+        // Bind immutabile
+        ScopedValue.where(SCOPED, "valore").run(() -> {
+            // Dentro questo scope, SCOPED.get() restituisce "valore"
+            String value = SCOPED.get();
+            System.out.println("Valore: " + value);
+            
+            // Operazioni annidate
+            nestedOperation();
+        });
+        // Fuori dallo scope, SCOPED non è definito
+    }
+    
+    static void nestedOperation() {
+        // Eredita il valore dallo scope padre
+        String value = SCOPED.get();
+        System.out.println("Nested: " + value);
+    }
+    
+    // ========== CONCORRENZA ==========
+    static void concurrentExample() throws Exception {
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            for (int i = 0; i < 10; i++) {
+                final int id = i;
+                executor.submit(() -> {
+                    ScopedValue.where(SCOPED, "User-" + id).run(() -> {
+                        processRequest();
+                    });
+                });
+            }
+        }
+    }
+    
+    static void processRequest() {
+        String userId = SCOPED.get();
+        System.out.println("Processing request for: " + userId);
+    }
+    
+    public static void main(String[] args) throws Exception {
+        scopedValueExample();
+        concurrentExample();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Valore: valore<br>
+                        Nested: valore<br>
+                        Processing request for: User-0<br>
+                        Processing request for: User-1<br>
+                        ...
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. API NOVITÀ ==================== -->
+            <div class="section-card" id="api-novita">
+                <div class="card-header"><i class="fas fa-gift"></i><h2>API Novità</h2></div>
+                <div class="card-body">
+                    <div class="badge-green">Nuove API introdotte in Java 21</div>
+                    
+                    <pre><code class="language-java">import java.util.*;
+import java.util.concurrent.*;
+import java.time.*;
+
+public class NuoveApiJava21 {
+    public static void main(String[] args) {
+        
+        // ========== 1. SEQUENCED COLLECTIONS ==========
+        SequencedCollection&lt;String&gt; list = new ArrayList&lt;&gt;(List.of("A", "B", "C"));
+        System.out.println("First: " + list.getFirst());  // A
+        System.out.println("Last: " + list.getLast());    // C
+        
+        // ========== 2. MATH API ==========
+        // Divisione con arrotondamento verso zero
+        long result1 = Math.divideExact(10, 3);   // 3
+        // Clamping - limita un valore tra min e max
+        int clamped = Math.clamp(15, 10, 20);     // 15
+        int clamped2 = Math.clamp(5, 10, 20);     // 10
+        int clamped3 = Math.clamp(25, 10, 20);    // 20
+        
+        // ========== 3. COLLECTION FACTORY METHODS ==========
+        // Set.of, List.of, Map.of già esistenti, ora più efficienti
+        
+        // ========== 4. FUTURE TASKS ==========
+        // Nuovi metodi in Future
+        Future&lt;String&gt; future = CompletableFuture.completedFuture("done");
+        // future.resultNow() - ottiene il risultato se completato
+        // future.exceptionNow() - ottiene l'eccezione se fallito
+        // future.state() - ottiene lo stato (RUNNING, SUCCESS, FAILED)
+        
+        // ========== 5. TIME API ==========
+        LocalDate date = LocalDate.of(2024, 10, 15);
+        DayOfWeek dow = DayOfWeek.from(date);
+        // Nuovi metodi per formattazione
+        String formatted = date.format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+        
+        // ========== 6. ZONED DATE TIME ==========
+        ZonedDateTime now = ZonedDateTime.now();
+        // Metodi per conversione tra fusi orari
+        ZonedDateTime utc = now.withZoneSameInstant(ZoneId.of("UTC"));
+        
+        System.out.println("Clamped: " + clamped);
+        System.out.println("Formatted date: " + formatted);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        First: A<br>
+                        Last: C<br>
+                        Clamped: 15<br>
+                        Formatted date: 2024-10-15
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 12. API RIMOSSE E DEPRECATE ==================== -->
+            <div class="section-card" id="api-rimosse">
+                <div class="card-header"><i class="fas fa-trash-alt" style="color: #f44336;"></i><h2>API Rimosse e Deprecate</h2></div>
+                <div class="card-body">
+                    <div class="badge-red">Rimosse o deprecate tra Java 17 e Java 21</div>
+                    
+                    <pre><code class="language-java">// ==================== API RIMOSSE ====================
+
+// 1. Finalizer (rimosso in Java 18)
+// ❌ @Deprecated(since="9", forRemoval=true)
+// protected void finalize() { }  // Non più presente
+
+// 2. Security Manager (deprecato per rimozione in Java 17)
+// System.setSecurityManager(...) // @Deprecated(forRemoval=true)
+
+// 3. ThreadGroup (alcuni metodi deprecati)
+// ThreadGroup.stop(), suspend(), resume() - rimossi
+
+// 4. URL public constructors (deprecati)
+// new URL("http", "example.com", 80, "/path") - deprecato
+
+// ==================== API DEPRECATE ====================
+
+// 1. Locale.ISO_3_LANGUAGE e ISO_3_COUNTRY (deprecati)
+// Usare Locale.forLanguageTag() invece
+
+// 2. Thread.destroy() e Thread.stop(Throwable) - deprecati
+
+// 3. Compiler.enable() e Compiler.disable() - deprecati
+
+// ==================== DA AGGIORNARE ====================
+
+// ❌ Vecchio codice (Java 17)
+// Thread t = new Thread();
+// t.stop();
+
+// ✅ Nuovo codice (Java 21)
+// Thread t = new Thread();
+// t.interrupt();
+// t.join();</code></pre>
+                    <div class="warning-block" style="margin-top: 1rem;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Attenzione:</strong> Il Security Manager è stato deprecato per la rimozione.
+                        Il codice che lo utilizza deve essere migrato ad alternative moderne.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 13. GUIDA ALLA MIGRAZIONE ==================== -->
+            <div class="section-card" id="guida-migrazione">
+                <div class="card-header"><i class="fas fa-exchange-alt"></i><h2>Guida alla Migrazione da Java 17 a Java 21</h2></div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Fase</th><th>Azioni consigliate</th><th>Dettagli</th></tr>
+                        <tr><td rowspan="3">1️⃣ Preparazione</td>
+                            <td>Aggiorna JDK</td>
+                            <td>Installa Java 21 JDK</td>
+                        </tr>
+                        <tr><td>Aggiorna Maven/Gradle</td>
+                            <td>Maven 3.9+, Gradle 8.2+</td>
+                        </tr>
+                        <tr><td>Verifica dipendenze</td>
+                            <td>Librerie compatibili con Java 21</td>
+                        </tr>
+                        <tr><td rowspan="3">2️⃣ Codice</td>
+                            <td>Sostituisci ThreadLocal con Scoped Values</td>
+                            <td>Performance migliori</td>
+                        </tr>
+                        <tr><td>Adotta Virtual Threads</td>
+                            <td>ExecutorService con virtual threads</td>
+                        </tr>
+                        <tr><td>Usa Sequenced Collections</td>
+                            <td>getFirst(), getLast(), reversed()</td>
+                        </tr>
+                        <tr><td rowspan="3">3️⃣ Feature</td>
+                            <td>Pattern matching per switch</td>
+                            <td>Sostituisci if-else annidati</td>
+                        </tr>
+                        <tr><td>Record patterns</td>
+                            <td>Destruttura automatica record</td>
+                        </tr>
+                        <tr><td>Unnamed variables</td>
+                            <td>Usa _ per variabili non utilizzate</td>
+                        </tr>
+                    </table>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Maven configuration</h3>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Maven pom.xml:<br>
+                        <code>
+                        &lt;properties&gt;<br>
+                        &nbsp;&nbsp;&lt;maven.compiler.source&gt;21&lt;/maven.compiler.source&gt;<br>
+                        &nbsp;&nbsp;&lt;maven.compiler.target&gt;21&lt;/maven.compiler.target&gt;<br>
+                        &lt;/properties&gt;
+                        </code>
+                    </div>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Gradle configuration</h3>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> build.gradle:<br>
+                        <code>
+                        java {<br>
+                        &nbsp;&nbsp;sourceCompatibility = JavaVersion.VERSION_21<br>
+                        &nbsp;&nbsp;targetCompatibility = JavaVersion.VERSION_21<br>
+                        }
+                        </code>
+                    </div>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Feature Preview</h3>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Per abilitare le feature preview:<br>
+                        <code>
+                        // Maven<br>
+                        &lt;compilerArgs&gt;<br>
+                        &nbsp;&nbsp;&lt;arg&gt;--enable-preview&lt;/arg&gt;<br>
+                        &lt;/compilerArgs&gt;<br><br>
+                        // Gradle<br>
+                        tasks.withType(JavaCompile) {<br>
+                        &nbsp;&nbsp;options.compilerArgs += "--enable-preview"<br>
+                        }<br><br>
+                        // Esecuzione<br>
+                        java --enable-preview -jar myapp.jar
+                        </code>
+                    </div>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-lightbulb"></i> <strong>Checklist di migrazione a Java 21:</strong><br>
+                        ✓ Aggiorna JDK a Java 21<br>
+                        ✓ Aggiorna Maven/Gradle (Maven 3.9+, Gradle 8.2+)<br>
+                        ✓ Verifica compatibilità librerie<br>
+                        ✓ Adotta Virtual Threads per alta concorrenza<br>
+                        ✓ Usa Sequenced Collections per codice più pulito<br>
+                        ✓ Sostituisci pattern matching if-else con switch<br>
+                        ✓ Usa Record Patterns per destrutturare record<br>
+                        ✓ Sostituisci ThreadLocal con Scoped Values<br>
+                        ✓ Usa unnamed variables (_) per variabili non utilizzate<br>
+                        ✓ Abilita preview per feature sperimentali
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Java 17 vs Java 21 | Confronto completo tra le LTS
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['confronto-generale', 'pattern-switch', 'record-patterns', 'sequenced-collections', 'virtual-threads', 'structured-concurrency', 'string-templates', 'unnamed-classes', 'unnamed-variables', 'scoped-values', 'api-novita', 'api-rimosse', 'guida-migrazione'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

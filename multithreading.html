@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multithreading | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+   
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#creazione" class="toc-link" data-target="creazione">
+                    <i class="fas fa-microchip"></i> Creazione Thread
+                </a></li>
+                <li><a href="#ciclo-vita" class="toc-link" data-target="ciclo-vita">
+                    <i class="fas fa-chart-line"></i> Ciclo di Vita
+                </a></li>
+                <li><a href="#sincronizzazione" class="toc-link" data-target="sincronizzazione">
+                    <i class="fas fa-lock"></i> Sincronizzazione
+                </a></li>
+                <li><a href="#executor" class="toc-link" data-target="executor">
+                    <i class="fas fa-cubes"></i> ExecutorService
+                </a></li>
+                <li><a href="#concurrent" class="toc-link" data-target="concurrent">
+                    <i class="fas fa-layer-group"></i> Concurrent Collections
+                </a></li>
+                <li><a href="#wait-notify" class="toc-link" data-target="wait-notify">
+                    <i class="fas fa-comments"></i> wait() e notify()
+                </a></li>
+                <li><a href="#completable" class="toc-link" data-target="completable">
+                    <i class="fas fa-hourglass-half"></i> CompletableFuture
+                </a></li>
+                <li><a href="#lock" class="toc-link" data-target="lock">
+                    <i class="fas fa-key"></i> Lock e ReentrantLock
+                </a></li>
+                <li><a href="#atomic" class="toc-link" data-target="atomic">
+                    <i class="fas fa-atom"></i> Classi Atomiche
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-tasks"></i> Multithreading e Concorrenza in Java</h1>
+                <p>Thread, Runnable, sincronizzazione, ExecutorService, Concurrent Collections e best practices</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è il Multithreading?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Il <strong>multithreading</strong> è la capacità di un programma di eseguire più thread (sotto-processi)
+                        contemporaneamente. Java supporta nativamente il multithreading, permettendo di sfruttare al meglio
+                        i processori multi-core e di creare applicazioni più reattive.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi del multithreading:</strong><br>
+                        - <strong>Prestazioni</strong>: sfrutta processori multi-core<br>
+                        - <strong>Reattività</strong>: UI non si blocca durante operazioni lunghe<br>
+                        - <strong>Condivisione risorse</strong>: thread condividono memoria<br>
+                        - <strong>Scalabilità</strong>: più richieste gestite simultaneamente
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. CREAZIONE THREAD ==================== -->
+            <div class="section-card" id="creazione">
+                <div class="card-header">
+                    <i class="fas fa-microchip"></i>
+                    <h2>Creazione di Thread</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Tre modi principali per creare thread</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 MODO 1: Estendere Thread</h3>
+                    <pre><code class="language-java">class ThreadEsteso extends Thread {
+    private String nome;
+    
+    public ThreadEsteso(String nome) {
+        this.nome = nome;
+    }
+    
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(nome + " - step " + i);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println(nome + " interrotto");
+            }
+        }
+    }
+}
+
+// Utilizzo
+Thread t1 = new ThreadEsteso("Thread-1");
+Thread t2 = new ThreadEsteso("Thread-2");
+t1.start();
+t2.start();</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 MODO 2: Implementare Runnable (consigliato)</h3>
+                    <pre><code class="language-java">class RunnableImpl implements Runnable {
+    private String nome;
+    
+    public RunnableImpl(String nome) {
+        this.nome = nome;
+    }
+    
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println(nome + " [Runnable] - " + i);
+            try {
+                Thread.sleep(400);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+}
+
+// Utilizzo
+Thread t3 = new Thread(new RunnableImpl("Runnable-1"));
+t3.start();</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 MODO 3: Lambda Expression (Java 8+)</h3>
+                    <pre><code class="language-java">Thread t4 = new Thread(() -> {
+    for (int i = 1; i <= 3; i++) {
+        System.out.println("Lambda: " + i);
+    }
+});
+t4.start();</code></pre>
+
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Nota:</strong> Implementare <code>Runnable</code> è preferibile perché Java non supporta 
+                        ereditarietà multipla. Inoltre permette di usare lambda expressions.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. CICLO DI VITA DEL THREAD ==================== -->
+            <div class="section-card" id="ciclo-vita">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>Ciclo di Vita del Thread</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">NEW → RUNNABLE → RUNNING → BLOCKED/WAITING/TIMED_WAITING → TERMINATED</div>
+                    <pre><code class="language-java">public class CicloVitaDemo {
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread = new Thread(() -> {
+            System.out.println("Thread in esecuzione...");
+            try {
+                Thread.sleep(1000);  // TIMED_WAITING
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Thread terminato");
+        });
+        
+        System.out.println("Stato dopo creazione: " + thread.getState());  // NEW
+        
+        thread.start();
+        System.out.println("Stato dopo start: " + thread.getState());  // RUNNABLE
+        
+        Thread.sleep(500);
+        System.out.println("Stato durante sleep: " + thread.getState());  // TIMED_WAITING
+        
+        thread.join();
+        System.out.println("Stato dopo join: " + thread.getState());  // TERMINATED
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Stato dopo creazione: NEW<br>
+                        Stato dopo start: RUNNABLE<br>
+                        Thread in esecuzione...<br>
+                        Stato durante sleep: TIMED_WAITING<br>
+                        Thread terminato<br>
+                        Stato dopo join: TERMINATED
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. SINCRONIZZAZIONE ==================== -->
+            <div class="section-card" id="sincronizzazione">
+                <div class="card-header">
+                    <i class="fas fa-lock"></i>
+                    <h2>Sincronizzazione e Race Condition</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-red"><i class="fas fa-exclamation-circle"></i> Attenzione: senza sincronizzazione, più thread possono corrompere i dati condivisi</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 ESEMPIO SENZA SINCRONIZZAZIONE (RACE CONDITION)</h3>
+                    <pre><code class="language-java">class ContatoreNonSincronizzato {
+    private int conteggio = 0;
+    
+    public void incrementa() {
+        conteggio++;  // Non è atomico!
+    }
+    
+    public int getConteggio() {
+        return conteggio;
+    }
+}
+
+// Problema: il risultato finale potrebbe essere minore di 10000!</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 ESEMPIO CON SINCRONIZZAZIONE (CORRETTO)</h3>
+                    <pre><code class="language-java">class ContatoreSincronizzato {
+    private int conteggio = 0;
+    
+    // Metodo sincronizzato (solo un thread alla volta)
+    public synchronized void incrementa() {
+        conteggio++;
+    }
+    
+    public synchronized int getConteggio() {
+        return conteggio;
+    }
+}
+
+class Lavoratore extends Thread {
+    private ContatoreSincronizzato contatore;
+    
+    public Lavoratore(ContatoreSincronizzato contatore) {
+        this.contatore = contatore;
+    }
+    
+    @Override
+    public void run() {
+        for (int i = 0; i < 1000; i++) {
+            contatore.incrementa();
+        }
+    }
+}
+
+public class SincronizzazioneDemo {
+    public static void main(String[] args) throws InterruptedException {
+        ContatoreSincronizzato contatore = new ContatoreSincronizzato();
+        Thread[] threads = new Thread[10];
+        
+        for (int i = 0; i < 10; i++) {
+            threads[i] = new Lavoratore(contatore);
+            threads[i].start();
+        }
+        
+        for (Thread t : threads) {
+            t.join();  // Attende la terminazione
+        }
+        
+        System.out.println("Conteggio finale: " + contatore.getConteggio());
+        // Dovrebbe essere 10 * 1000 = 10000
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output: Conteggio finale: 10000
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Alternative a synchronized:</strong><br>
+                        - <code>volatile</code> per variabili semplici<br>
+                        - <code>AtomicInteger</code>, <code>AtomicLong</code>, ecc.<br>
+                        - <code>ReentrantLock</code> per maggiore flessibilità
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. EXECUTOR SERVICE ==================== -->
+            <div class="section-card" id="executor">
+                <div class="card-header">
+                    <i class="fas fa-cubes"></i>
+                    <h2>ExecutorService e Thread Pool</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fas fa-rocket"></i> Gestione professionale dei thread</div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.*;
+import java.util.List;
+import java.util.ArrayList;
+
+public class ExecutorServiceDemo {
+    public static void main(String[] args) throws Exception {
+        // 1. FixedThreadPool - pool con numero fisso di thread
+        ExecutorService fixedPool = Executors.newFixedThreadPool(5);
+        
+        // 2. CachedThreadPool - crea thread quando necessario, riusa quelli esistenti
+        ExecutorService cachedPool = Executors.newCachedThreadPool();
+        
+        // 3. SingleThreadExecutor - un singolo thread sequenziale
+        ExecutorService singlePool = Executors.newSingleThreadExecutor();
+        
+        // 4. ScheduledThreadPool - per task programmati
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+        
+        // ========== ESECUZIONE TASK ==========
+        // Esecuzione di task senza ritorno
+        fixedPool.submit(() -> {
+            System.out.println("Task eseguito da: " + Thread.currentThread().getName());
+        });
+        
+        // Esecuzione con risultato (Callable)
+        Callable&lt;Integer&gt; taskCallable = () -> {
+            Thread.sleep(1000);
+            return 42;
+        };
+        
+        Future&lt;Integer&gt; future = fixedPool.submit(taskCallable);
+        System.out.println("Risultato: " + future.get());
+        
+        // ========== TASK PROGRAMMATI ==========
+        // Esegue dopo 2 secondi
+        scheduler.schedule(() -> System.out.println("Task dopo 2 secondi"), 2, TimeUnit.SECONDS);
+        
+        // Esegue periodicamente ogni 3 secondi (dopo 1 secondo di ritardo iniziale)
+        scheduler.scheduleAtFixedRate(() -> System.out.println("Task periodico"), 1, 3, TimeUnit.SECONDS);
+        
+        // ========== INVOKE ALL ==========
+        List&lt;Callable&lt;String&gt;&gt; tasks = Arrays.asList(
+            () -> "Task 1 completato",
+            () -> "Task 2 completato",
+            () -> "Task 3 completato"
+        );
+        
+        List&lt;Future&lt;String&gt;&gt; risultati = fixedPool.invokeAll(tasks);
+        for (Future&lt;String&gt; res : risultati) {
+            System.out.println(res.get());
+        }
+        
+        // ========== SHUTDOWN ==========
+        fixedPool.shutdown();
+        try {
+            if (!fixedPool.awaitTermination(60, TimeUnit.SECONDS)) {
+                fixedPool.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            fixedPool.shutdownNow();
+        }
+        
+        // scheduler.shutdown();  // Ricordati di shutdown anche lo scheduler
+    }
+}</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Tipi di ExecutorService:</strong><br>
+                        - <code>newFixedThreadPool(n)</code>: pool con numero fisso di thread<br>
+                        - <code>newCachedThreadPool()</code>: crea thread quando necessario, riusa quelli esistenti<br>
+                        - <code>newSingleThreadExecutor()</code>: un singolo thread sequenziale<br>
+                        - <code>newScheduledThreadPool(n)</code>: per task programmati
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. CONCURRENT COLLECTIONS ==================== -->
+            <div class="section-card" id="concurrent">
+                <div class="card-header">
+                    <i class="fas fa-layer-group"></i>
+                    <h2>Thread Safety con Concurrent Collections</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Collections thread-safe per ambienti concorrenti</div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.*;
+import java.util.*;
+
+public class ConcurrentCollectionsDemo {
+    public static void main(String[] args) throws InterruptedException {
+        // HashMap NON è thread-safe!
+        // Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();  // PROBLEMA!
+        
+        // ========== SOLUZIONI THREAD-SAFE ==========
+        
+        // 1. ConcurrentHashMap
+        Map&lt;String, Integer&gt; concurrentMap = new ConcurrentHashMap&lt;&gt;();
+        
+        // 2. CopyOnWriteArrayList (ottimo per letture frequenti, scritture rare)
+        List&lt;Integer&gt; copyOnWriteList = new CopyOnWriteArrayList&lt;&gt;();
+        
+        // 3. ConcurrentLinkedQueue (coda non bloccante)
+        Queue&lt;String&gt; concurrentQueue = new ConcurrentLinkedQueue&lt;&gt;();
+        
+        // 4. BlockingQueue (coda bloccante)
+        BlockingQueue&lt;Integer&gt; blockingQueue = new ArrayBlockingQueue&lt;&gt;(10);
+        
+        // ========== ESEMPIO PRODUCER-CONSUMER ==========
+        BlockingQueue&lt;Integer&gt; coda = new LinkedBlockingQueue&lt;&gt;();
+        
+        // Producer
+        Thread producer = new Thread(() -> {
+            try {
+                for (int i = 1; i <= 10; i++) {
+                    coda.put(i);
+                    System.out.println("📦 Prodotto: " + i);
+                    Thread.sleep(100);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        // Consumer
+        Thread consumer = new Thread(() -> {
+            try {
+                while (true) {
+                    Integer val = coda.take();
+                    System.out.println("📦 Consumato: " + val);
+                    if (val == 10) break;
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        producer.start();
+        consumer.start();
+        producer.join();
+        consumer.join();
+        
+        // ========== ESEMPIO CONCURRENT HASHMAP ==========
+        System.out.println("\n=== ConcurrentHashMap esempio ===");
+        ConcurrentHashMap&lt;String, Integer&gt; voti = new ConcurrentHashMap&lt;&gt;();
+        
+        // Operazioni atomiche
+        voti.put("Alice", 85);
+        voti.put("Bob", 70);
+        
+        // putIfAbsent - inserisce solo se la chiave non esiste
+        voti.putIfAbsent("Alice", 100);  // Non fa nulla
+        voti.putIfAbsent("Diana", 90);   // Inserisce
+        
+        // replace condizionale
+        voti.replace("Bob", 70, 75);     // Sostituisce solo se il valore corrente è 70
+        
+        // compute
+        voti.compute("Alice", (k, v) -> v + 5);
+        
+        System.out.println("Voti: " + voti);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        📦 Prodotto: 1<br>
+                        📦 Consumato: 1<br>
+                        ...<br>
+                        📦 Prodotto: 10<br>
+                        📦 Consumato: 10<br>
+                        === ConcurrentHashMap esempio ===<br>
+                        Voti: {Bob=75, Alice=90, Diana=90}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. WAIT E NOTIFY ==================== -->
+            <div class="section-card" id="wait-notify">
+                <div class="card-header">
+                    <i class="fas fa-comments"></i>
+                    <h2>wait(), notify(), notifyAll()</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Comunicazione tra thread</div>
+                    
+                    <pre><code class="language-java">class MessageQueue {
+    private String message;
+    private boolean empty = true;
+    
+    public synchronized String take() throws InterruptedException {
+        while (empty) {
+            wait();  // Attende che il messaggio sia disponibile
+        }
+        empty = true;
+        notifyAll();  // Notifica i producer
+        return message;
+    }
+    
+    public synchronized void put(String message) throws InterruptedException {
+        while (!empty) {
+            wait();  // Attende che il messaggio venga consumato
+        }
+        empty = false;
+        this.message = message;
+        notifyAll();  // Notifica i consumer
+    }
+}
+
+public class WaitNotifyDemo {
+    public static void main(String[] args) {
+        MessageQueue queue = new MessageQueue();
+        
+        // Consumer
+        Thread consumer = new Thread(() -> {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    String msg = queue.take();
+                    System.out.println("📩 Ricevuto: " + msg);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        // Producer
+        Thread producer = new Thread(() -> {
+            String[] messaggi = {"Msg1", "Msg2", "Msg3", "Msg4", "Msg5"};
+            try {
+                for (String msg : messaggi) {
+                    queue.put(msg);
+                    System.out.println("📤 Inviato: " + msg);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        consumer.start();
+        producer.start();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        📤 Inviato: Msg1<br>
+                        📩 Ricevuto: Msg1<br>
+                        📤 Inviato: Msg2<br>
+                        📩 Ricevuto: Msg2<br>
+                        ...
+                    </div>
+                    <div class="warning-block">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> wait(), notify() e notifyAll() 
+                        devono essere chiamati solo all'interno di blocchi sincronizzati (synchronized)!
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. COMPLETABLE FUTURE ==================== -->
+            <div class="section-card" id="completable">
+                <div class="card-header">
+                    <i class="fas fa-hourglass-half"></i>
+                    <h2>CompletableFuture (Programmazione Asincrona)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 8+ - Pipeline asincrone non bloccanti</div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.*;
+import java.util.List;
+
+public class CompletableFutureDemo {
+    public static void main(String[] args) throws Exception {
+        // ========== ESECUZIONE ASINCRONA SEMPLICE ==========
+        CompletableFuture&lt;String&gt; future = CompletableFuture.supplyAsync(() -> {
+            try { Thread.sleep(1000); } catch (InterruptedException e) {}
+            return "Risultato";
+        });
+        
+        future.thenAccept(result -> System.out.println("Ricevuto: " + result));
+        
+        // ========== PIPELINE DI OPERAZIONI ==========
+        CompletableFuture.supplyAsync(() -> "Hello")
+            .thenApply(s -> s + " World")
+            .thenApply(String::toUpperCase)
+            .thenAccept(System.out::println);
+        
+        // ========== COMBINAZIONE DI PIÙ FUTURES ==========
+        CompletableFuture&lt;Integer&gt; future1 = CompletableFuture.supplyAsync(() -> 10);
+        CompletableFuture&lt;Integer&gt; future2 = CompletableFuture.supplyAsync(() -> 20);
+        
+        CompletableFuture&lt;Integer&gt; somma = future1.thenCombine(future2, (a, b) -> a + b);
+        System.out.println("Somma: " + somma.get());
+        
+        // ========== GESTIONE ERRORI ==========
+        CompletableFuture.supplyAsync(() -> {
+            if (true) throw new RuntimeException("Errore!");
+            return "OK";
+        }).exceptionally(ex -> {
+            System.out.println("Errore: " + ex.getMessage());
+            return "Fallback";
+        }).thenAccept(System.out::println);
+        
+        // ========== ATTESA DI TUTTI I FUTURES ==========
+        List&lt;CompletableFuture&lt;String&gt;&gt; futures = List.of(
+            CompletableFuture.supplyAsync(() -> "Task 1"),
+            CompletableFuture.supplyAsync(() -> "Task 2"),
+            CompletableFuture.supplyAsync(() -> "Task 3")
+        );
+        
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+            .thenRun(() -> System.out.println("Tutti i task completati"));
+        
+        // ========== CORSA TRA FUTURES ==========
+        CompletableFuture&lt;String&gt; veloce = CompletableFuture.supplyAsync(() -> {
+            sleep(100); return "Veloce";
+        });
+        CompletableFuture&lt;String&gt; lento = CompletableFuture.supplyAsync(() -> {
+            sleep(500); return "Lento";
+        });
+        
+        CompletableFuture&lt;Object&gt; primo = CompletableFuture.anyOf(veloce, lento);
+        System.out.println("Primo completato: " + primo.get());
+    }
+    
+    private static void sleep(int ms) {
+        try { Thread.sleep(ms); } catch (InterruptedException e) {}
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        HELLO WORLD<br>
+                        Somma: 30<br>
+                        Errore: java.lang.RuntimeException: Errore!<br>
+                        Fallback<br>
+                        Ricevuto: Risultato<br>
+                        Tutti i task completati<br>
+                        Primo completato: Veloce
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. LOCK E REENTRANT LOCK ==================== -->
+            <div class="section-card" id="lock">
+                <div class="card-header">
+                    <i class="fas fa-key"></i>
+                    <h2>Lock e ReentrantLock</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Alternativa più flessibile a synchronized</div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.locks.*;
+import java.util.*;
+
+public class LockDemo {
+    
+    // ========== REENTRANT LOCK ==========
+    static class ContatoreConLock {
+        private int conteggio = 0;
+        private final Lock lock = new ReentrantLock();
+        
+        public void incrementa() {
+            lock.lock();
+            try {
+                conteggio++;
+            } finally {
+                lock.unlock();  // Importante: sempre in finally!
+            }
+        }
+        
+        public int getConteggio() {
+            lock.lock();
+            try {
+                return conteggio;
+            } finally {
+                lock.unlock();
+            }
+        }
+        
+        // TryLock - non bloccante
+        public boolean tryIncrementa() {
+            if (lock.tryLock()) {
+                try {
+                    conteggio++;
+                    return true;
+                } finally {
+                    lock.unlock();
+                }
+            }
+            return false;
+        }
+        
+        // TryLock con timeout
+        public boolean tryIncrementaConTimeout(long timeout, TimeUnit unit) throws InterruptedException {
+            if (lock.tryLock(timeout, unit)) {
+                try {
+                    conteggio++;
+                    return true;
+                } finally {
+                    lock.unlock();
+                }
+            }
+            return false;
+        }
+    }
+    
+    // ========== READ WRITE LOCK ==========
+    static class Cache {
+        private final Map&lt;String, String&gt; data = new HashMap&lt;&gt;();
+        private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+        private final Lock readLock = readWriteLock.readLock();
+        private final Lock writeLock = readWriteLock.writeLock();
+        
+        public String get(String key) {
+            readLock.lock();
+            try {
+                return data.get(key);
+            } finally {
+                readLock.unlock();
+            }
+        }
+        
+        public void put(String key, String value) {
+            writeLock.lock();
+            try {
+                data.put(key, value);
+                System.out.println("Inserito: " + key + "=" + value);
+            } finally {
+                writeLock.unlock();
+            }
+        }
+        
+        public void clear() {
+            writeLock.lock();
+            try {
+                data.clear();
+                System.out.println("Cache svuotata");
+            } finally {
+                writeLock.unlock();
+            }
+        }
+    }
+    
+    public static void main(String[] args) throws InterruptedException {
+        // Test ReentrantLock
+        ContatoreConLock contatore = new ContatoreConLock();
+        
+        Thread[] threads = new Thread[10];
+        for (int i = 0; i < 10; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < 1000; j++) {
+                    contatore.incrementa();
+                }
+            });
+            threads[i].start();
+        }
+        
+        for (Thread t : threads) {
+            t.join();
+        }
+        System.out.println("Contatore con Lock: " + contatore.getConteggio());
+        
+        // Test ReadWriteLock
+        Cache cache = new Cache();
+        
+        // Scrittori
+        Thread writer = new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                cache.put("key" + i, "value" + i);
+            }
+        });
+        
+        // Lettori (possono essere concorrenti)
+        Thread reader1 = new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Reader1: " + cache.get("key" + i));
+            }
+        });
+        
+        Thread reader2 = new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Reader2: " + cache.get("key" + i));
+            }
+        });
+        
+        writer.start();
+        writer.join();
+        reader1.start();
+        reader2.start();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Contatore con Lock: 10000<br>
+                        Inserito: key0=value0<br>
+                        ...<br>
+                        Reader1: value0<br>
+                        Reader2: value0<br>
+                        ...
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi di Lock rispetto a synchronized:</strong><br>
+                        - <code>tryLock()</code> non bloccante<br>
+                        - <code>lockInterruptibly()</code> interrompibile<br>
+                        - <code>ReadWriteLock</code> per ottimizzare letture concorrenti<br>
+                        - Più controllo sul timeout
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 10. CLASSI ATOMICHE ==================== -->
+            <div class="section-card" id="atomic">
+                <div class="card-header">
+                    <i class="fas fa-atom"></i>
+                    <h2>Classi Atomiche (java.util.concurrent.atomic)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Operazioni atomiche senza sincronizzazione esplicita</div>
+                    
+                    <pre><code class="language-java">import java.util.concurrent.atomic.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class AtomicDemo {
+    public static void main(String[] args) throws InterruptedException {
+        // ========== ATOMIC INTEGER ==========
+        AtomicInteger atomicInt = new AtomicInteger(0);
+        
+        System.out.println("=== AtomicInteger ===");
+        System.out.println("Valore iniziale: " + atomicInt.get());
+        
+        // Operazioni atomiche
+        atomicInt.incrementAndGet();      // 1
+        atomicInt.addAndGet(5);           // 6
+        atomicInt.compareAndSet(6, 10);   // CAS (Compare And Swap)
+        
+        System.out.println("Dopo operazioni: " + atomicInt.get());
+        
+        // getAndUpdate
+        atomicInt.getAndUpdate(n -> n * 2);
+        System.out.println("Dopo update: " + atomicInt.get());
+        
+        // ========== ATOMIC BOOLEAN ==========
+        AtomicBoolean flag = new AtomicBoolean(false);
+        boolean wasFalse = flag.compareAndSet(false, true);
+        System.out.println("\n=== AtomicBoolean ===");
+        System.out.println("CompareAndSet riuscito? " + wasFalse);
+        System.out.println("Valore flag: " + flag.get());
+        
+        // ========== ATOMIC REFERENCE ==========
+        AtomicReference&lt;String&gt; ref = new AtomicReference&lt;&gt;("init");
+        ref.set("nuovo valore");
+        ref.compareAndSet("nuovo valore", "aggiornato");
+        System.out.println("\n=== AtomicReference ===");
+        System.out.println("Valore reference: " + ref.get());
+        
+        // ========== ESEMPIO PRATICO: CONTATORE SENZA LOCK ==========
+        System.out.println("\n=== Contatore con AtomicLong ===");
+        AtomicLong contatore = new AtomicLong(0);
+        
+        ExecutorService executor = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 1000; i++) {
+            executor.submit(contatore::incrementAndGet);
+        }
+        
+        executor.shutdown();
+        Thread.sleep(1000);
+        System.out.println("Contatore atomico: " + contatore.get());  // 1000
+        
+        // ========== LONG ADDER (più performante per alte concorrenze) ==========
+        System.out.println("\n=== LongAdder (alte concorrenze) ===");
+        LongAdder adder = new LongAdder();
+        
+        // 1000 thread che incrementano
+        ExecutorService executor2 = Executors.newFixedThreadPool(10);
+        for (int i = 0; i < 1000; i++) {
+            executor2.submit(() -> adder.increment());
+        }
+        
+        executor2.shutdown();
+        Thread.sleep(1000);
+        System.out.println("LongAdder sum: " + adder.sum());
+        System.out.println("LongAdder longValue: " + adder.longValue());
+        
+        // ========== ATOMIC INTEGER ARRAY ==========
+        System.out.println("\n=== AtomicIntegerArray ===");
+        AtomicIntegerArray array = new AtomicIntegerArray(5);
+        array.set(0, 10);
+        array.set(1, 20);
+        array.incrementAndGet(0);
+        array.addAndGet(1, 5);
+        System.out.println("Array[0]: " + array.get(0));
+        System.out.println("Array[1]: " + array.get(1));
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        === AtomicInteger ===<br>
+                        Valore iniziale: 0<br>
+                        Dopo operazioni: 10<br>
+                        Dopo update: 20<br>
+                        === AtomicBoolean ===<br>
+                        CompareAndSet riuscito? true<br>
+                        Valore flag: true<br>
+                        === AtomicReference ===<br>
+                        Valore reference: aggiornato<br>
+                        === Contatore con AtomicLong ===<br>
+                        Contatore atomico: 1000<br>
+                        === LongAdder (alte concorrenze) ===<br>
+                        LongAdder sum: 1000<br>
+                        === AtomicIntegerArray ===<br>
+                        Array[0]: 11<br>
+                        Array[1]: 25
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Confronto prestazioni:</strong><br>
+                        - <code>AtomicInteger/Long</code>: ottimo per pochi thread<br>
+                        - <code>LongAdder</code>: migliore per alte concorrenze (molti thread)<br>
+                        - <code>compareAndSet()</code> (CAS) è l'operazione fondamentale alla base di tutte le classi atomiche
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices per il Multithreading</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Regole fondamentali per scrivere codice concorrente sicuro</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. PREFERISCI Runnable A Thread ====================
+// ✅ Buona pratica
+new Thread(() -> {
+    // task
+}).start();
+
+// ==================== 2. USA EXECUTORService INVECE DI THREAD MANUALI ====================
+ExecutorService executor = Executors.newFixedThreadPool(10);
+executor.submit(() -> { /* task */ });
+executor.shutdown();
+
+// ==================== 3. RENDI IMMUTABILI GLI OGGETTI CONDIVISI ====================
+public final class ImmutablePerson {
+    private final String name;
+    private final int age;
+    
+    public ImmutablePerson(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    public String getName() { return name; }
+    public int getAge() { return age; }
+}
+
+// ==================== 4. USA CONCURRENT COLLECTIONS ====================
+// ❌ Map&lt;String, String&gt; map = new HashMap&lt;&gt;();
+// ✅ Map&lt;String, String&gt; map = new ConcurrentHashMap&lt;&gt;();
+
+// ==================== 5. MINIMIZZA LA SINCRONIZZAZIONE ====================
+// Sincronizza solo le sezioni critiche, non interi metodi
+public void increment() {
+    synchronized(this) {
+        // solo la parte critica
+        contatore++;
+    }
+}
+
+// ==================== 6. USA volatile PER VARIABILI SEMPLICI ====================
+private volatile boolean running = true;
+
+// ==================== 7. GESTISCI L'INTERRUZIONE DEI THREAD ====================
+while (!Thread.currentThread().isInterrupted()) {
+    try {
+        // lavoro
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();  // Ristabilisce lo stato
+        break;
+    }
+}
+
+// ==================== 8. EVITA DEADLOCK ====================
+// - Acquisisci i lock sempre nello stesso ordine
+// - Usa tryLock con timeout
+// - Riduci al minimo i lock annidati
+
+// ==================== 9. USA THREAD LOCAL QUANDO APPROPRIATO ====================
+public class DateFormatter {
+    private static final ThreadLocal&lt;SimpleDateFormat&gt; dateFormat = 
+        ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
+    
+    public String format(Date date) {
+        return dateFormat.get().format(date);
+    }
+}
+
+// ==================== 10. USA COMPLETABLE FUTURE PER OPERAZIONI ASINCRONE ====================
+CompletableFuture.supplyAsync(() -> "Hello")
+    .thenApply(String::toUpperCase)
+    .thenAccept(System.out::println);</code></pre>
+                    
+                    <div class="warning-block" style="margin-top: 1rem;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Attenzione ai Deadlock:</strong> 
+                        Assicurati che i thread acquisiscano i lock nello stesso ordine per evitare deadlock!
+                    </div>
+                    
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist per codice concorrente:</strong><br>
+                        ✓ Usa ExecutorService invece di Thread manuali<br>
+                        ✓ Preferisci classi atomiche e concurrent collections<br>
+                        ✓ Rendi immutabili gli oggetti condivisi quando possibile<br>
+                        ✓ Usa volatile per flag semplici<br>
+                        ✓ Gestisci correttamente InterruptedException<br>
+                        ✓ Evita deadlock ordinando l'acquisizione dei lock<br>
+                        ✓ Usa CompletableFuture per operazioni asincrone
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Multithreading e Concorrenza | Programmazione concorrente in Java
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Prism.js e Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+      <script src="js/script.js"></script>
+    <script src="includes/include.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'creazione', 'ciclo-vita', 'sincronizzazione', 'executor', 'concurrent', 'wait-notify', 'completable', 'lock', 'atomic', 'best-practices'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

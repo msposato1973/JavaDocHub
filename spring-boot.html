@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot 3.x | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Include Navbar (generata da navbar.js) -->
+    <!-- La navbar viene generata automaticamente -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDICE</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduzione
+                </a></li>
+                <li><a href="#novita" class="toc-link" data-target="novita">
+                    <i class="fas fa-star"></i> Novità di Spring Boot 3
+                </a></li>
+                <li><a href="#setup" class="toc-link" data-target="setup">
+                    <i class="fas fa-cogs"></i> Setup e Configurazione
+                </a></li>
+                <li><a href="#rest-controller" class="toc-link" data-target="rest-controller">
+                    <i class="fas fa-code-branch"></i> REST Controller
+                </a></li>
+                <li><a href="#data-jpa" class="toc-link" data-target="data-jpa">
+                    <i class="fas fa-database"></i> Spring Data JPA
+                </a></li>
+                <li><a href="#security" class="toc-link" data-target="security">
+                    <i class="fas fa-shield-alt"></i> Spring Security
+                </a></li>
+                <li><a href="#exception-handling" class="toc-link" data-target="exception-handling">
+                    <i class="fas fa-exclamation-triangle"></i> Exception Handling
+                </a></li>
+                <li><a href="#testing" class="toc-link" data-target="testing">
+                    <i class="fas fa-vial"></i> Testing
+                </a></li>
+                <li><a href="#actuator" class="toc-link" data-target="actuator">
+                    <i class="fas fa-heartbeat"></i> Actuator & Monitoring
+                </a></li>
+                <li><a href="#docker" class="toc-link" data-target="docker">
+                    <i class="fab fa-docker"></i> Docker
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Indice
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-leaf"></i> Spring Boot 3.x</h1>
+                <p>Il framework più popolare per lo sviluppo di applicazioni Java moderne, microservizi e API REST</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUZIONE ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Cos'è Spring Boot?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        <strong>Spring Boot</strong> è un framework che semplifica la creazione di applicazioni Spring pronte per la produzione.
+                        Riduce la configurazione boilerplate e fornisce un modo rapido per avviare nuovi progetti.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Vantaggi di Spring Boot:</strong><br>
+                        - <strong>Auto-configuration</strong>: configura automaticamente i componenti Spring<br>
+                        - <strong>Starter dependencies</strong>: dipendenze pre-configurate per attività comuni<br>
+                        - <strong>Embedded servers</strong>: Tomcat, Jetty o Undertow integrati<br>
+                        - <strong>Production-ready</strong>: metriche, health check, monitoring<br>
+                        - <strong>Opinionated defaults</strong>: convenzioni sensate per ridurre la configurazione
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. NOVITÀ DI SPRING BOOT 3 ==================== -->
+            <div class="section-card" id="novita">
+                <div class="card-header">
+                    <i class="fas fa-star"></i>
+                    <h2>Novità di Spring Boot 3.x</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fab fa-java"></i> Basato su Java 17+</div>
+                    <div class="badge-blue"><i class="fas fa-cloud"></i> Supporto nativo per GraalVM</div>
+                    
+                    <table class="comparison-table">
+                        <tr><th>Feature</th><th>Spring Boot 2.x</th><th>Spring Boot 3.x</th></tr>
+                        <tr><td>Java Baseline</th><td>Java 8 / 11</td><td>Java 17+</td></tr>
+                        <tr><td>Jakarta EE</th><td>javax.*</td><td>jakarta.*</td></tr>
+                        <tr><td>Native Images</th><td>Sperimentale (Spring Native)</td><td>✅ Stabile (GraalVM)</td></tr>
+                        <tr><td>Observability</th><td>Limitata</td><td>✅ Micrometer Tracing</td></tr>
+                        <tr><td>Problem Details</th><td>❌</td><td>✅ RFC 7807</td></tr>
+                    </table>
+                    
+                    <pre><code class="language-java">// Spring Boot 2.x (javax)
+import javax.persistence.Entity;
+import javax.validation.Valid;
+
+// Spring Boot 3.x (jakarta)
+import jakarta.persistence.Entity;
+import jakarta.validation.Valid;</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 3. SETUP E CONFIGURAZIONE ==================== -->
+            <div class="section-card" id="setup">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h2>Setup e Configurazione</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Spring Initializr</h3>
+                    <div class="desc">
+                        Il modo più rapido per creare un progetto Spring Boot è utilizzare <a href="https://start.spring.io" target="_blank" style="color: #ff9800;">start.spring.io</a>.
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Maven pom.xml</h3>
+                    <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;3.2.0&lt;/version&gt;
+    &lt;/parent&gt;
+    
+    &lt;groupId&gt;com.esempio&lt;/groupId&gt;
+    &lt;artifactId&gt;demo-spring-boot&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    
+    &lt;properties&gt;
+        &lt;java.version&gt;17&lt;/java.version&gt;
+    &lt;/properties&gt;
+    
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+            &lt;artifactId&gt;h2&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Application Class</h3>
+                    <pre><code class="language-java">package com.esempio.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: demo-app
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+logging:
+  level:
+    com.esempio: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 4. REST CONTROLLER ==================== -->
+            <div class="section-card" id="rest-controller">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>REST Controller</h2>
+                </div>
+                <div class="card-body">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Entity</h3>
+                    <pre><code class="language-java">package com.esempio.demo.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "utenti")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Utente {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, length = 100)
+    private String nome;
+    
+    @Column(unique = true, nullable = false)
+    private String email;
+    
+    private Integer eta;
+    
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Repository</h3>
+                    <pre><code class="language-java">package com.esempio.demo.repository;
+
+import com.esempio.demo.entity.Utente;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface UtenteRepository extends JpaRepository&lt;Utente, Long&gt; {
+    Optional&lt;Utente&gt; findByEmail(String email);
+    List&lt;Utente&gt; findByNomeContainingIgnoreCase(String nome);
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 DTO</h3>
+                    <pre><code class="language-java">package com.esempio.demo.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UtenteDTO {
+    
+    private Long id;
+    
+    @NotBlank(message = "Il nome è obbligatorio")
+    @Size(min = 2, max = 100, message = "Il nome deve avere tra 2 e 100 caratteri")
+    private String nome;
+    
+    @NotBlank(message = "L'email è obbligatoria")
+    @Email(message = "Formato email non valido")
+    private String email;
+    
+    @Min(value = 0, message = "L'età non può essere negativa")
+    @Max(value = 150, message = "L'età non può superare 150")
+    private Integer eta;
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Service</h3>
+                    <pre><code class="language-java">package com.esempio.demo.service;
+
+import com.esempio.demo.dto.UtenteDTO;
+import com.esempio.demo.entity.Utente;
+import com.esempio.demo.repository.UtenteRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class UtenteService {
+    
+    private final UtenteRepository utenteRepository;
+    
+    public List&lt;UtenteDTO&gt; findAll() {
+        return utenteRepository.findAll().stream()
+            .map(this::toDTO)
+            .collect(Collectors.toList());
+    }
+    
+    public UtenteDTO findById(Long id) {
+        return utenteRepository.findById(id)
+            .map(this::toDTO)
+            .orElseThrow(() -> new RuntimeException("Utente non trovato: " + id));
+    }
+    
+    @Transactional
+    public UtenteDTO save(UtenteDTO dto) {
+        Utente utente = toEntity(dto);
+        Utente saved = utenteRepository.save(utente);
+        log.info("Utente salvato con ID: {}", saved.getId());
+        return toDTO(saved);
+    }
+    
+    @Transactional
+    public UtenteDTO update(Long id, UtenteDTO dto) {
+        Utente utente = utenteRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Utente non trovato: " + id));
+        
+        utente.setNome(dto.getNome());
+        utente.setEmail(dto.getEmail());
+        utente.setEta(dto.getEta());
+        
+        return toDTO(utenteRepository.save(utente));
+    }
+    
+    @Transactional
+    public void delete(Long id) {
+        utenteRepository.deleteById(id);
+        log.info("Utente eliminato con ID: {}", id);
+    }
+    
+    private UtenteDTO toDTO(Utente utente) {
+        return UtenteDTO.builder()
+            .id(utente.getId())
+            .nome(utente.getNome())
+            .email(utente.getEmail())
+            .eta(utente.getEta())
+            .build();
+    }
+    
+    private Utente toEntity(UtenteDTO dto) {
+        return Utente.builder()
+            .nome(dto.getNome())
+            .email(dto.getEmail())
+            .eta(dto.getEta())
+            .build();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 REST Controller</h3>
+                    <pre><code class="language-java">package com.esempio.demo.controller;
+
+import com.esempio.demo.dto.UtenteDTO;
+import com.esempio.demo.service.UtenteService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/utenti")
+@RequiredArgsConstructor
+public class UtenteController {
+    
+    private final UtenteService utenteService;
+    
+    @GetMapping
+    public ResponseEntity&lt;List&lt;UtenteDTO&gt;&gt; getAll() {
+        return ResponseEntity.ok(utenteService.findAll());
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; getById(@PathVariable Long id) {
+        return ResponseEntity.ok(utenteService.findById(id));
+    }
+    
+    @PostMapping
+    public ResponseEntity&lt;UtenteDTO&gt; create(@Valid @RequestBody UtenteDTO utente) {
+        UtenteDTO saved = utenteService.save(utente);
+        return ResponseEntity
+            .created(URI.create("/api/utenti/" + saved.getId()))
+            .body(saved);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity&lt;UtenteDTO&gt; update(
+            @PathVariable Long id,
+            @Valid @RequestBody UtenteDTO utente) {
+        return ResponseEntity.ok(utenteService.update(id, utente));
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity&lt;Void&gt; delete(@PathVariable Long id) {
+        utenteService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Esempio di chiamata API:<br>
+                        <code>POST /api/utenti</code><br>
+                        Body: {"nome": "Mario", "email": "mario@email.com", "eta": 30}<br>
+                        Response: 201 Created + {"id": 1, "nome": "Mario", ...}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. SPRING DATA JPA ==================== -->
+            <div class="section-card" id="data-jpa">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>Spring Data JPA</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Query methods, JPQL, Native Query, Specifications</div>
+                    
+                    <pre><code class="language-java">package com.esempio.demo.repository;
+
+import com.esempio.demo.entity.Utente;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface UtenteRepository extends JpaRepository&lt;Utente, Long&gt; {
+    
+    // ========== QUERY METHODS ==========
+    Optional&lt;Utente&gt; findByEmail(String email);
+    
+    List&lt;Utente&gt; findByNomeContainingIgnoreCase(String nome);
+    
+    List&lt;Utente&gt; findByEtaBetween(int min, int max);
+    
+    Page&lt;Utente&gt; findByAttivoTrue(Pageable pageable);
+    
+    boolean existsByEmail(String email);
+    
+    long countByEtaGreaterThan(int eta);
+    
+    // ========== JPQL QUERIES ==========
+    @Query("SELECT u FROM Utente u WHERE u.email LIKE %:dominio%")
+    List&lt;Utente&gt; findByDominioEmail(@Param("dominio") String dominio);
+    
+    @Query("SELECT u FROM Utente u WHERE u.createdAt BETWEEN :start AND :end")
+    List&lt;Utente&gt; findByDateRange(@Param("start") LocalDateTime start, 
+                                  @Param("end") LocalDateTime end);
+    
+    // ========== NATIVE QUERIES ==========
+    @Query(value = "SELECT * FROM utenti WHERE YEAR(created_at) = :year", 
+           nativeQuery = true)
+    List&lt;Utente&gt; findUtentiByAnnoCreazione(@Param("year") int year);
+    
+    // ========== UPDATE QUERIES ==========
+    @Modifying
+    @Transactional
+    @Query("UPDATE Utente u SET u.attivo = false WHERE u.id = :id")
+    void disattivaUtente(@Param("id") Long id);
+    
+    // ========== DELETE QUERIES ==========
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Utente u WHERE u.eta &lt; :etaMin")
+    void deleteByEtaMinoreDi(@Param("etaMin") int etaMin);
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 6. SPRING SECURITY ==================== -->
+            <div class="section-card" id="security">
+                <div class="card-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>Spring Security</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Autenticazione e Autorizzazione</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenze</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Security Configuration</h3>
+                    <pre><code class="language-java">package com.esempio.demo.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/utenti/**").hasAnyRole("USER", "ADMIN")
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .httpBasic(httpBasic -> {});
+        
+        return http.build();
+    }
+    
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.builder()
+            .username("user")
+            .password(passwordEncoder().encode("password"))
+            .roles("USER")
+            .build();
+        
+        UserDetails admin = User.builder()
+            .username("admin")
+            .password(passwordEncoder().encode("admin"))
+            .roles("ADMIN")
+            .build();
+        
+        return new InMemoryUserDetailsManager(user, admin);
+    }
+    
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 7. EXCEPTION HANDLING ==================== -->
+            <div class="section-card" id="exception-handling">
+                <div class="card-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>Exception Handling</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Global Exception Handler con @RestControllerAdvice</div>
+                    
+                    <pre><code class="language-java">package com.esempio.demo.exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+@Data
+@AllArgsConstructor
+class ErrorResponse {
+    private String code;
+    private String message;
+    private LocalDateTime timestamp;
+    private Map&lt;String, String&gt; details;
+}
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleNotFound(ResourceNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+            "NOT_FOUND",
+            ex.getMessage(),
+            LocalDateTime.now(),
+            new HashMap&lt;&gt;()
+        );
+        return new ResponseEntity&lt;&gt;(error, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleValidation(MethodArgumentNotValidException ex) {
+        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();
+        ex.getBindingResult().getAllErrors().forEach(error -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        
+        ErrorResponse error = new ErrorResponse(
+            "VALIDATION_ERROR",
+            "Errore di validazione",
+            LocalDateTime.now(),
+            errors
+        );
+        return new ResponseEntity&lt;&gt;(error, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleGeneric(Exception ex) {
+        ErrorResponse error = new ErrorResponse(
+            "INTERNAL_ERROR",
+            "Errore interno del server",
+            LocalDateTime.now(),
+            new HashMap&lt;&gt;()
+        );
+        return new ResponseEntity&lt;&gt;(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 8. TESTING ==================== -->
+            <div class="section-card" id="testing">
+                <div class="card-header">
+                    <i class="fas fa-vial"></i>
+                    <h2>Testing con Spring Boot</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Unit test, Integration test, WebMvc test</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Unit Test (Service)</h3>
+                    <pre><code class="language-java">package com.esempio.demo.service;
+
+import com.esempio.demo.dto.UtenteDTO;
+import com.esempio.demo.entity.Utente;
+import com.esempio.demo.repository.UtenteRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class UtenteServiceTest {
+    
+    @Mock
+    private UtenteRepository utenteRepository;
+    
+    @InjectMocks
+    private UtenteService utenteService;
+    
+    private Utente utente;
+    private UtenteDTO utenteDTO;
+    
+    @BeforeEach
+    void setUp() {
+        utente = Utente.builder()
+            .id(1L)
+            .nome("Mario")
+            .email("mario@email.com")
+            .eta(30)
+            .build();
+        
+        utenteDTO = UtenteDTO.builder()
+            .id(1L)
+            .nome("Mario")
+            .email("mario@email.com")
+            .eta(30)
+            .build();
+    }
+    
+    @Test
+    void findById_ShouldReturnUtenteDTO_WhenUtenteExists() {
+        when(utenteRepository.findById(1L)).thenReturn(Optional.of(utente));
+        
+        UtenteDTO result = utenteService.findById(1L);
+        
+        assertThat(result).isNotNull();
+        assertThat(result.getNome()).isEqualTo("Mario");
+        verify(utenteRepository, times(1)).findById(1L);
+    }
+    
+    @Test
+    void save_ShouldReturnSavedUtenteDTO() {
+        when(utenteRepository.save(any(Utente.class))).thenReturn(utente);
+        
+        UtenteDTO result = utenteService.save(utenteDTO);
+        
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(1L);
+        verify(utenteRepository, times(1)).save(any(Utente.class));
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Integration Test (Controller)</h3>
+                    <pre><code class="language-java">package com.esempio.demo.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.esempio.demo.dto.UtenteDTO;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class UtenteControllerIntegrationTest {
+    
+    @Autowired
+    private MockMvc mockMvc;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
+    
+    @Test
+    void createUtente_ShouldReturnCreatedUtente() throws Exception {
+        UtenteDTO utenteDTO = UtenteDTO.builder()
+            .nome("Mario")
+            .email("mario@email.com")
+            .eta(30)
+            .build();
+        
+        mockMvc.perform(post("/api/utenti")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(utenteDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.nome").value("Mario"));
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 9. ACTUATOR & MONITORING ==================== -->
+            <div class="section-card" id="actuator">
+                <div class="card-header">
+                    <i class="fas fa-heartbeat"></i>
+                    <h2>Actuator & Monitoring</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Production-ready features</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dipendenza</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Configurazione</h3>
+                    <pre><code class="language-yaml">management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+
+info:
+  app:
+    name: Demo Spring Boot
+    version: 1.0.0
+    description: Applicazione di esempio</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Custom Health Indicator</h3>
+                    <pre><code class="language-java">package com.esempio.demo.health;
+
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CustomHealthIndicator implements HealthIndicator {
+    
+    @Override
+    public Health health() {
+        // Logica di verifica
+        boolean externalServiceAvailable = checkExternalService();
+        
+        if (externalServiceAvailable) {
+            return Health.up()
+                .withDetail("external-service", "available")
+                .withDetail("timestamp", System.currentTimeMillis())
+                .build();
+        }
+        return Health.down()
+            .withDetail("external-service", "unavailable")
+            .build();
+    }
+    
+    private boolean checkExternalService() {
+        // Simulazione verifica
+        return true;
+    }
+}</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> <strong>Endpoint Actuator disponibili:</strong><br>
+                        - <code>GET /actuator/health</code> → Stato dell'applicazione<br>
+                        - <code>GET /actuator/info</code> → Informazioni sull'app<br>
+                        - <code>GET /actuator/metrics</code> → Metriche di sistema<br>
+                        - <code>GET /actuator/prometheus</code> → Metriche formato Prometheus
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 10. DOCKER ==================== -->
+            <div class="section-card" id="docker">
+                <div class="card-header">
+                    <i class="fab fa-docker"></i>
+                    <h2>Docker</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Containerizzare applicazioni Spring Boot</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dockerfile</h3>
+                    <pre><code class="language-dockerfile"># Multi-stage build
+FROM eclipse-temurin:17-jdk-alpine AS build
+WORKDIR /app
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+RUN ./mvnw dependency:go-offline -B
+COPY src src
+RUN ./mvnw package -DskipTests
+
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+# Utente non-root per sicurezza
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 docker-compose.yml</h3>
+                    <pre><code class="language-yaml">version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=postgres
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: demo
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+
+networks:
+  app-network:
+    driver: bridge</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> <strong>Comandi Docker:</strong><br>
+                        <code>docker build -t spring-app .</code><br>
+                        <code>docker run -p 8080:8080 spring-app</code><br>
+                        <code>docker-compose up -d</code><br>
+                        <code>docker-compose down</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices per Spring Boot</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Regole fondamentali per applicazioni Spring Boot di qualità</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. USA I PROFILI ====================
+// application-dev.yml, application-prod.yml
+@Profile("dev")
+@Component
+public class DevConfig { }
+
+// ==================== 2. CONFIGURAZIONE ESTERNA ====================
+@Value("${app.feature.enabled:false}")
+private boolean featureEnabled;
+
+// ==================== 3. LOGGING STRUTTURATO ====================
+@Slf4j
+@Service
+public class MyService {
+    public void doSomething() {
+        log.info("Operazione completata con ID: {}", id);
+        log.error("Errore durante l'operazione", exception);
+    }
+}
+
+// ==================== 4. VALIDAZIONE DEGLI INPUT ====================
+@PostMapping
+public ResponseEntity&lt;UtenteDTO&gt; create(@Valid @RequestBody UtenteDTO utente) { }
+
+// ==================== 5. RITORNO DI STRUTTURE PAGINATE ====================
+@GetMapping
+public Page&lt;UtenteDTO&gt; getAll(Pageable pageable) {
+    return utenteService.findAll(pageable);
+}
+
+// ==================== 6. GESTIONE TEMPI DI RISPOSTA ====================
+@RestControllerAdvice
+public class TimeoutHandler {
+    @ExceptionHandler(TimeoutException.class)
+    @ResponseStatus(HttpStatus.REQUEST_TIMEOUT)
+    public ErrorResponse handleTimeout() {
+        return new ErrorResponse("TIMEOUT", "Richiesta timeout");
+    }
+}
+
+// ==================== 7. API VERSIONING ====================
+@RestController
+@RequestMapping("/api/v1/utenti")
+public class UtenteControllerV1 { }
+
+@RestController
+@RequestMapping("/api/v2/utenti")
+public class UtenteControllerV2 { }</code></pre>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist per Spring Boot di qualità:</strong><br>
+                        ✓ Usa i profili per separare le configurazioni (dev, test, prod)<br>
+                        ✓ Esternalizza la configurazione (application.yml, variabili d'ambiente)<br>
+                        ✓ Usa Lombok per ridurre il boilerplate<br>
+                        ✓ Implementa logging strutturato<br>
+                       ✓ Valida gli input con @Valid e Bean Validation<br>
+                        ✓ Usa paginazione per liste grandi<br>
+                        ✓ Implementa Global Exception Handler<br>
+                        ✓ Aggiungi Actuator per il monitoring<br>
+                        ✓ Containerizza con Docker<br>
+                        ✓ Scrivi test unitari e di integrazione
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Spring Boot 3.x | Il framework per applicazioni Java moderne
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
+        </div>
+    </footer>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specifico per questa pagina
+        const sections = ['introduzione', 'novita', 'setup', 'rest-controller', 'data-jpa', 'security', 'exception-handling', 'testing', 'actuator', 'docker', 'best-practices'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
