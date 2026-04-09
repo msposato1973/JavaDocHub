@@ -1,0 +1,53 @@
+// ========== HEADER SCROLL EFFECT ==========
+const navbar = document.getElementById('navbar');
+if (navbar) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+}
+
+// ========== SCROLL PROGRESS BAR ==========
+const progressBar = document.getElementById('scrollProgress');
+if (progressBar) {
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+    });
+}
+
+// ========== TOGGLE SIDEBAR PER MOBILE ==========
+const sidebarToc = document.getElementById('sidebarToc');
+const tocToggleBtn = document.getElementById('tocToggleBtn');
+
+if (tocToggleBtn && sidebarToc) {
+    tocToggleBtn.addEventListener('click', () => {
+        sidebarToc.classList.toggle('open');
+    });
+}
+
+if (sidebarToc) {
+    document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && sidebarToc.classList.contains('open')) {
+            if (!sidebarToc.contains(e.target) && e.target !== tocToggleBtn && !tocToggleBtn?.contains(e.target)) {
+                sidebarToc.classList.remove('open');
+            }
+        }
+    });
+}
+
+// ========== ATTIVA LINK NAVBAR IN BASE ALLA PAGINA ==========
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+const navLinks = document.querySelectorAll('.nav-links a');
+
+navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === currentPage) {
+        link.classList.add('active');
+    }
+});
