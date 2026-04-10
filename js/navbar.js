@@ -84,6 +84,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span>SOLID</span>
                     <span class="nav-indicator"></span>
                 </a>
+				<a href="CICD-Pipeline.html" title="CI/CD Pipeline">
+				     <i class="fas fa-code-branch"></i>
+                    <span>CI/CD Pipeline</span>
+                    <span class="nav-indicator"></span>
+                </a>
+				
 				<a href="kubernetes-java.html" data-tooltip="☸️ Kubernetes per Java"  title="Kubernetes per Java">
 				<i class="fab fa-kubernetes"></i>
 				<span>K8s</span>
