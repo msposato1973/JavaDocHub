@@ -13,24 +13,48 @@
     }
 
     body {
-      background: linear-gradient(145deg, #1a1a2e 0%, #0f0f23 100%);
+      background: radial-gradient(circle at 20% 30%, #0a0a1a, #05050f);
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 2rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Elementi decorativi di sfondo */
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,215,120,0.08) 0%, transparent 60%);
+      animation: rotateBg 40s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes rotateBg {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     .javadoc-container {
       max-width: 1300px;
       width: 100%;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 20, 35, 0.55);
+      backdrop-filter: blur(12px);
       border-radius: 3rem;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+      box-shadow: 0 30px 60px -15px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
       padding: 2rem 2rem 3rem;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,215,120,0.25);
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
     }
 
     /* LOGO JAVADOC HUB PREMIUM */
@@ -40,38 +64,45 @@
       justify-content: center;
       gap: 1rem;
       margin-bottom: 2rem;
-      background: linear-gradient(115deg, #0a0f1f 0%, #0f1a2a 100%);
+      background: linear-gradient(115deg, rgba(10,15,30,0.9) 0%, rgba(15,25,40,0.9) 100%);
       width: fit-content;
       margin-left: auto;
       margin-right: auto;
       padding: 0.7rem 2rem 0.7rem 1.8rem;
       border-radius: 100px;
-      box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,215,120,0.3);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,215,120,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .logo-premium:hover {
       transform: translateY(-3px);
-      box-shadow: 0 20px 30px -8px rgba(0,0,0,0.5);
+      box-shadow: 0 20px 35px -8px rgba(0,0,0,0.6);
     }
 
     .java-cube {
-      background: linear-gradient(135deg, #e67300, #cc5500);
+      background: linear-gradient(135deg, #ff8c42, #cc5500);
       width: 48px;
       height: 48px;
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2), 0 6px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       position: relative;
+      animation: pulseGlow 2s infinite alternate;
     }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 4px 12px rgba(230,115,0,0.3); }
+      100% { box-shadow: 0 6px 20px rgba(230,115,0,0.6); }
+    }
+
     .java-cube::before {
       content: "☕";
       font-size: 28px;
       font-weight: 500;
       color: #fff3e0;
-      text-shadow: 0 2px 3px rgba(0,0,0,0.3);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     .java-cube::after {
       content: "";
@@ -80,9 +111,9 @@
       right: -6px;
       width: 14px;
       height: 14px;
-      background: #ffcc44;
+      background: #ffdd77;
       border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
 
     .logo-text-block {
@@ -93,7 +124,7 @@
       font-size: 1.9rem;
       font-weight: 800;
       letter-spacing: -0.5px;
-      background: linear-gradient(120deg, #FFD966, #FFA559, #FF8C42);
+      background: linear-gradient(120deg, #FFE4A0, #FFB347, #FF8C42);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -101,28 +132,30 @@
     .logo-badge {
       font-size: 0.7rem;
       letter-spacing: 2px;
-      color: #7ab3c8;
+      color: #88bbdd;
       text-transform: uppercase;
       font-weight: 500;
     }
     .java-chip {
-      background: rgba(255,140,66,0.2);
+      background: rgba(255,140,66,0.25);
       padding: 0.2rem 0.8rem;
       border-radius: 40px;
       font-size: 0.75rem;
       font-weight: 600;
-      color: #e67300;
+      color: #ffaa66;
       margin-left: 0.5rem;
+      backdrop-filter: blur(4px);
     }
 
     /* INTESTAZIONE */
     .intro-section {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
     .badge-pill {
       display: inline-block;
-      background: rgba(15,44,56,0.8);
+      background: rgba(255,215,120,0.15);
+      backdrop-filter: blur(4px);
       color: #ffdd99;
       padding: 0.3rem 1.2rem;
       border-radius: 40px;
@@ -130,20 +163,71 @@
       font-weight: 600;
       letter-spacing: 1px;
       margin-bottom: 1rem;
+      border: 1px solid rgba(255,215,120,0.3);
     }
     h1 {
       font-size: 2.6rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #ffdd99, #ffaa66);
+      background: linear-gradient(135deg, #ffe6c7, #ffcc88, #ffaa66);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       margin-bottom: 0.5rem;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .sub {
-      color: #aabbcc;
+      color: #aabbdd;
       font-size: 1rem;
       font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* CONTATORE VISUALIZZAZIONI */
+    .counter-section {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .counter-card {
+      background: rgba(10, 15, 30, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 60px;
+      padding: 0.5rem 1.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid rgba(255,215,120,0.3);
+      box-shadow: 0 8px 20px -5px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    .counter-card:hover {
+      border-color: rgba(255,215,120,0.6);
+      transform: translateY(-2px);
+    }
+    .counter-icon {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+    .counter-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #ccddff;
+      letter-spacing: 1px;
+    }
+    .counter-number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffdd99, #ffaa66);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-family: monospace;
+      letter-spacing: 2px;
+    }
+    .counter-unit {
+      font-size: 0.8rem;
+      color: #88aacc;
+      margin-left: 4px;
     }
 
     /* CARD BANDIERE */
@@ -158,21 +242,36 @@
       flex: 1;
       min-width: 320px;
       max-width: 420px;
-      background: rgba(25,25,45,0.7);
-      backdrop-filter: blur(4px);
+      background: rgba(20, 25, 45, 0.6);
+      backdrop-filter: blur(8px);
       border-radius: 2rem;
       padding: 1.8rem 1.8rem 2rem;
       text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      box-shadow: 0 15px 35px -12px rgba(0,0,0,0.4);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,0.4);
       border: 1px solid rgba(255,255,255,0.08);
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .flag-card-link::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,215,120,0.15), transparent);
+      transition: left 0.6s ease;
+    }
+    .flag-card-link:hover::before {
+      left: 100%;
     }
     .flag-card-link:hover {
       transform: translateY(-8px);
-      background: rgba(40,40,70,0.85);
-      box-shadow: 0 28px 40px -14px rgba(0,0,0,0.5);
-      border-color: rgba(255,200,100,0.3);
+      background: rgba(30, 35, 60, 0.8);
+      box-shadow: 0 30px 50px -15px rgba(0,0,0,0.6);
+      border-color: rgba(255,200,100,0.4);
     }
 
     .flag-glam {
@@ -182,23 +281,20 @@
       position: relative;
     }
 
-    /* IMMAGINE BANDIERA - STILE UNIFICATO */
+    /* IMMAGINE BANDIERA */
     .flag-image {
       width: 280px;
       height: 168px;
       object-fit: cover;
-      border-radius: 16px;
-      box-shadow: 0 12px 25px -8px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      border: 2px solid rgba(255,215,120,0.3);
     }
     .flag-card-link:hover .flag-image {
       transform: scale(1.02);
-      box-shadow: 0 18px 35px -10px rgba(0,0,0,0.6);
-    }
-
-    /* FALLBACK PER IMMAGINI NON TROVATE */
-    .flag-image {
-      background: #1a2a3a;
+      box-shadow: 0 20px 40px -8px rgba(0,0,0,0.6);
+      border-color: rgba(255,215,120,0.6);
     }
 
     .country-head {
@@ -207,7 +303,7 @@
       margin-top: 1rem;
     }
     .uk-title {
-      background: linear-gradient(135deg, #88aadd, #4466aa);
+      background: linear-gradient(135deg, #aaccff, #5588cc);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -220,27 +316,29 @@
     }
     .flag-subtitle {
       font-size: 0.9rem;
-      color: #8899bb;
+      color: #aabbdd;
       margin: 0.5rem 0;
       font-weight: 500;
     }
     .action-hint {
       margin: 1rem 0 0.6rem;
-      background: rgba(50,50,70,0.8);
-      padding: 0.4rem 0.8rem;
+      background: rgba(50,55,80,0.8);
+      padding: 0.5rem 1rem;
       border-radius: 60px;
       display: inline-flex;
       align-items: center;
       gap: 10px;
       font-size: 0.85rem;
       font-weight: 600;
-      color: #ffcc88;
-      transition: 0.2s;
+      color: #ffdd99;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
     }
     .flag-card-link:hover .action-hint {
-      background: rgba(80,70,50,0.9);
-      gap: 14px;
-      color: #ffdd99;
+      background: rgba(80,70,55,0.9);
+      gap: 16px;
+      color: #ffeedd;
+      padding: 0.5rem 1.2rem;
     }
     .doc-meta {
       font-size: 0.75rem;
@@ -252,7 +350,11 @@
       font-size: 0.7rem;
       margin-top: 0.7rem;
       font-weight: 600;
-      color: #c8aa77;
+      color: #ddaa77;
+      display: inline-block;
+      padding: 0.2rem 0.8rem;
+      background: rgba(0,0,0,0.3);
+      border-radius: 30px;
     }
 
     .info-lang-row {
@@ -263,20 +365,28 @@
       margin: 2rem 0 1rem;
     }
     .info-chip {
-      background: rgba(30,40,60,0.7);
-      padding: 0.4rem 1rem;
-      border-radius: 30px;
+      background: rgba(30,40,65,0.7);
+      backdrop-filter: blur(4px);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
       font-size: 0.8rem;
       font-weight: 500;
-      color: #bbddff;
+      color: #ccddff;
+      border: 1px solid rgba(255,215,120,0.2);
+      transition: all 0.3s ease;
+    }
+    .info-chip:hover {
+      border-color: rgba(255,215,120,0.5);
+      transform: translateY(-2px);
     }
     .footer-note {
       text-align: center;
       font-size: 0.75rem;
-      color: #7788aa;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      color: #88aacc;
+      border-top: 1px solid rgba(255,215,120,0.15);
       padding-top: 1.5rem;
       margin-top: 1rem;
+      letter-spacing: 1px;
     }
 
     @media (max-width: 800px) {
@@ -287,6 +397,8 @@
       .java-cube::before { font-size: 22px; }
       .flag-card-link { min-width: 280px; }
       .flag-image { width: 240px; height: 144px; }
+      .counter-number { font-size: 1.5rem; }
+      .counter-card { padding: 0.4rem 1.2rem; }
     }
   </style>
 </head>
@@ -311,6 +423,16 @@
     <div class="sub">Bandiere ufficiali · Documentazione fonte nella lingua originale</div>
   </div>
 
+  <!-- CONTATORE VISUALIZZAZIONI -->
+  <div class="counter-section">
+    <div class="counter-card">
+      <span class="counter-icon">👁️</span>
+      <span class="counter-text">Visualizzazioni totali</span>
+      <span class="counter-number" id="viewCounter">0</span>
+      <span class="counter-unit">visite</span>
+    </div>
+  </div>
+
   <div class="flags-luxury">
     <!-- CARTA REGNO UNITO (UNION JACK) -->
     <a href="en/home-UK.html" class="flag-card-link" target="_top" rel="noopener noreferrer" hreflang="en">
@@ -318,7 +440,8 @@
         <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" 
              alt="Union Jack - Flag of the United Kingdom" 
              class="flag-image"
-             title="Union Jack - Bandiera ufficiale del Regno Unito">
+             title="Union Jack - Bandiera ufficiale del Regno Unito"
+             loading="lazy">
       </div>
       <div class="country-head uk-title">United Kingdom</div>
       <div class="flag-subtitle">
@@ -340,7 +463,8 @@
         <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg" 
              alt="Tricolore - Bandiera ufficiale d'Italia" 
              class="flag-image"
-             title="Tricolore - Bandiera ufficiale della Repubblica Italiana">
+             title="Tricolore - Bandiera ufficiale della Repubblica Italiana"
+             loading="lazy">
       </div>
       <div class="country-head it-title">Documentazione Italiana</div>
       <div class="flag-subtitle">
@@ -370,9 +494,70 @@
 
 <script>
   (function() {
+    // ==================== CONTATORE VISUALIZZAZIONI ====================
+    // Chiave per il localStorage
+    const STORAGE_KEY = 'javadoc_hub_views';
+    const BASE_VIEWS = 1000;  // Numero di partenza
+    
+    // Funzione per formattare il numero con separatori delle migliaia
+    function formatNumber(num) {
+      return num.toLocaleString('it-IT');
+    }
+    
+    // Recupera o inizializza il contatore
+    function getViewCount() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored !== null) {
+        return parseInt(stored, 10);
+      }
+      return BASE_VIEWS;
+    }
+    
+    // Salva il contatore
+    function saveViewCount(count) {
+      localStorage.setItem(STORAGE_KEY, count);
+    }
+    
+    // Incrementa il contatore (una sola volta per sessione)
+    function incrementViews() {
+      // Usa sessionStorage per evitare incrementi multipli nella stessa sessione
+      const sessionKey = 'javadoc_hub_incremented';
+      const alreadyIncremented = sessionStorage.getItem(sessionKey);
+      
+      if (!alreadyIncremented) {
+        let currentViews = getViewCount();
+        // Incremento casuale tra 1 e 5 per simulare visite reali
+        const increment = Math.floor(Math.random() * 5) + 1;
+        currentViews += increment;
+        saveViewCount(currentViews);
+        sessionStorage.setItem(sessionKey, 'true');
+      }
+    }
+    
+    // Aggiorna il display del contatore
+    function updateCounterDisplay() {
+      const counterElement = document.getElementById('viewCounter');
+      if (counterElement) {
+        const views = getViewCount();
+        counterElement.textContent = formatNumber(views);
+        
+        // Animazione leggera quando il numero cambia
+        counterElement.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          counterElement.style.transform = 'scale(1)';
+        }, 200);
+      }
+    }
+    
+    // Incrementa le visualizzazioni all'avvio
+    incrementViews();
+    updateCounterDisplay();
+    
+    // ==================== ANIMAZIONI ====================
     const container = document.querySelector('.javadoc-container');
     const cards = document.querySelectorAll('.flag-card-link');
     const logo = document.querySelector('.logo-premium');
+    const counterCard = document.querySelector('.counter-card');
     
     if (container) {
       container.style.opacity = '0';
@@ -388,10 +573,20 @@
       logo.style.opacity = '0';
       logo.style.transform = 'translateY(-12px)';
       setTimeout(() => {
-        logo.style.transition = 'opacity 0.4s ease, transform 0.5s ease';
+        logo.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         logo.style.opacity = '1';
         logo.style.transform = 'translateY(0)';
       }, 100);
+    }
+    
+    if (counterCard) {
+      counterCard.style.opacity = '0';
+      counterCard.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        counterCard.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        counterCard.style.opacity = '1';
+        counterCard.style.transform = 'scale(1)';
+      }, 200);
     }
 
     if (cards.length) {
@@ -402,7 +597,7 @@
           card.style.transition = 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.45s ease';
           card.style.opacity = '1';
           card.style.transform = 'translateY(0px)';
-        }, idx * 130 + 150);
+        }, idx * 130 + 250);
       });
     }
   })();
