@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span>JavaDoc<span class="brand-highlight">Hub</span></span>
             </div>
             <div class="nav-links">
-                <a href="index.html" title="Home page">
+                <a href="../index.html" title="Home page">
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                     <span class="nav-indicator"></span>

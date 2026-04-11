@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream API | JavaDoc Hub</title>
+    
+   <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+		
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDEX</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduction
+                </a></li>
+                <li><a href="#creazione" class="toc-link" data-target="creazione">
+                    <i class="fas fa-play"></i> Creating Streams
+                </a></li>
+                <li><a href="#operazioni-intermedie" class="toc-link" data-target="operazioni-intermedie">
+                    <i class="fas fa-filter"></i> Intermediate Operations
+                </a></li>
+                <li><a href="#operazioni-terminali" class="toc-link" data-target="operazioni-terminali">
+                    <i class="fas fa-flag-checkered"></i> Terminal Operations
+                </a></li>
+                <li><a href="#collectors" class="toc-link" data-target="collectors">
+                    <i class="fas fa-box"></i> Collectors
+                </a></li>
+                <li><a href="#oggetti-complessi" class="toc-link" data-target="oggetti-complessi">
+                    <i class="fas fa-users"></i> Complex Objects
+                </a></li>
+                <li><a href="#parallel-stream" class="toc-link" data-target="parallel-stream">
+                    <i class="fas fa-tachometer-alt"></i> Parallel Stream
+                </a></li>
+                <li><a href="#primitive-stream" class="toc-link" data-target="primitive-stream">
+                    <i class="fas fa-calculator"></i> Primitive Streams
+                </a></li>
+                <li><a href="#esempi-pratici" class="toc-link" data-target="esempi-pratici">
+                    <i class="fas fa-code-branch"></i> Practical Examples
+                </a></li>
+                <li><a href="#riepilogo" class="toc-link" data-target="riepilogo">
+                    <i class="fas fa-list-check"></i> Summary
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Index
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-stream"></i> Stream API and Lambda Expressions</h1>
+                <p>Functional programming in Java: filter, map, reduce, collect, and parallel streams</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUCTION ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>Introduction to Stream API</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-code"></i> Declarative and functional programming</div>
+                    <div class="desc">
+                        The Stream API (introduced in Java 8) allows processing sequences of data in a <strong>declarative</strong> way,
+                        similar to SQL queries. A stream represents a sequence of elements on which you can perform pipeline operations,
+                        without modifying the original data source.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Main characteristics:</strong><br>
+                        - <strong>Lazy evaluation</strong>: intermediate operations are executed only when needed<br>
+                        - <strong>Pipeline</strong>: chaining of operations (filter → map → collect)<br>
+                        - <strong>Immutability</strong>: does not modify the source collection<br>
+                        - <strong>Parallelism</strong>: easy conversion to parallel streams
+                    </div>
+                    <pre><code class="language-java">// COMPARISON EXAMPLE: find names of adults
+
+// Imperative way (Java 7 and earlier)
+List&lt;String&gt; adults = new ArrayList&lt;&gt;();
+for (Person p : people) {
+    if (p.getAge() >= 18) {
+        adults.add(p.getName().toUpperCase());
+    }
+}
+Collections.sort(adults);
+
+// Declarative way with Stream API
+List&lt;String&gt; adultsStream = people.stream()
+    .filter(p -> p.getAge() >= 18)
+    .map(p -> p.getName().toUpperCase())
+    .sorted()
+    .collect(Collectors.toList());</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 2. CREATING STREAMS ==================== -->
+            <div class="section-card" id="creazione">
+                <div class="card-header">
+                    <i class="fas fa-play"></i>
+                    <h2>Creating Streams</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">From Collection, array, values, files, strings</div>
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+import java.nio.file.*;
+
+public class CreatingStreamsDemo {
+    public static void main(String[] args) {
+        // 1. From Collection
+        List&lt;String&gt; list = Arrays.asList("a", "b", "c");
+        Stream&lt;String&gt; streamFromList = list.stream();
+        
+        Set&lt;Integer&gt; set = new HashSet<>(Arrays.asList(1, 2, 3));
+        Stream&lt;Integer&gt; streamFromSet = set.stream();
+        
+        Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+        map.put("one", 1);
+        map.put("two", 2);
+        Stream&lt;Map.Entry&lt;String, Integer&gt;&gt; streamFromMap = map.entrySet().stream();
+        
+        // 2. From array
+        String[] array = {"a", "b", "c"};
+        Stream&lt;String&gt; streamFromArray = Arrays.stream(array);
+        Stream&lt;String&gt; streamFromArrayOf = Stream.of(array);
+        
+        // 3. From values
+        Stream&lt;Integer&gt; streamOfValues = Stream.of(1, 2, 3, 4, 5);
+        
+        // 4. Empty stream
+        Stream&lt;String&gt; emptyStream = Stream.empty();
+        
+        // 5. Infinite streams
+        Stream&lt;Double&gt; randomStream = Stream.generate(Math::random).limit(10);
+        Stream&lt;Integer&gt; iterateStream = Stream.iterate(0, n -> n + 2).limit(10);
+        
+        // 6. From file (try-with-resources)
+        try (Stream&lt;String&gt; lines = Files.lines(Paths.get("file.txt"))) {
+            lines.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // 7. From string (characters)
+        IntStream charStream = "Hello".chars();
+        
+        // 8. Builder pattern
+        Stream&lt;String&gt; builtStream = Stream.&lt;String&gt;builder()
+            .add("one")
+            .add("two")
+            .add("three")
+            .build();
+        
+        // Example outputs
+        System.out.println("Stream iterate: " + iterateStream.collect(Collectors.toList()));
+        System.out.println("Stream generate: " + randomStream.collect(Collectors.toList()));
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Stream iterate: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]<br>
+                        Stream generate: [0.123, 0.456, 0.789, ...]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. INTERMEDIATE OPERATIONS ==================== -->
+            <div class="section-card" id="operazioni-intermedie">
+                <div class="card-header">
+                    <i class="fas fa-filter"></i>
+                    <h2>Intermediate Operations</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">filter, map, flatMap, distinct, limit, skip, sorted, peek</div>
+                    <div class="desc">
+                        Intermediate operations transform one stream into another stream. They are <strong>lazy</strong>:
+                        they are executed only when a terminal operation is invoked.
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+public class IntermediateOperationsDemo {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        
+        // 1. filter - selects elements that satisfy a predicate
+        List&lt;Integer&gt; evens = numbers.stream()
+            .filter(n -> n % 2 == 0)
+            .collect(Collectors.toList());
+        System.out.println("Even numbers: " + evens);
+        
+        // 2. map - transforms each element
+        List&lt;Integer&gt; squares = numbers.stream()
+            .map(n -> n * n)
+            .collect(Collectors.toList());
+        System.out.println("Squares: " + squares);
+        
+        // 3. flatMap - flattens a stream of streams
+        List&lt;List&lt;Integer&gt;&gt; listOfLists = Arrays.asList(
+            Arrays.asList(1, 2),
+            Arrays.asList(3, 4),
+            Arrays.asList(5, 6)
+        );
+        List&lt;Integer&gt; flattened = listOfLists.stream()
+            .flatMap(List::stream)
+            .collect(Collectors.toList());
+        System.out.println("Flattened: " + flattened);
+        
+        // 4. distinct - removes duplicates
+        List&lt;Integer&gt; withDuplicates = Arrays.asList(1, 2, 2, 3, 3, 3, 4, 5);
+        List&lt;Integer&gt; withoutDuplicates = withDuplicates.stream()
+            .distinct()
+            .collect(Collectors.toList());
+        System.out.println("Without duplicates: " + withoutDuplicates);
+        
+        // 5. sorted - sorts
+        List&lt;Integer&gt; sortedDesc = numbers.stream()
+            .sorted((a, b) -> b - a)  // descending
+            .collect(Collectors.toList());
+        System.out.println("Sorted descending: " + sortedDesc);
+        
+        // 6. limit - limits the number of elements
+        List&lt;Integer&gt; firstThree = numbers.stream()
+            .limit(3)
+            .collect(Collectors.toList());
+        System.out.println("First 3: " + firstThree);
+        
+        // 7. skip - skips the first n elements
+        List&lt;Integer&gt; afterFirstThree = numbers.stream()
+            .skip(3)
+            .collect(Collectors.toList());
+        System.out.println("After first 3: " + afterFirstThree);
+        
+        // 8. peek - executes an action on each element (debugging)
+        List&lt;Integer&gt; withPeek = numbers.stream()
+            .peek(n -> System.out.println("Processing: " + n))
+            .map(n -> n * 2)
+            .limit(3)
+            .collect(Collectors.toList());
+        System.out.println("Result with peek: " + withPeek);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Even numbers: [2, 4, 6, 8, 10]<br>
+                        Squares: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]<br>
+                        Flattened: [1, 2, 3, 4, 5, 6]<br>
+                        Without duplicates: [1, 2, 3, 4, 5]<br>
+                        Sorted descending: [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]<br>
+                        First 3: [1, 2, 3]<br>
+                        After first 3: [4, 5, 6, 7, 8, 9, 10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. TERMINAL OPERATIONS ==================== -->
+            <div class="section-card" id="operazioni-terminali">
+                <div class="card-header">
+                    <i class="fas fa-flag-checkered"></i>
+                    <h2>Terminal Operations</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-purple">forEach, collect, reduce, count, anyMatch, allMatch, findFirst, min, max</div>
+                    <div class="desc">
+                        Terminal operations produce a result or a side effect. Once executed, the stream is consumed and cannot be reused.
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+public class TerminalOperationsDemo {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        
+        // 1. forEach - executes an action for each element
+        System.out.print("forEach: ");
+        numbers.stream().forEach(n -> System.out.print(n + " "));
+        
+        // 2. collect - collects elements into a collection
+        List&lt;Integer&gt; collected = numbers.stream()
+            .filter(n -> n > 5)
+            .collect(Collectors.toList());
+        System.out.println("\nCollect: " + collected);
+        
+        // 3. count - counts the elements
+        long count = numbers.stream()
+            .filter(n -> n % 2 == 0)
+            .count();
+        System.out.println("Even count: " + count);
+        
+        // 4. reduce - reduces elements to a single value
+        Optional&lt;Integer&gt; sum = numbers.stream()
+            .reduce((a, b) -> a + b);
+        System.out.println("Sum: " + sum.orElse(0));
+        
+        // reduce with initial value
+        int sumWithInitial = numbers.stream()
+            .reduce(0, (a, b) -> a + b);
+        System.out.println("Sum with initial: " + sumWithInitial);
+        
+        // 5. anyMatch / allMatch / noneMatch - matching operations
+        boolean anyEven = numbers.stream().anyMatch(n -> n % 2 == 0);
+        boolean allGreaterThanZero = numbers.stream().allMatch(n -> n > 0);
+        boolean noneNegative = numbers.stream().noneMatch(n -> n < 0);
+        System.out.println("Any even? " + anyEven);
+        System.out.println("All > 0? " + allGreaterThanZero);
+        System.out.println("None negative? " + noneNegative);
+        
+        // 6. findFirst / findAny - finds an element
+        Optional&lt;Integer&gt; first = numbers.stream()
+            .filter(n -> n > 5)
+            .findFirst();
+        System.out.println("First > 5: " + first.orElse(-1));
+        
+        // 7. min / max - minimum and maximum values
+        Optional&lt;Integer&gt; min = numbers.stream().min(Integer::compareTo);
+        Optional&lt;Integer&gt; max = numbers.stream().max(Integer::compareTo);
+        System.out.println("Min: " + min.orElse(-1));
+        System.out.println("Max: " + max.orElse(-1));
+        
+        // 8. toArray - converts to an array
+        Integer[] array = numbers.stream()
+            .filter(n -> n % 2 == 0)
+            .toArray(Integer[]::new);
+        System.out.println("Even array: " + Arrays.toString(array));
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        forEach: 1 2 3 4 5 6 7 8 9 10 <br>
+                        Collect: [6, 7, 8, 9, 10]<br>
+                        Even count: 5<br>
+                        Sum: 55<br>
+                        Sum with initial: 55<br>
+                        Any even? true<br>
+                        All > 0? true<br>
+                        None negative? true<br>
+                        First > 5: 6<br>
+                        Min: 1<br>
+                        Max: 10<br>
+                        Even array: [2, 4, 6, 8, 10]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. COLLECTORS ==================== -->
+            <div class="section-card" id="collectors">
+                <div class="card-header">
+                    <i class="fas fa-box"></i>
+                    <h2>Collectors - Gathering Results</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">toList, toSet, toMap, joining, groupingBy, partitioningBy</div>
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+public class CollectorsDemo {
+    public static void main(String[] args) {
+        List&lt;String&gt; words = Arrays.asList("house", "tree", "sun", "moon", "sea", "sky");
+        
+        // 1. toList
+        List&lt;String&gt; list = words.stream()
+            .filter(w -> w.length() > 3)
+            .collect(Collectors.toList());
+        System.out.println("toList: " + list);
+        
+        // 2. toSet
+        Set&lt;String&gt; set = words.stream()
+            .collect(Collectors.toSet());
+        System.out.println("toSet: " + set);
+        
+        // 3. toMap
+        Map&lt;String, Integer&gt; map = words.stream()
+            .collect(Collectors.toMap(
+                w -> w,                    // key
+                w -> w.length(),           // value
+                (v1, v2) -> v1             // in case of duplicates
+            ));
+        System.out.println("toMap: " + map);
+        
+        // 4. joining - concatenates strings
+        String joined = words.stream()
+            .collect(Collectors.joining(", "));
+        System.out.println("joining: " + joined);
+        
+        // 5. groupingBy - groups by criteria
+        Map&lt;Integer, List&lt;String&gt;&gt; byLength = words.stream()
+            .collect(Collectors.groupingBy(String::length));
+        System.out.println("groupingBy: " + byLength);
+        
+        // 6. partitioningBy - partitions into two groups (true/false)
+        Map&lt;Boolean, List&lt;String&gt;&gt; partition = words.stream()
+            .collect(Collectors.partitioningBy(w -> w.length() > 3));
+        System.out.println("partitioningBy (len>3): " + partition);
+        
+        // 7. summarizingInt - statistics
+        IntSummaryStatistics stats = words.stream()
+            .collect(Collectors.summarizingInt(String::length));
+        System.out.println("Statistics: " + stats);
+        
+        // 8. Collectors with downstream
+        Map&lt;Integer, Long&gt; countByLength = words.stream()
+            .collect(Collectors.groupingBy(
+                String::length,
+                Collectors.counting()
+            ));
+        System.out.println("Count by length: " + countByLength);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        toList: [house, tree, moon, sea, sky]<br>
+                        toSet: [sky, house, tree, sun, moon, sea]<br>
+                        toMap: {sky=3, house=5, tree=4, sun=3, moon=4, sea=3}<br>
+                        joining: house, tree, sun, moon, sea, sky<br>
+                        groupingBy: {3=[sun, sea, sky], 4=[tree, moon], 5=[house]}<br>
+                        partitioningBy (len>3): {false=[sun], true=[house, tree, moon, sea, sky]}<br>
+                        Statistics: IntSummaryStatistics{count=6, sum=22, min=3, average=3.666667, max=5}<br>
+                        Count by length: {3=3, 4=2, 5=1}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. STREAMS WITH COMPLEX OBJECTS ==================== -->
+            <div class="section-card" id="oggetti-complessi">
+                <div class="card-header">
+                    <i class="fas fa-users"></i>
+                    <h2>Streams with Complex Objects</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Operations on custom classes</div>
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+class Product {
+    String name;
+    double price;
+    String category;
+    int quantity;
+    
+    public Product(String name, double price, String category, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.quantity = quantity;
+    }
+    
+    public double getTotalValue() {
+        return price * quantity;
+    }
+    
+    @Override
+    public String toString() {
+        return String.format("%s (€%.2f x %d = €%.2f)", name, price, quantity, getTotalValue());
+    }
+}
+
+public class ComplexObjectsDemo {
+    public static void main(String[] args) {
+        List&lt;Product&gt; products = Arrays.asList(
+            new Product("Laptop", 1200, "Electronics", 5),
+            new Product("Mouse", 25, "Electronics", 50),
+            new Product("Java Book", 45, "Books", 30),
+            new Product("Keyboard", 80, "Electronics", 15),
+            new Product("Notebook", 3, "Stationery", 100)
+        );
+        
+        // 1. Expensive electronics with price > 50
+        List&lt;Product&gt; expensiveElectronics = products.stream()
+            .filter(p -> p.category.equals("Electronics"))
+            .filter(p -> p.price > 50)
+            .collect(Collectors.toList());
+        System.out.println("Expensive electronics: " + expensiveElectronics);
+        
+        // 2. Average product price
+        double avgPrice = products.stream()
+            .mapToDouble(p -> p.price)
+            .average()
+            .orElse(0);
+        System.out.printf("Average price: €%.2f\n", avgPrice);
+        
+        // 3. Total inventory value
+        double totalValue = products.stream()
+            .mapToDouble(Product::getTotalValue)
+            .sum();
+        System.out.printf("Total inventory value: €%.2f\n", totalValue);
+        
+        // 4. Grouping by category
+        Map&lt;String, List&lt;Product&gt;&gt; byCategory = products.stream()
+            .collect(Collectors.groupingBy(p -> p.category));
+        
+        System.out.println("\nGrouped by category:");
+        byCategory.forEach((cat, list) -> {
+            System.out.println(cat + ": " + list);
+        });
+        
+        // 5. Most expensive product per category
+        Map&lt;String, Optional&lt;Product&gt;&gt; maxPerCategory = products.stream()
+            .collect(Collectors.groupingBy(
+                p -> p.category,
+                Collectors.maxBy(Comparator.comparingDouble(p -> p.price))
+            ));
+        
+        System.out.println("\nMost expensive product per category:");
+        maxPerCategory.forEach((cat, prod) -> 
+            System.out.println(cat + ": " + prod.map(p -> p.name).orElse("N/A"))
+        );
+        
+        // 6. Total quantity per category
+        Map&lt;String, Integer&gt; quantityPerCategory = products.stream()
+            .collect(Collectors.groupingBy(
+                p -> p.category,
+                Collectors.summingInt(p -> p.quantity)
+            ));
+        System.out.println("\nTotal quantity per category: " + quantityPerCategory);
+        
+        // 7. Sorting by total value descending
+        List&lt;Product&gt; sortedByValue = products.stream()
+            .sorted((a, b) -> Double.compare(b.getTotalValue(), a.getTotalValue()))
+            .collect(Collectors.toList());
+        System.out.println("\nProducts sorted by value: " + sortedByValue);
+        
+        // 8. Filtering and mapping
+        List&lt;String&gt; cheapProductNames = products.stream()
+            .filter(p -> p.price < 50)
+            .map(p -> p.name)
+            .collect(Collectors.toList());
+        System.out.println("\nCheap products (<€50): " + cheapProductNames);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Expensive electronics: [Laptop (€1200.00 x 5 = €6000.00)]<br>
+                        Average price: €270.60<br>
+                        Total inventory value: €11315.00<br>
+                        Grouped by category: ...<br>
+                        Most expensive product per category: ...<br>
+                        Total quantity per category: {Books=30, Stationery=100, Electronics=70}<br>
+                        Cheap products (<€50): [Mouse, Java Book, Notebook]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. PARALLEL STREAM ==================== -->
+            <div class="section-card" id="parallel-stream">
+                <div class="card-header">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h2>Parallel Stream (Performance)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Automatic parallel processing on multiple cores</div>
+                    <div class="warning-block">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> parallelStream is not always faster!
+                        Use it only for expensive operations and large datasets. For simple operations, parallelism overhead
+                        can degrade performance.
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+import java.util.concurrent.*;
+
+public class ParallelStreamDemo {
+    public static void main(String[] args) {
+        // Creating a large dataset
+        List&lt;Integer&gt; numbers = IntStream.rangeClosed(1, 10_000_000)
+            .boxed()
+            .collect(Collectors.toList());
+        
+        // ========== SEQUENTIAL STREAM ==========
+        long startSeq = System.nanoTime();
+        long sumSeq = numbers.stream()
+            .mapToLong(n -> n * n)
+            .sum();
+        long endSeq = System.nanoTime();
+        
+        // ========== PARALLEL STREAM ==========
+        long startPar = System.nanoTime();
+        long sumPar = numbers.parallelStream()
+            .mapToLong(n -> n * n)
+            .sum();
+        long endPar = System.nanoTime();
+        
+        System.out.println("Sum of squares: " + sumSeq);
+        System.out.println("Sequential time: " + (endSeq - startSeq) / 1_000_000 + " ms");
+        System.out.println("Parallel time: " + (endPar - startPar) / 1_000_000 + " ms");
+        System.out.println("Speedup: " + String.format("%.2f", (double)(endSeq - startSeq) / (endPar - startPar)) + "x");
+        
+        // ========== WHEN TO USE PARALLEL STREAM ==========
+        System.out.println("\n--- When to use parallelStream ---");
+        
+        // Expensive operation (simulation)
+        List&lt;Integer&gt; data = IntStream.rangeClosed(1, 1000).boxed().collect(Collectors.toList());
+        
+        long start1 = System.nanoTime();
+        double avg1 = data.stream()
+            .mapToDouble(n -> expensiveOperation(n))
+            .average()
+            .orElse(0);
+        long end1 = System.nanoTime();
+        
+        long start2 = System.nanoTime();
+        double avg2 = data.parallelStream()
+            .mapToDouble(n -> expensiveOperation(n))
+            .average()
+            .orElse(0);
+        long end2 = System.nanoTime();
+        
+        System.out.println("Expensive operation - sequential: " + (end1 - start1) / 1_000_000 + " ms");
+        System.out.println("Expensive operation - parallel: " + (end2 - start2) / 1_000_000 + " ms");
+        
+        // ========== CUSTOM THREAD POOL ==========
+        System.out.println("\n--- Custom thread pool ---");
+        ForkJoinPool customPool = new ForkJoinPool(4);
+        try {
+            long result = customPool.submit(() ->
+                numbers.parallelStream()
+                    .mapToLong(n -> n * n)
+                    .sum()
+            ).get();
+            System.out.println("Result with custom pool: " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Simulates an expensive operation
+    private static double expensiveOperation(int n) {
+        double result = 0;
+        for (int i = 0; i < 10000; i++) {
+            result += Math.sin(n) * Math.cos(i);
+        }
+        return result;
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output (example):<br>
+                        Sum of squares: 333333283333335000000<br>
+                        Sequential time: 245 ms<br>
+                        Parallel time: 68 ms<br>
+                        Speedup: 3.60x<br>
+                        Expensive operation - sequential: 1250 ms<br>
+                        Expensive operation - parallel: 420 ms
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. PRIMITIVE STREAMS ==================== -->
+            <div class="section-card" id="primitive-stream">
+                <div class="card-header">
+                    <i class="fas fa-calculator"></i>
+                    <h2>Primitive Streams</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">IntStream, LongStream, DoubleStream</div>
+                    <div class="desc">
+                        To avoid boxing/unboxing (which has a cost), Java provides specialized streams for primitive types.
+                    </div>
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+public class PrimitiveStreamDemo {
+    public static void main(String[] args) {
+        // ========== IntStream ==========
+        System.out.println("--- IntStream ---");
+        
+        // Number ranges
+        System.out.print("range(1,10): ");
+        IntStream.range(1, 10).forEach(n -> System.out.print(n + " "));
+        
+        System.out.print("\nrangeClosed(1,10): ");
+        IntStream.rangeClosed(1, 10).forEach(n -> System.out.print(n + " "));
+        
+        // IntStream operations
+        int sum = IntStream.rangeClosed(1, 100).sum();
+        OptionalDouble average = IntStream.rangeClosed(1, 100).average();
+        int max = IntStream.rangeClosed(1, 100).max().orElse(0);
+        
+        System.out.println("\n\nSum 1-100: " + sum);
+        System.out.println("Average 1-100: " + average.orElse(0));
+        System.out.println("Max 1-100: " + max);
+        
+        // Boxed - converts to Stream&lt;Integer&gt;
+        List&lt;Integer&gt; list = IntStream.rangeClosed(1, 10)
+            .boxed()
+            .collect(Collectors.toList());
+        System.out.println("Boxed: " + list);
+        
+        // ========== LongStream ==========
+        System.out.println("\n--- LongStream ---");
+        long longSum = LongStream.rangeClosed(1L, 1_000_000L).sum();
+        System.out.println("Sum 1-1,000,000: " + longSum);
+        
+        // ========== DoubleStream ==========
+        System.out.println("\n--- DoubleStream ---");
+        DoubleStream.generate(Math::random)
+            .limit(5)
+            .forEach(n -> System.out.printf("%.4f ", n));
+        
+        // Mathematical operations
+        double[] numbers = {1.5, 2.5, 3.5, 4.5, 5.5};
+        DoubleStream stream = Arrays.stream(numbers);
+        
+        System.out.println("\nArray sum: " + stream.sum());
+        
+        // ========== CONVERSIONS ==========
+        System.out.println("\n--- Conversions ---");
+        
+        // From Stream to IntStream
+        Stream&lt;Integer&gt; boxedStream = Stream.of(1, 2, 3, 4, 5);
+        int boxedSum = boxedStream.mapToInt(Integer::intValue).sum();
+        System.out.println("Sum from Stream&lt;Integer&gt;: " + boxedSum);
+        
+        // From IntStream to Stream
+        IntStream intStream = IntStream.of(1, 2, 3, 4, 5);
+        Stream&lt;Integer&gt; unboxedStream = intStream.boxed();
+        
+        // ========== STATISTICS WITH IntStream ==========
+        System.out.println("\n--- Statistics with IntStream ---");
+        IntStream numbersStream = IntStream.of(10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
+        
+        IntSummaryStatistics stats = numbersStream.summaryStatistics();
+        System.out.println("Count: " + stats.getCount());
+        System.out.println("Sum: " + stats.getSum());
+        System.out.println("Min: " + stats.getMin());
+        System.out.println("Max: " + stats.getMax());
+        System.out.println("Average: " + stats.getAverage());
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        --- IntStream ---<br>
+                        range(1,10): 1 2 3 4 5 6 7 8 9 <br>
+                        rangeClosed(1,10): 1 2 3 4 5 6 7 8 9 10 <br>
+                        Sum 1-100: 5050<br>
+                        Average 1-100: 50.5<br>
+                        Max 1-100: 100<br>
+                        Boxed: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]<br>
+                        --- LongStream ---<br>
+                        Sum 1-1,000,000: 500000500000<br>
+                        --- DoubleStream ---<br>
+                        0.1234 0.5678 0.9012 0.3456 0.7890 <br>
+                        Array sum: 17.5<br>
+                        --- Conversions ---<br>
+                        Sum from Stream&lt;Integer&gt;: 15<br>
+                        --- Statistics with IntStream ---<br>
+                        Count: 10, Sum: 550, Min: 10, Max: 100, Average: 55.0
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. PRACTICAL EXAMPLES ==================== -->
+            <div class="section-card" id="esempi-pratici">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>Complete Practical Examples</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Real-world examples of using Stream API</div>
+                    
+                    <pre><code class="language-java">import java.util.*;
+import java.util.stream.*;
+
+public class StreamPracticalExamples {
+    public static void main(String[] args) {
+        
+        // ==================== EXAMPLE 1: Student grade analysis ====================
+        System.out.println("=== EXAMPLE 1: Grade analysis ===");
+        List&lt;Integer&gt; grades = Arrays.asList(28, 25, 30, 22, 18, 15, 30, 27, 24, 29);
+        
+        // Grade statistics
+        double averageGrade = grades.stream()
+            .mapToInt(Integer::intValue)
+            .average()
+            .orElse(0);
+        System.out.printf("Average grade: %.2f\n", averageGrade);
+        
+        // Count of students with grade >= 27
+        long excellent = grades.stream()
+            .filter(g -> g >= 27)
+            .count();
+        System.out.println("Excellent students (>=27): " + excellent);
+        
+        // Unique sorted grades
+        List&lt;Integer&gt; uniqueGrades = grades.stream()
+            .distinct()
+            .sorted()
+            .collect(Collectors.toList());
+        System.out.println("Unique grades: " + uniqueGrades);
+        
+        // ==================== EXAMPLE 2: Bank transaction processing ====================
+        System.out.println("\n=== EXAMPLE 2: Bank transactions ===");
+        List&lt;Double&gt; transactions = Arrays.asList(150.0, -30.0, 200.0, -50.0, 75.0, -20.0, 300.0);
+        
+        // Total income
+        double income = transactions.stream()
+            .filter(t -> t > 0)
+            .reduce(0.0, Double::sum);
+        System.out.printf("Total income: €%.2f\n", income);
+        
+        // Total expenses
+        double expenses = transactions.stream()
+            .filter(t -> t < 0)
+            .map(Math::abs)
+            .reduce(0.0, Double::sum);
+        System.out.printf("Total expenses: €%.2f\n", expenses);
+        
+        // Final balance
+        double balance = transactions.stream()
+            .reduce(0.0, Double::sum);
+        System.out.printf("Final balance: €%.2f\n", balance);
+        
+        // ==================== EXAMPLE 3: String filtering and transformation ====================
+        System.out.println("\n=== EXAMPLE 3: Strings ===");
+        List&lt;String&gt; phrases = Arrays.asList(
+            "Java is awesome",
+            "Python is powerful",
+            "JavaScript is everywhere",
+            "Java 17 is LTS",
+            "Kotlin is modern"
+        );
+        
+        // Phrases containing "Java"
+        List&lt;String&gt; withJava = phrases.stream()
+            .filter(s -> s.contains("Java"))
+            .collect(Collectors.toList());
+        System.out.println("Phrases with 'Java': " + withJava);
+        
+        // Average phrase length
+        double avgLength = phrases.stream()
+            .mapToInt(String::length)
+            .average()
+            .orElse(0);
+        System.out.printf("Average phrase length: %.2f\n", avgLength);
+        
+        // Total words (split and flatMap)
+        long totalWords = phrases.stream()
+            .flatMap(s -> Arrays.stream(s.split(" ")))
+            .count();
+        System.out.println("Total words: " + totalWords);
+        
+        // ==================== EXAMPLE 4: Employee management ====================
+        System.out.println("\n=== EXAMPLE 4: Employees ===");
+        List&lt;Employee&gt; employees = Arrays.asList(
+            new Employee("Mario", "IT", 3500),
+            new Employee("Laura", "HR", 2800),
+            new Employee("Giuseppe", "IT", 4200),
+            new Employee("Anna", "HR", 3100),
+            new Employee("Paolo", "Sales", 3800),
+            new Employee("Sofia", "IT", 3900)
+        );
+        
+        // Average salary per department
+        Map&lt;String, Double&gt; avgSalaryPerDept = employees.stream()
+            .collect(Collectors.groupingBy(
+                e -> e.department,
+                Collectors.averagingDouble(e -> e.salary)
+            ));
+        System.out.println("Average salary per department: " + avgSalaryPerDept);
+        
+        // Employee with highest salary
+        Employee maxSalary = employees.stream()
+            .max(Comparator.comparingDouble(e -> e.salary))
+            .orElse(null);
+        System.out.println("Employee with highest salary: " + maxSalary);
+        
+        // IT employees sorted by salary
+        List&lt;Employee&gt; itSorted = employees.stream()
+            .filter(e -> e.department.equals("IT"))
+            .sorted(Comparator.comparingDouble(e -> e.salary))
+            .collect(Collectors.toList());
+        System.out.println("IT sorted by salary: " + itSorted);
+        
+        // ==================== EXAMPLE 5: Prime numbers with Stream ====================
+        System.out.println("\n=== EXAMPLE 5: Prime numbers ===");
+        List&lt;Integer&gt; primes = IntStream.rangeClosed(2, 100)
+            .filter(n -> IntStream.rangeClosed(2, (int)Math.sqrt(n))
+                .noneMatch(i -> n % i == 0))
+            .boxed()
+            .collect(Collectors.toList());
+        System.out.println("Prime numbers up to 100: " + primes);
+        
+        // ==================== EXAMPLE 6: Complex pipeline ====================
+        System.out.println("\n=== EXAMPLE 6: Complex pipeline ===");
+        List&lt;String&gt; words = Arrays.asList("house", "tree", "sun", "mountain", "moon", "sea");
+        
+        // Words with more than 3 letters, converted to uppercase, sorted by length
+        List&lt;String&gt; result = words.stream()
+            .filter(w -> w.length() > 3)
+            .map(String::toUpperCase)
+            .sorted(Comparator.comparingInt(String::length))
+            .collect(Collectors.toList());
+        System.out.println("Pipeline result: " + result);
+    }
+    
+    static class Employee {
+        String name;
+        String department;
+        double salary;
+        
+        Employee(String name, String department, double salary) {
+            this.name = name;
+            this.department = department;
+            this.salary = salary;
+        }
+        
+        @Override
+        public String toString() {
+            return name + " (" + salary + ")";
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        === EXAMPLE 1: Grade analysis ===<br>
+                        Average grade: 24.80<br>
+                        Excellent students (>=27): 5<br>
+                        Unique grades: [15, 18, 22, 24, 25, 27, 28, 29, 30]<br>
+                        === EXAMPLE 2: Bank transactions ===<br>
+                        Total income: €725.00<br>
+                        Total expenses: €100.00<br>
+                        Final balance: €625.00<br>
+                        === EXAMPLE 3: Strings ===<br>
+                        Phrases with 'Java': [Java is awesome, Java 17 is LTS]<br>
+                        Average phrase length: 17.20<br>
+                        Total words: 19<br>
+                        === EXAMPLE 4: Employees ===<br>
+                        Average salary per department: {HR=2950.0, IT=3866.6666666666665, Sales=3800.0}<br>
+                        Employee with highest salary: Giuseppe (4200.0)<br>
+                        IT sorted by salary: [Mario (3500.0), Sofia (3900.0), Giuseppe (4200.0)]<br>
+                        === EXAMPLE 5: Prime numbers ===<br>
+                        Prime numbers up to 100: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]<br>
+                        === EXAMPLE 6: Complex pipeline ===<br>
+                        Pipeline result: [HOUSE, MOON, SEA, TREE, MOUNTAIN]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 10. SUMMARY ==================== -->
+            <div class="section-card" id="riepilogo">
+                <div class="card-header">
+                    <i class="fas fa-list-check"></i>
+                    <h2>Stream Operations Summary</h2>
+                </div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr><th>Category</th><th>Operations</th><th>Description</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td rowspan="7">Intermediate</td><td>filter()</td><td>Selects elements that satisfy a predicate</td></tr>
+                            <tr><td>map()</td><td>Transforms each element</td></tr>
+                            <tr><td>flatMap()</td><td>Flattens a stream of streams</td></tr>
+                            <tr><td>distinct()</td><td>Removes duplicates</td></tr>
+                            <tr><td>sorted()</td><td>Sorts the elements</td></tr>
+                            <tr><td>limit()</td><td>Limits the number of elements</td></tr>
+                            <tr><td>skip()</td><td>Skips the first n elements</td></tr>
+                            <tr><td rowspan="8">Terminal</td><td>forEach()</td><td>Executes an action for each element</td></tr>
+                            <tr><td>collect()</td><td>Collects into a collection</td></tr>
+                            <tr><td>count()</td><td>Counts the elements</td></tr>
+                            <tr><td>reduce()</td><td>Reduces to a single value</td></tr>
+                            <tr><td>anyMatch()/allMatch()</td><td>Checks conditions</td></tr>
+                            <tr><td>findFirst()/findAny()</td><td>Finds an element</td></tr>
+                            <tr><td>min()/max()</td><td>Minimum/maximum value</td></tr>
+                            <tr><td>toArray()</td><td>Converts to an array</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-lightbulb"></i> <strong>Remember:</strong> Streams are <strong>lazy</strong> (intermediate operations
+                        are executed only when needed) and <strong>single-use</strong> (cannot be reused after a terminal operation)!
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Back to top</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Stream API | Functional programming in Java
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> All examples are ready to run
+        </div>
+    </footer>
+
+      <!-- Prism.js and Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+	<script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specific to this page
+        const sections = ['introduzione', 'creazione', 'operazioni-intermedie', 'operazioni-terminali', 'collectors', 'oggetti-complessi', 'parallel-stream', 'primitive-stream', 'esempi-pratici', 'riepilogo'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

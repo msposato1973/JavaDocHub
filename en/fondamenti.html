@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Fundamentals | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDEX</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#tipi-primitivi" class="toc-link" data-target="tipi-primitivi">
+                    <i class="fas fa-cube"></i> Primitive Types
+                </a></li>
+                <li><a href="#operatori" class="toc-link" data-target="operatori">
+                    <i class="fas fa-calculator"></i> Operators
+                </a></li>
+                <li><a href="#condizionali" class="toc-link" data-target="condizionali">
+                    <i class="fas fa-code-branch"></i> Conditionals
+                </a></li>
+                <li><a href="#cicli" class="toc-link" data-target="cicli">
+                    <i class="fas fa-repeat"></i> Loops
+                </a></li>
+                <li><a href="#array" class="toc-link" data-target="array">
+                    <i class="fas fa-table"></i> Arrays
+                </a></li>
+                <li><a href="#stringhe" class="toc-link" data-target="stringhe">
+                    <i class="fas fa-font"></i> Strings
+                </a></li>
+                <li><a href="#input-output" class="toc-link" data-target="input-output">
+                    <i class="fas fa-keyboard"></i> Input/Output
+                </a></li>
+                <li><a href="#metodi" class="toc-link" data-target="metodi">
+                    <i class="fas fa-code"></i> Methods
+                </a></li>
+                <li><a href="#esempi" class="toc-link" data-target="esempi">
+                    <i class="fas fa-code-branch"></i> Practical Examples
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Index
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fab fa-java"></i> Java Language Fundamentals</h1>
+                <p>Variables, primitive types, operators, control structures, loops, arrays, strings, and methods</p>
+            </div>
+
+            <!-- ==================== 1. PRIMITIVE TYPES ==================== -->
+            <div class="section-card" id="tipi-primitivi">
+                <div class="card-header">
+                    <i class="fas fa-cube"></i>
+                    <h2>Variables and Primitive Types</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-tag"></i> Types: byte, short, int, long, float, double, char, boolean</div>
+                    <div class="desc">
+                        Java is a <strong>statically typed</strong> language: every variable must declare its type before being used.
+                    </div>
+                    <pre><code class="language-java">public class PrimitiveTypes {
+    public static void main(String[] args) {
+        // Integer types
+        byte byteValue = 127;           // 8 bits, from -128 to 127
+        short shortValue = 32767;       // 16 bits, from -32,768 to 32,767
+        int number = 42;                 // 32 bits, most common
+        long bigNumber = 1_000_000_000L;  // 64 bits, requires final 'L'
+        
+        // Floating point types
+        float price = 19.99f;           // 32 bits, requires final 'f'
+        double precision = 3.14159265359; // 64 bits, default for decimals
+        
+        // Other types
+        char letter = 'A';              // 16 bits (Unicode)
+        boolean active = true;           // true or false
+        
+        // Output
+        System.out.println("Number: " + number);
+        System.out.println("Price: €" + price);
+        System.out.println("Letter: " + letter);
+        System.out.println("Active: " + active);
+        
+        // Type inference with var (Java 10+)
+        var message = "Hello Java";     // compiler infers String
+        var numberVar = 100;             // infers int
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Number: 42<br>
+                        Price: €19.99<br>
+                        Letter: A<br>
+                        Active: true
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Note:</strong> Java is strongly typed. You cannot assign a double value to an int variable without an explicit cast!
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. OPERATORS ==================== -->
+            <div class="section-card" id="operatori">
+                <div class="card-header">
+                    <i class="fas fa-calculator"></i>
+                    <h2>Operators</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Arithmetic, relational, logical, assignment</div>
+                    <pre><code class="language-java">public class OperatorsDemo {
+    public static void main(String[] args) {
+        int a = 10, b = 3;
+        
+        // Arithmetic operators
+        System.out.println("Sum: " + (a + b));      // 13
+        System.out.println("Difference: " + (a - b)); // 7
+        System.out.println("Product: " + (a * b)); // 30
+        System.out.println("Division: " + (a / b));  // 3 (integer!)
+        System.out.println("Modulus: " + (a % b));     // 1 (remainder)
+        
+        // Increment/decrement operators
+        int x = 5;
+        System.out.println("x++: " + (x++)); // 5 (then x becomes 6)
+        System.out.println("++x: " + (++x)); // 7
+        
+        // Relational operators
+        System.out.println("a > b: " + (a > b));   // true
+        System.out.println("a == b: " + (a == b)); // false
+        
+        // Logical operators
+        boolean cond1 = true, cond2 = false;
+        System.out.println("AND: " + (cond1 && cond2));  // false
+        System.out.println("OR: " + (cond1 || cond2));   // true
+        System.out.println("NOT: " + (!cond1));          // false
+        
+        // Compound assignment operators
+        int c = 10;
+        c += 5;  // c = c + 5 → 15
+        c *= 2;  // c = c * 2 → 30
+        System.out.println("final c: " + c);
+        
+        // Ternary operator
+        int max = (a > b) ? a : b;
+        System.out.println("Max: " + max);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Sum: 13<br>
+                        Difference: 7<br>
+                        Product: 30<br>
+                        Division: 3<br>
+                        Modulus: 1<br>
+                        x++: 5<br>
+                        ++x: 7<br>
+                        a > b: true<br>
+                        a == b: false<br>
+                        AND: false<br>
+                        OR: true<br>
+                        NOT: false<br>
+                        final c: 30<br>
+                        Max: 10
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. CONDITIONAL STRUCTURES ==================== -->
+            <div class="section-card" id="condizionali">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>Conditional Structures (if-else, switch)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">if, else if, else, switch</div>
+                    <pre><code class="language-java">public class ConditionalsDemo {
+    public static void main(String[] args) {
+        int grade = 85;
+        
+        // if-else if-else
+        System.out.println("--- if-else ---");
+        if (grade >= 90) {
+            System.out.println("Excellent");
+        } else if (grade >= 70) {
+            System.out.println("Good");
+        } else if (grade >= 60) {
+            System.out.println("Sufficient");
+        } else {
+            System.out.println("Needs improvement");
+        }
+        
+        // Traditional switch (Java 7-)
+        System.out.println("\n--- Traditional switch ---");
+        int dayNumber = 3;
+        switch (dayNumber) {
+            case 1:
+                System.out.println("Monday");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday");
+                break;
+            default:
+                System.out.println("Other day");
+        }
+        
+        // Switch expression (Java 14+)
+        System.out.println("\n--- Switch expression (Java 14+) ---");
+        String day = "SATURDAY";
+        String type = switch (day) {
+            case "SATURDAY", "SUNDAY" -> "Weekend";
+            case "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY" -> "Weekday";
+            default -> "Unknown";
+        };
+        System.out.println(day + " is " + type);
+        
+        // Switch with yield (multiple blocks)
+        String color = "RED";
+        String code = switch (color) {
+            case "RED" -> {
+                System.out.println("Primary color");
+                yield "#FF0000";
+            }
+            case "GREEN" -> {
+                System.out.println("Primary color");
+                yield "#00FF00";
+            }
+            default -> "#000000";
+        };
+        System.out.println("Code: " + code);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        --- if-else ---<br>
+                        Good<br>
+                        --- Traditional switch ---<br>
+                        Wednesday<br>
+                        --- Switch expression (Java 14+) ---<br>
+                        SATURDAY is Weekend<br>
+                        Primary color<br>
+                        Code: #FF0000
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. LOOPS ==================== -->
+            <div class="section-card" id="cicli">
+                <div class="card-header">
+                    <i class="fas fa-repeat"></i>
+                    <h2>Loops: for, while, do-while</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">for, enhanced for, while, do-while</div>
+                    <pre><code class="language-java">public class LoopsDemo {
+    public static void main(String[] args) {
+        // ========== FOR LOOP ==========
+        System.out.println("--- For loop ---");
+        System.out.print("Even numbers from 1 to 10: ");
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 == 0) {
+                System.out.print(i + " ");
+            }
+        }
+        
+        // ========== WHILE LOOP ==========
+        System.out.println("\n\n--- While loop ---");
+        int counter = 3;
+        while (counter > 0) {
+            System.out.println("Countdown: " + counter);
+            counter--;
+        }
+        
+        // ========== DO-WHILE LOOP ==========
+        System.out.println("\n--- Do-while loop ---");
+        int choice = 0;
+        do {
+            System.out.println("Do-while executes at least once");
+            choice = 0;
+        } while (choice != 0);
+        
+        // ========== ENHANCED FOR (for-each) ==========
+        System.out.println("\n--- Enhanced for (array) ---");
+        int[] numbers = {10, 20, 30, 40, 50};
+        for (int n : numbers) {
+            System.out.print(n + " ");
+        }
+        
+        // ========== BREAK AND CONTINUE ==========
+        System.out.println("\n\n--- break and continue ---");
+        for (int i = 1; i <= 10; i++) {
+            if (i == 5) {
+                System.out.println("break at " + i);
+                break;
+            }
+            System.out.print(i + " ");
+        }
+        
+        System.out.println();
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 == 0) {
+                continue;
+            }
+            System.out.print(i + " ");
+        }
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        --- For loop ---<br>
+                        Even numbers from 1 to 10: 2 4 6 8 10 <br>
+                        --- While loop ---<br>
+                        Countdown: 3<br>
+                        Countdown: 2<br>
+                        Countdown: 1<br>
+                        --- Do-while loop ---<br>
+                        Do-while executes at least once<br>
+                        --- Enhanced for (array) ---<br>
+                        10 20 30 40 50 <br>
+                        --- break and continue ---<br>
+                        1 2 3 4 break at 5<br>
+                        1 3 5 7 9
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. ARRAYS ==================== -->
+            <div class="section-card" id="array">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    <h2>One-dimensional and Multidimensional Arrays</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Arrays, matrices, Arrays utility class</div>
+                    <pre><code class="language-java">import java.util.Arrays;
+
+public class ArraysDemo {
+    public static void main(String[] args) {
+        // ========== 1D ARRAY ==========
+        System.out.println("--- 1D Array ---");
+        int[] numbers = new int[5];
+        int[] grades = {85, 90, 78, 92, 88};
+        
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = i * 10;
+        }
+        
+        System.out.print("Numbers: ");
+        for (int n : numbers) {
+            System.out.print(n + " ");
+        }
+        
+        // ========== 2D ARRAY (MATRIX) ==========
+        System.out.println("\n\n--- 2D Array ---");
+        int[][] matrix = {
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
+        };
+        
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+        
+        // ========== ARRAYS UTILITY ==========
+        System.out.println("\n--- Arrays Utility ---");
+        int[] original = {5, 2, 8, 1, 9};
+        
+        Arrays.sort(original);
+        System.out.println("Sorted: " + Arrays.toString(original));
+        
+        int[] copy = Arrays.copyOf(original, 3);
+        System.out.println("Copy first 3: " + Arrays.toString(copy));
+        
+        boolean equal = Arrays.equals(original, copy);
+        System.out.println("Arrays equal? " + equal);
+        
+        Arrays.fill(original, 0);
+        System.out.println("Filled with 0: " + Arrays.toString(original));
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        --- 1D Array ---<br>
+                        Numbers: 0 10 20 30 40 <br>
+                        --- 2D Array ---<br>
+                        1 2 3 <br>
+                        4 5 6 <br>
+                        7 8 9 <br>
+                        --- Arrays Utility ---<br>
+                        Sorted: [1, 2, 5, 8, 9]<br>
+                        Copy first 3: [1, 2, 5]<br>
+                        Arrays equal? false<br>
+                        Filled with 0: [0, 0, 0, 0, 0]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. STRINGS ==================== -->
+            <div class="section-card" id="stringhe">
+                <div class="card-header">
+                    <i class="fas fa-font"></i>
+                    <h2>Strings (String, StringBuilder)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Immutable String, mutable StringBuilder</div>
+                    <pre><code class="language-java">import java.util.Arrays;
+
+public class StringsDemo {
+    public static void main(String[] args) {
+        // ========== STRING ==========
+        System.out.println("--- String (immutable) ---");
+        
+        String greeting = "Hello World";
+        String name = "Java";
+        
+        String message = greeting + " from " + name;
+        System.out.println(message);
+        
+        System.out.println("Length: " + message.length());
+        System.out.println("Uppercase: " + message.toUpperCase());
+        System.out.println("Contains 'Java'? " + message.contains("Java"));
+        System.out.println("Substring (5-10): " + message.substring(5, 10));
+        
+        // Comparison (use equals, not ==)
+        String str1 = "test";
+        String str2 = new String("test");
+        System.out.println("== : " + (str1 == str2));
+        System.out.println("equals: " + str1.equals(str2));
+        
+        // Split
+        String csv = "apple,pear,banana,orange";
+        String[] fruits = csv.split(",");
+        System.out.println("Split: " + Arrays.toString(fruits));
+        
+        // ========== STRINGBUILDER (MUTABLE) ==========
+        System.out.println("\n--- StringBuilder (mutable) ---");
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("Java");
+        sb.append(" ");
+        sb.append("is");
+        sb.append(" ");
+        sb.append("awesome!");
+        
+        System.out.println(sb.toString());
+        
+        sb.insert(5, "programming ");
+        System.out.println("After insert: " + sb);
+        
+        sb.reverse();
+        System.out.println("Reverse: " + sb);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        --- String (immutable) ---<br>
+                        Hello World from Java<br>
+                        Length: 19<br>
+                        Uppercase: HELLO WORLD FROM JAVA<br>
+                        Contains 'Java'? true<br>
+                        Substring (5-10): World<br>
+                        equals: true<br>
+                        Split: [apple, pear, banana, orange]<br>
+                        --- StringBuilder (mutable) ---<br>
+                        Java is awesome!<br>
+                        After insert: Java programming is awesome!<br>
+                        Reverse: !emosewa si gnimmargorp avaJ
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. INPUT/OUTPUT ==================== -->
+            <div class="section-card" id="input-output">
+                <div class="card-header">
+                    <i class="fas fa-keyboard"></i>
+                    <h2>Console Input/Output</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Scanner, System.out, System.err</div>
+                    <pre><code class="language-java">import java.util.Scanner;
+
+public class InputOutputDemo {
+    public static void main(String[] args) {
+        // ========== OUTPUT ==========
+        System.out.println("Print with println (adds newline)");
+        System.out.print("Print with print (no newline)");
+        System.out.printf("Formatted print: %d, %s, %.2f\n", 42, "test", 3.14159);
+        
+        // ========== INPUT ==========
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("\n--- Enter your data ---");
+        
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        
+        scanner.nextLine();  // consume newline
+        
+        System.out.print("Enter your city: ");
+        String city = scanner.nextLine();
+        
+        System.out.print("Enter your salary: ");
+        double salary = scanner.nextDouble();
+        
+        System.out.println("\n--- Summary ---");
+        System.out.printf("Name: %s\n", name);
+        System.out.printf("Age: %d years\n", age);
+        System.out.printf("City: %s\n", city);
+        System.out.printf("Salary: €%.2f\n", salary);
+        
+        scanner.close();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Example interaction:<br>
+                        --- Enter your data ---<br>
+                        Enter your name: Mario<br>
+                        Enter your age: 30<br>
+                        Enter your city: Rome<br>
+                        Enter your salary: 2500.50<br>
+                        --- Summary ---<br>
+                        Name: Mario<br>
+                        Age: 30 years<br>
+                        City: Rome<br>
+                        Salary: €2500.50
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Note:</strong> Always remember to close the Scanner with .close() to free resources!
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. METHODS ==================== -->
+            <div class="section-card" id="metodi">
+                <div class="card-header">
+                    <i class="fas fa-code"></i>
+                    <h2>Methods in Java</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Declaration, parameters, return, overload</div>
+                    <pre><code class="language-java">public class MethodsDemo {
+    
+    // Method without parameters and without return
+    public static void greet() {
+        System.out.println("Hello from Java!");
+    }
+    
+    // Method with parameters and return
+    public static int sum(int a, int b) {
+        return a + b;
+    }
+    
+    // Method overload (same name, different parameters)
+    public static double sum(double a, double b) {
+        return a + b;
+    }
+    
+    public static int sum(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    // Method with varargs
+    public static int sumVarargs(int... numbers) {
+        int total = 0;
+        for (int n : numbers) {
+            total += n;
+        }
+        return total;
+    }
+    
+    // Recursive method
+    public static long factorial(int n) {
+        if (n <= 1) return 1;
+        return n * factorial(n - 1);
+    }
+    
+    public static void main(String[] args) {
+        greet();
+        
+        System.out.println("Sum 5+3: " + sum(5, 3));
+        System.out.println("Sum 5.5+3.2: " + sum(5.5, 3.2));
+        System.out.println("Sum 5+3+2: " + sum(5, 3, 2));
+        System.out.println("Sum varargs: " + sumVarargs(1, 2, 3, 4, 5));
+        System.out.println("Factorial of 5: " + factorial(5));
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Hello from Java!<br>
+                        Sum 5+3: 8<br>
+                        Sum 5.5+3.2: 8.7<br>
+                        Sum 5+3+2: 10<br>
+                        Sum varargs: 15<br>
+                        Factorial of 5: 120
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. PRACTICAL EXAMPLES ==================== -->
+            <div class="section-card" id="esempi">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>Complete Practical Examples</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Complete programs for practice</div>
+                    
+                    <pre><code class="language-java">// ==================== EXAMPLE 1: SIMPLE CALCULATOR ====================
+import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("--- Simple Calculator ---");
+        System.out.print("Enter first number: ");
+        double a = scanner.nextDouble();
+        
+        System.out.print("Enter operation (+, -, *, /): ");
+        char op = scanner.next().charAt(0);
+        
+        System.out.print("Enter second number: ");
+        double b = scanner.nextDouble();
+        
+        double result;
+        switch (op) {
+            case '+': result = a + b; break;
+            case '-': result = a - b; break;
+            case '*': result = a * b; break;
+            case '/': 
+                if (b != 0) result = a / b;
+                else { System.out.println("Error: division by zero!"); return; }
+                break;
+            default: System.out.println("Invalid operation!"); return;
+        }
+        
+        System.out.printf("%.2f %c %.2f = %.2f\n", a, op, b, result);
+        scanner.close();
+    }
+}
+
+// ==================== EXAMPLE 2: PRIME NUMBERS ====================
+public class PrimeNumbers {
+    public static void main(String[] args) {
+        System.out.println("Prime numbers between 1 and 100:");
+        
+        for (int num = 2; num <= 100; num++) {
+            boolean isPrime = true;
+            
+            for (int i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            
+            if (isPrime) {
+                System.out.print(num + " ");
+            }
+        }
+    }
+}
+// Output: 2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97
+
+// ==================== EXAMPLE 3: FIBONACCI SEQUENCE ====================
+public class Fibonacci {
+    public static void main(String[] args) {
+        int n = 10;
+        System.out.println("Fibonacci sequence (first " + n + " numbers):");
+        
+        int a = 0, b = 1;
+        
+        for (int i = 0; i < n; i++) {
+            System.out.print(a + " ");
+            int next = a + b;
+            a = b;
+            b = next;
+        }
+    }
+}
+// Output: 0 1 1 2 3 5 8 13 21 34
+
+// ==================== EXAMPLE 4: FACTORIAL (RECURSION) ====================
+public class RecursiveFactorial {
+    public static void main(String[] args) {
+        int number = 5;
+        System.out.println("Factorial of " + number + " = " + factorial(number));
+    }
+    
+    public static long factorial(int n) {
+        if (n <= 1) return 1;
+        return n * factorial(n - 1);
+    }
+}
+// Output: Factorial of 5 = 120</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> <strong>Calculator example output:</strong><br>
+                        --- Simple Calculator ---<br>
+                        Enter first number: 10<br>
+                        Enter operation (+, -, *, /): *<br>
+                        Enter second number: 5<br>
+                        10.00 * 5.00 = 50.00
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Back to top</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Java Fundamentals | Language basics
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> All examples are ready to run
+        </div>
+    </footer>
+
+    <!-- Prism.js and Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+	<script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specific to this page
+        const sections = ['tipi-primitivi', 'operatori', 'condizionali', 'cicli', 'array', 'stringhe', 'input-output', 'metodi', 'esempi'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

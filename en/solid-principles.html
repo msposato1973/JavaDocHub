@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLID Principles | JavaDoc Hub</title>
+</head>
+ <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+	
+    <div class="main-layout">
+        
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDEX</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#srp" class="toc-link" data-target="srp">
+                    <i class="fas fa-gavel"></i> S - Single Responsibility
+                </a></li>
+                <li><a href="#ocp" class="toc-link" data-target="ocp">
+                    <i class="fas fa-door-open"></i> O - Open/Closed
+                </a></li>
+                <li><a href="#lsp" class="toc-link" data-target="lsp">
+                    <i class="fas fa-exchange-alt"></i> L - Liskov Substitution
+                </a></li>
+                <li><a href="#isp" class="toc-link" data-target="isp">
+                    <i class="fas fa-cut"></i> I - Interface Segregation
+                </a></li>
+                <li><a href="#dip" class="toc-link" data-target="dip">
+                    <i class="fas fa-arrow-down"></i> D - Dependency Inversion
+                </a></li>
+                <li><a href="#esempio" class="toc-link" data-target="esempio">
+                    <i class="fas fa-code-branch"></i> Practical Example
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Index
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-cubes"></i> SOLID Principles</h1>
+                <p>The five fundamental principles of object-oriented programming</p>
+            </div>
+
+            <!-- SRP -->
+            <div class="section-card" id="srp">
+                <div class="card-header"><i class="fas fa-gavel"></i><h2>S - Single Responsibility</h2></div>
+                <div class="card-body">
+                    <div class="badge">"A class should have only one reason to change"</div>
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title">❌ WRONG EXAMPLE</div>
+                            <pre><code class="language-java">class User {
+    void saveToDatabase() { }
+    void sendEmail() { }
+    void logOperation() { }
+}</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title">✅ CORRECT EXAMPLE</div>
+                            <pre><code class="language-java">class User { }
+class UserRepository { }
+class EmailService { }
+class LoggerService { }</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OCP -->
+            <div class="section-card" id="ocp">
+                <div class="card-header"><i class="fas fa-door-open"></i><h2>O - Open/Closed</h2></div>
+                <div class="card-body">
+                    <div class="badge">"Open for extension, closed for modification"</div>
+                    <pre><code class="language-java">interface Shape { double area(); }
+class Rectangle implements Shape { ... }
+class Circle implements Shape { ... }
+// New shapes? Just implement the interface!</code></pre>
+                </div>
+            </div>
+
+            <!-- LSP -->
+            <div class="section-card" id="lsp">
+                <div class="card-header"><i class="fas fa-exchange-alt"></i><h2>L - Liskov Substitution</h2></div>
+                <div class="card-body">
+                    <div class="badge">"Subclasses must be substitutable for their base classes"</div>
+                    <pre><code class="language-java">// A subclass must not alter expected behavior
+Rectangle r = new Square(); // WARNING: might violate LSP!</code></pre>
+                </div>
+            </div>
+
+            <!-- ISP -->
+            <div class="section-card" id="isp">
+                <div class="card-header"><i class="fas fa-cut"></i><h2>I - Interface Segregation</h2></div>
+                <div class="card-body">
+                    <div class="badge">"Specific interfaces are better than a generic one"</div>
+                    <pre><code class="language-java">interface Workable { void work(); }
+interface Eatable { void eat(); }
+// Robot implements only Workable, Human implements both</code></pre>
+                </div>
+            </div>
+
+            <!-- DIP -->
+            <div class="section-card" id="dip">
+                <div class="card-header"><i class="fas fa-arrow-down"></i><h2>D - Dependency Inversion</h2></div>
+                <div class="card-body">
+                    <div class="badge">"Depend on abstractions, not on concrete implementations"</div>
+                    <pre><code class="language-java">interface MessageService { void send(String msg); }
+class Notifier {
+    private final MessageService service;
+    Notifier(MessageService s) { this.service = s; }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Practical Example -->
+            <div class="section-card" id="esempio">
+                <div class="card-header"><i class="fas fa-code-branch"></i><h2>Practical Example: Payment System</h2></div>
+                <div class="card-body">
+                    <pre><code class="language-java">// All SOLID principles applied together
+interface PaymentMethod { void pay(double amount); }
+class CreditCard implements PaymentMethod { ... }
+class PayPal implements PaymentMethod { ... }
+// Dependency Injection via constructor</code></pre>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+    </div>
+
+    <div data-include="footer"></div>
+    <div data-include="scripts"></div>
+
+    <script>
+        const sections = ['srp', 'ocp', 'lsp', 'isp', 'dip', 'esempio'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+	<script src="js/script.js"></script>
+    <script src="includes/include.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

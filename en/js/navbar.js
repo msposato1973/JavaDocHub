@@ -2,78 +2,114 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     
-    // HTML della navbar compatta con tooltip
+    // HTML della navbar con stile menu migliorato
     const navbarHTML = `
         <!-- Scroll progress bar -->
         <div class="scroll-progress" id="scrollProgress"></div>
 
-        <!-- Navbar compatta con tooltip -->
+        <!-- Navbar con stile menu migliorato -->
         <div class="navbar" id="navbar">
             <div class="nav-brand">
-                <i class="fab fa-java"></i> <span>JavaDoc Hub</span>
+                <i class="fab fa-java"></i> 
+                <span>JavaDoc<span class="brand-highlight">Hub</span></span>
             </div>
             <div class="nav-links">
-                <a href="index.html" title="Home page">
-                    <i class="fas fa-home"></i><span>Home</span>
+                <a href="../index.html" title="Home page">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="core-java.html" title="Fondamenti del linguaggio Java">
-                    <i class="fab fa-java"></i><span>Core</span>
+                    <i class="fab fa-java"></i>
+                    <span>Core</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="fondamenti.html" title="Variabili, operatori, cicli, array">
-                    <i class="fas fa-code"></i><span>Base</span>
+                    <i class="fas fa-code"></i>
+                    <span>Base</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="oop.html" title="Programmazione Orientata agli Oggetti">
-                    <i class="fas fa-project-diagram"></i><span>OOP</span>
+                    <i class="fas fa-project-diagram"></i>
+                    <span>OOP</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="collections.html" title="Collection Framework: List, Set, Map">
-                    <i class="fas fa-layer-group"></i><span>Coll</span>
+                    <i class="fas fa-layer-group"></i>
+                    <span>Coll</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="streams.html" title="Stream API e Lambda Expressions">
-                    <i class="fas fa-stream"></i><span>Stream</span>
+                    <i class="fas fa-stream"></i>
+                    <span>Stream</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="exceptions.html" title="Gestione delle eccezioni">
-                    <i class="fas fa-exclamation-triangle"></i><span>Exc</span>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Exc</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="multithreading.html" title="Thread, concorrenza e parallelismo">
-                    <i class="fas fa-tasks"></i><span>Thread</span>
+                    <i class="fas fa-tasks"></i>
+                    <span>Thread</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="microservices.html" title="Architettura a microservizi con Spring Boot">
-                    <i class="fas fa-microchip"></i><span>μSvc</span>
+                    <i class="fas fa-microchip"></i>
+                    <span>μSvc</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="spring-boot.html" title="Spring Boot 3.x - Applicazioni enterprise">
-                    <i class="fas fa-leaf"></i><span>SBoot</span>
+                    <i class="fas fa-leaf"></i>
+                    <span>SBoot</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="rest-api.html" title="REST API con Spring Boot">
-                    <i class="fas fa-plug"></i><span>REST</span>
+                    <i class="fas fa-plug"></i>
+                    <span>REST</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="java11-vs-java17.html" title="Confronto Java 11 e Java 17">
-                    <i class="fas fa-code-compare"></i><span>11vs17</span>
+                    <i class="fas fa-code-compare"></i>
+                    <span>11vs17</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="java17-vs-java21.html" title="Confronto Java 17 e Java 21">
-                    <i class="fas fa-code-compare"></i><span>17vs21</span>
+                    <i class="fas fa-code-compare"></i>
+                    <span>17vs21</span>
+                    <span class="nav-indicator"></span>
                 </a>
                 <a href="solid-principles.html" title="Principi SOLID di progettazione">
-                    <i class="fas fa-cubes"></i><span>SOLID</span>
+                    <i class="fas fa-cubes"></i>
+                    <span>SOLID</span>
+                    <span class="nav-indicator"></span>
                 </a>
+				<a href="CICD-Pipeline.html" title="CI/CD Pipeline">
+				     <i class="fas fa-code-branch"></i>
+                    <span>CI/CD Pipeline</span>
+                    <span class="nav-indicator"></span>
+                </a>
+				
 				<a href="kubernetes-java.html" data-tooltip="☸️ Kubernetes per Java"  title="Kubernetes per Java">
-					<i class="fab fa-kubernetes"></i>
-					<span>K8s</span>
-					<div class="button-tooltip">
-						<span class="tooltip-icon">☸️</span>
-						<span class="tooltip-text">Kubernetes per Java</span>
-						<span class="tooltip-arrow"></span>
-					</div>
-				</a>
-				<a href="spring-cloud.html" data-tooltip="☁️ Spring Cloud">
-					<i class="fas fa-cloud"></i>
-					<span>Cloud</span>
-					<div class="button-tooltip">
-						<span class="tooltip-icon">☁️</span>
-						<span class="tooltip-text">Spring Cloud - Microservizi distribuiti</span>
-						<span class="tooltip-arrow"></span>
-					</div>
-				</a>
+				<i class="fab fa-kubernetes"></i>
+				<span>K8s</span>
+				<div class="button-tooltip">
+					<span class="tooltip-icon">☸️</span>
+					<span class="tooltip-text">Kubernetes per Java</span>
+					<span class="tooltip-arrow"></span>
+				</div>
+			</a>
+			<a href="spring-cloud.html" data-tooltip="☁️ Spring Cloud">
+				<i class="fas fa-cloud"></i>
+				<span>Cloud</span>
+				<div class="button-tooltip">
+					<span class="tooltip-icon">☁️</span>
+					<span class="tooltip-text">Spring Cloud - Microservizi distribuiti</span>
+					<span class="tooltip-arrow"></span>
+				</div>
+			</a>
             </div>
+           
         </div>
     `;
 
@@ -144,6 +180,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     sidebarToc.classList.remove('open');
                 }
             }
+        });
+    }
+    
+    // ========== MOBILE NAVBAR TOGGLE ==========
+    const navMobileToggle = document.getElementById('navMobileToggle');
+    const navLinksContainer = document.querySelector('.nav-links');
+    
+    if (navMobileToggle && navLinksContainer) {
+        navMobileToggle.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('open');
+        });
+        
+        // Chiudi il menu mobile quando si clicca su un link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('open');
+            });
         });
     }
 });

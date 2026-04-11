@@ -1,346 +1,411 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaDoc Hub | Home</title>
-    
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-	 
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>JavaDoc Hub · Union Jack & Tricolore | Documentazione Ufficiale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #1a1a2e 0%, #0f0f23 100%);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .javadoc-container {
+      max-width: 1300px;
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+      border-radius: 3rem;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+      padding: 2rem 2rem 3rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* LOGO JAVADOC HUB PREMIUM */
+    .logo-premium {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(115deg, #0a0f1f 0%, #0f1a2a 100%);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0.7rem 2rem 0.7rem 1.8rem;
+      border-radius: 100px;
+      box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,215,120,0.3);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .logo-premium:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 30px -8px rgba(0,0,0,0.5);
+    }
+
+    .java-cube {
+      background: linear-gradient(135deg, #e67300, #cc5500);
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2), 0 6px 12px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .java-cube::before {
+      content: "☕";
+      font-size: 28px;
+      font-weight: 500;
+      color: #fff3e0;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.3);
+    }
+    .java-cube::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      right: -6px;
+      width: 14px;
+      height: 14px;
+      background: #ffcc44;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .logo-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-main {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(120deg, #FFD966, #FFA559, #FF8C42);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo-badge {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: #7ab3c8;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .java-chip {
+      background: rgba(255,140,66,0.2);
+      padding: 0.2rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #e67300;
+      margin-left: 0.5rem;
+    }
+
+    /* INTESTAZIONE */
+    .intro-section {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .badge-pill {
+      display: inline-block;
+      background: rgba(15,44,56,0.8);
+      color: #ffdd99;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffdd99, #ffaa66);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .sub {
+      color: #aabbcc;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* CARD BANDIERE */
+    .flags-luxury {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+      margin: 2rem 0 2rem;
+    }
+    .flag-card-link {
+      flex: 1;
+      min-width: 320px;
+      max-width: 420px;
+      background: rgba(25,25,45,0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 2rem;
+      padding: 1.8rem 1.8rem 2rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 15px 35px -12px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .flag-card-link:hover {
+      transform: translateY(-8px);
+      background: rgba(40,40,70,0.85);
+      box-shadow: 0 28px 40px -14px rgba(0,0,0,0.5);
+      border-color: rgba(255,200,100,0.3);
+    }
+
+    .flag-glam {
+      margin-bottom: 1.2rem;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* IMMAGINE BANDIERA - STILE UNIFICATO */
+    .flag-image {
+      width: 280px;
+      height: 168px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 12px 25px -8px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .flag-card-link:hover .flag-image {
+      transform: scale(1.02);
+      box-shadow: 0 18px 35px -10px rgba(0,0,0,0.6);
+    }
+
+    /* FALLBACK PER IMMAGINI NON TROVATE */
+    .flag-image {
+      background: #1a2a3a;
+    }
+
+    .country-head {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+    .uk-title {
+      background: linear-gradient(135deg, #88aadd, #4466aa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .it-title {
+      background: linear-gradient(135deg, #009246, #ce2b37);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .flag-subtitle {
+      font-size: 0.9rem;
+      color: #8899bb;
+      margin: 0.5rem 0;
+      font-weight: 500;
+    }
+    .action-hint {
+      margin: 1rem 0 0.6rem;
+      background: rgba(50,50,70,0.8);
+      padding: 0.4rem 0.8rem;
+      border-radius: 60px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffcc88;
+      transition: 0.2s;
+    }
+    .flag-card-link:hover .action-hint {
+      background: rgba(80,70,50,0.9);
+      gap: 14px;
+      color: #ffdd99;
+    }
+    .doc-meta {
+      font-size: 0.75rem;
+      color: #99aacc;
+      margin-top: 1rem;
+      line-height: 1.4;
+    }
+    .lang-badge {
+      font-size: 0.7rem;
+      margin-top: 0.7rem;
+      font-weight: 600;
+      color: #c8aa77;
+    }
+
+    .info-lang-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0 1rem;
+    }
+    .info-chip {
+      background: rgba(30,40,60,0.7);
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #bbddff;
+    }
+    .footer-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #7788aa;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 800px) {
+      .javadoc-container { padding: 1.5rem; }
+      h1 { font-size: 1.8rem; }
+      .logo-main { font-size: 1.3rem; }
+      .java-cube { width: 38px; height: 38px; }
+      .java-cube::before { font-size: 22px; }
+      .flag-card-link { min-width: 280px; }
+      .flag-image { width: 240px; height: 144px; }
+    }
+  </style>
 </head>
 <body>
+<div class="javadoc-container">
 
-	
-
-    <!-- Scroll progress bar -->
-    <div class="scroll-progress" id="scrollProgress"></div>
-
-    <!-- Include Navbar -->
-    <div data-include="navbar"></div>
-	<!-- Scroll progress bar -->
-
-    <div class="main-layout">
-        
-        <!-- Sidebar TOC -->
-        <div class="sidebar-toc" id="sidebarToc">
-            <div class="toc-header">
-                <div class="toc-title">
-                    <i class="fas fa-bars-staggered"></i>
-                    <span>INDICE</span>
-                </div>
-            </div>
-            <ul class="toc-list">
-				<li><a href="#benvenuto" class="toc-link" data-target="benvenuto">
-                    <i class="fas fa-home"></i> Benvenuto
-                </a></li>
-                <li><a href="#argomenti" class="toc-link" data-target="argomenti">
-                    <i class="fas fa-book"></i> Argomenti
-                </a></li>
-				<li><a href="#roadmap" class="toc-link" data-target="roadmap">
-                    <i class="fas fa-book"></i> Roadmap
-                </a></li>
-            </ul>
-        </div>
-
-        <button class="toc-toggle" id="tocToggleBtn">
-            <i class="fas fa-bars"></i> Indice
-        </button>
-
-        <div class="content-wrapper">
-		<div class="page-header" id="benvenuto">
-			<h1><i class="fas fa-home"></i> Benvenuto su JavaDoc Hub</h1>
-			<p>La tua guida completa alla programmazione Java con esempi pratici</p>
-		</div>
-           <div class="section-card">
-			<div class="card-header">
-				<i class="fas fa-rocket" style="color: #ff9800;"></i>
-				<h2>Impara Java in modo semplice ed efficace</h2>
-			</div>
-    <div class="card-body">
-        <div class="desc">
-            <strong>JavaDoc Hub</strong> è un progetto nato con l'obiettivo di fornire una 
-            <strong>documentazione chiara, completa e ricca di esempi pratici</strong> per tutti coloro che vogliono 
-            imparare o approfondire il linguaggio Java.
-        </div>
-        
-        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1.5rem 0;">
-            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
-                <i class="fas fa-check-circle" style="font-size: 2rem; color: #4caf50;"></i>
-                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Documentazione chiara</h3>
-                <p style="font-size: 0.8rem; color: #9aa3b3;">Spiegazioni semplici e dirette</p>
-            </div>
-            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
-                <i class="fas fa-code" style="font-size: 2rem; color: #ff9800;"></i>
-                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Esempi pronti all'uso</h3>
-                <p style="font-size: 0.8rem; color: #9aa3b3;">Codice copiabile e testabile</p>
-            </div>
-            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
-                <i class="fas fa-graduation-cap" style="font-size: 2rem; color: #2196f3;"></i>
-                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Percorso completo</h3>
-                <p style="font-size: 0.8rem; color: #9aa3b3;">Dai fondamenti all'avanzato</p>
-            </div>
-            <div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
-                <i class="fas fa-sync-alt" style="font-size: 2rem; color: #ce93d8;"></i>
-                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Sempre aggiornato</h3>
-                <p style="font-size: 0.8rem; color: #9aa3b3;">Java 17+ e Spring Boot 3</p>
-            </div>
-			<div style="flex: 1; min-width: 180px; text-align: center; padding: 1rem; background: #1a1e26; border-radius: 12px;">
-                <i class="fas fa-sync-alt" style="font-size: 2rem; color: #ce93d8;"></i>
-                <h3 style="margin: 0.5rem 0; font-size: 1rem;">Sempre aggiornato</h3>
-                <p style="font-size: 0.8rem; color: #9aa3b3;">Java 17 vs Java 21</p>
-            </div>
-        </div>
-        
-        <div class="info-block">
-            <i class="fas fa-lightbulb"></i> <strong>Perché JavaDoc Hub?</strong><br>
-            Abbiamo raccolto in un unico posto tutto ciò che serve per diventare uno sviluppatore Java competente: 
-            dalla sintassi base ai principi SOLID, dalle collection agli stream, fino ai microservizi con Spring Boot. 
-            Ogni argomento è accompagnato da <strong>esempi di codice funzionanti</strong> e <strong>output dimostrativi</strong> 
-            che puoi copiare, incollare e testare immediatamente.
-        </div>
-        
-        <div style="margin-top: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #ff980020, #f4433620); border-radius: 12px; text-align: center;">
-            <i class="fas fa-chart-line" style="color: #ff9800;"></i>
-            <strong style="margin-left: 0.5rem;">Oltre 70 esempi di codice pronti all'uso</strong>
-            <span style="display: inline-block; margin-left: 1rem; background: #ff9800; color: #111; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;">
-                <i class="fas fa-download"></i> Tutti eseguibili
-            </span>
-        </div>
+  <!-- LOGO JAVADOC HUB -->
+  <div class="logo-premium">
+    <div class="java-cube"></div>
+    <div class="logo-text-block">
+      <span class="logo-main">JavaDoc Hub</span>
+      <span class="logo-badge">DOCUMENTAZIONE TECNICA &nbsp;✦&nbsp; ISTITUZIONALE</span>
     </div>
+    <div class="java-chip">Java 21+</div>
+  </div>
+
+  <div class="intro-section">
+    <div class="badge-pill">
+      ✦  ARCHIVIO NAZIONALE  ✦
+    </div>
+    <h1>🇬🇧  Union Jack  ·  Tricolore  🇮🇹</h1>
+    <div class="sub">Bandiere ufficiali · Documentazione fonte nella lingua originale</div>
+  </div>
+
+  <div class="flags-luxury">
+    <!-- CARTA REGNO UNITO (UNION JACK) -->
+    <a href="en/home-UK.html" class="flag-card-link" target="_top" rel="noopener noreferrer" hreflang="en">
+      <div class="flag-glam">
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" 
+             alt="Union Jack - Flag of the United Kingdom" 
+             class="flag-image"
+             title="Union Jack - Bandiera ufficiale del Regno Unito">
+      </div>
+      <div class="country-head uk-title">United Kingdom</div>
+      <div class="flag-subtitle">
+        <span>🇬🇧 Union Jack</span> · <span>London · Westminster</span>
+      </div>
+      <div class="action-hint">
+        <span>📘 Official documents (EN)</span>
+        <span class="arrow-dynamic">➡️</span>
+      </div>
+      <div class="doc-meta">
+        🇬🇧 Legislation.gov.uk — Atti normativi, Statuti del Regno Unito in lingua INGLESE originale.
+      </div>
+      <div class="lang-badge">🔗 Lingua ufficiale: INGLESE · Portale legislativo UK</div>
+    </a>
+
+    <!-- CARTA ITALIA (TRICOLORE) -->
+    <a href="it/home-IT.html" class="flag-card-link" target="_top" rel="noopener noreferrer" hreflang="it">
+      <div class="flag-glam">
+        <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg" 
+             alt="Tricolore - Bandiera ufficiale d'Italia" 
+             class="flag-image"
+             title="Tricolore - Bandiera ufficiale della Repubblica Italiana">
+      </div>
+      <div class="country-head it-title">Documentazione Italiana</div>
+      <div class="flag-subtitle">
+        <span>🇮🇹 Il Tricolore</span> · <span>Roma · Quirinale</span>
+      </div>
+      <div class="action-hint">
+        <span>📖 Documentazione ufficiale (IT)</span>
+        <span class="arrow-dynamic">➡️</span>
+      </div>
+      <div class="doc-meta">
+        🇮🇹 Normattiva — Raccolta ufficiale delle leggi, decreti e norme italiane in lingua ITALIANA.
+      </div>
+      <div class="lang-badge">🔗 Lingua ufficiale: ITALIANO · Portale normativo nazionale</div>
+    </a>
+  </div>
+
+  <div class="info-lang-row">
+    <div class="info-chip"><span>⚜️</span> Union Jack – bandiera ufficiale del Regno Unito</div>
+    <div class="info-chip"><span>🎨</span> Tricolore italiano – simbolo della Repubblica Italiana</div>
+    <div class="info-chip"><span>📌</span> Clicca sulla scheda → documentazione nativa</div>
+  </div>
+
+  <div class="footer-note">
+    ✦  Documentazione ufficiale e istituzionale — link diretti ai portali legislativi e governativi  ✦
+  </div>
 </div>
 
-            <div class="section-card" id="argomenti">
-                <div class="card-header">
-                    <i class="fas fa-book"></i>
-                    <h2>Argomenti disponibili</h2>
-                </div>
-                <div class="card-body">
-                    <div class="desc">
-                        Esplora tutti gli argomenti disponibili nel menu di navigazione. Ogni sezione contiene esempi di codice 
-                        pronti all'uso con output dimostrativo.
-                    </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
-						<div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fab fa-java" style="color: #ff9800;"></i> <strong>Core Java</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">JVM alla sintassi base, tipi di dati, operatori e strutture di controllo</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fab fa-java" style="color: #ff9800;"></i> <strong>Fondamenti Java</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Variabili, cicli, array, stringhe</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-project-diagram" style="color: #ff9800;"></i> <strong>Programmazione OOP</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Classi, ereditarietà, polimorfismo</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-layer-group" style="color: #ff9800;"></i> <strong>Collections Framework</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">ArrayList, HashMap, Lambda</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-stream" style="color: #ff9800;"></i> <strong>Stream API</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Filter, map, collect, parallel</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-exclamation-triangle" style="color: #ff9800;"></i> <strong>Eccezioni</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Try-catch, custom exceptions</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-tasks" style="color: #ff9800;"></i> <strong>Multithreading</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Thread, ExecutorService, Lock</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-microchip" style="color: #ff9800;"></i> <strong>Microservizi</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Spring Boot, Cloud, Docker</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-code-compare" style="color: #ff9800;"></i> <strong>Java 11 vs 17</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Record, Switch expression, Text block</p>
-                        </div>
-						 <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-code-compare" style="color: #ff9800;"></i> <strong>Java 17 vs 21</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Java 17 (LTS - set 2021), Java 21 (LTS - set 2023)</p>
-                        </div>
-                        <div style="background: #1a1e26; padding: 1rem; border-radius: 12px; border-left: 3px solid #ff9800;">
-                            <i class="fas fa-cubes" style="color: #ff9800;"></i> <strong>SOLID Principi</strong>
-                            <p style="font-size: 0.8rem; margin-top: 0.5rem;">SRP, OCP, LSP, ISP, DIP</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-			<div class="section-card" id="roadmap">
-                <div class="card-header">
-                    <i class="fas fa-book"></i>
-                    <h2>Roadmap di apprendimento </h2>
-                </div>
-				<div class="card-body">
-				   <div style="background: #111317; border-radius: 20px; padding: 2rem; margin-top: 2rem; border: 1px solid #252b33;">
-						<h3 style="color: #ff9800; margin-bottom: 1rem;"><i class="fas fa-map-signs"></i> Roadmap di apprendimento</h3>
-						<div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
-						<div style="flex: 1; min-width: 150px;">
-							<div style="font-weight: 600; margin-bottom: 0.5rem;">🥇 Livello Base</div>
-							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
-							    <li>✓ Core Java</li>
-								<li>✓ Fondamenti Java</li>
-								<li>✓ Programmazione OOP</li>
-								<li>✓ Gestione Eccezioni</li>
-							</ul>
-						</div>
-						<div style="flex: 1; min-width: 150px;">
-							<div style="font-weight: 600; margin-bottom: 0.5rem;">🥈 Livello Intermedio</div>
-							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
-								<li>✓ Collections Framework</li>
-								<li>✓ Stream API</li>
-								<li>✓ Multithreading</li>
-							</ul>
-						</div>
-						<div style="flex: 1; min-width: 150px;">
-							<div style="font-weight: 600; margin-bottom: 0.5rem;">🥉 Livello Avanzato</div>
-							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
-								<li>✓ Microservizi Spring Boot</li>
-								<li>✓ Spring Cloud</li>
-								<li>✓ Docker / Kubernetes</li>
-							</ul>
-						</div>
-						<div style="flex: 1; min-width: 150px;">
-							<div style="font-weight: 600; margin-bottom: 0.5rem;">📊 Aggiornamento</div>
-							<ul style="list-style: none; font-size: 0.85rem; color: #9aa3b3;">
-								<li>✓ Java 11 → 17</li>
-								<li>✓ Java 17 → 21</li>
-								<li>✓ Nuove feature LTS</li>
-								<li>✓ Migrazione best practices</li>
-							</ul>
-						</div>
-					</div>
-				   </div>
-			   </div>
-            </div>
-			<!-- Sezione risorse utili -->
-        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; justify-content: center;">
-            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
-                <i class="fab fa-java" style="color: #ff9800;"></i> Java 17 LTS
-            </div>
-            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
-                <i class="fas fa-leaf" style="color: #6db33f;"></i> Spring Boot 3.x
-            </div>
-            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
-                <i class="fab fa-docker" style="color: #2496ed;"></i> Docker
-            </div>
-            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
-                <i class="fas fa-cloud" style="color: #ff9800;"></i> Spring Cloud
-            </div>
-            <div style="background: #12161c; padding: 1rem 1.5rem; border-radius: 12px; border: 1px solid #252b33;">
-                <i class="fas fa-lambda" style="color: #6db33f;"></i> Lambda & Stream
-            </div>
-        </div>
-
-        <!-- Sezione statistiche contenuti -->
-         <!-- Sezione statistiche contenuti -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
-            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
-                <div style="font-size: 2rem; color: #ff9800;">8</div>
-                <div style="font-size: 0.8rem; color: #8e96a3;">Argomenti trattati</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
-                <div style="font-size: 2rem; color: #ff9800;">60+</div>
-                <div style="font-size: 0.8rem; color: #8e96a3;">Esempi di codice</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
-                <div style="font-size: 2rem; color: #ff9800;">100%</div>
-                <div style="font-size: 0.8rem; color: #8e96a3;">Pronti da eseguire</div>
-            </div>
-            <div style="text-align: center; padding: 1rem; background: #0e1117; border-radius: 12px;">
-                <div style="font-size: 2rem; color: #ff9800;">📚</div>
-                <div style="font-size: 0.8rem; color: #8e96a3;">Documentazione completa</div>
-            </div>
-        </div>
-
-        <!-- Call to action -->
-        <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #ff980020, #f4433620); border-radius: 20px;">
-            <p style="color: #ffb347;">
-                <i class="fas fa-graduation-cap"></i> Tutto il codice è pronto per essere copiato e testato!
-            </p>
-            <p style="font-size: 0.8rem; margin-top: 0.5rem;">
-                Ogni esempio include output dimostrativo per una comprensione immediata
-            </p>
-        </div>
-         <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Torna su</a>
-        </div>
-    </div>
-
-    <footer>
-        <i class="fab fa-java"></i> JavaDoc Hub - Documentazione tecnica con esempi pratici | Java 17+ | Spring Boot 3
-        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
-            <i class="fas fa-code"></i> Tutti gli esempi sono pronti per essere eseguiti
-        </div>
-		<div style="margin-top: 0.5rem; font-size: 0.7rem; color: #5a6370;">
-            <i class="fas fa-sync-alt"></i> Ultimo aggiornamento: Java 11 vs Java 17 | Lambda nelle Collection
-        </div>
-		<div style="margin-top: 0.5rem; font-size: 0.7rem; color: #5a6370;">
-            <i class="fas fa-sync-alt"></i> Ultimo aggiornamento: Java 17 vs Java 21
-        </div>
-    </footer>
-
-    <!-- Prism.js e Script -->
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-xml-doc.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
-    <script src="js/script.js"></script>
-	<script src="js/navbar.js"></script>
+<script>
+  (function() {
+    const container = document.querySelector('.javadoc-container');
+    const cards = document.querySelectorAll('.flag-card-link');
+    const logo = document.querySelector('.logo-premium');
     
-    <script>
-        // TOC specifico per questa pagina
-        const sections = ['benvenuto', 'argomenti'];
-        const tocLinks = document.querySelectorAll('.toc-link');
+    if (container) {
+      container.style.opacity = '0';
+      container.style.transform = 'scale(0.98)';
+      setTimeout(() => {
+        container.style.transition = 'opacity 0.6s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.5s ease';
+        container.style.opacity = '1';
+        container.style.transform = 'scale(1)';
+      }, 50);
+    }
+    
+    if (logo) {
+      logo.style.opacity = '0';
+      logo.style.transform = 'translateY(-12px)';
+      setTimeout(() => {
+        logo.style.transition = 'opacity 0.4s ease, transform 0.5s ease';
+        logo.style.opacity = '1';
+        logo.style.transform = 'translateY(0)';
+      }, 100);
+    }
 
-        function updateActiveToc() {
-            let currentSection = '';
-            const scrollPosition = window.scrollY + 100;
-            for (const sectionId of sections) {
-                const element = document.getElementById(sectionId);
-                if (element) {
-                    const offsetTop = element.offsetTop;
-                    const offsetBottom = offsetTop + element.offsetHeight;
-                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-                        currentSection = sectionId;
-                        break;
-                    }
-                }
-            }
-            tocLinks.forEach(link => {
-                link.classList.remove('active-toc');
-                if (link.getAttribute('data-target') === currentSection) {
-                    link.classList.add('active-toc');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', updateActiveToc);
-        window.addEventListener('load', updateActiveToc);
-
-        tocLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('data-target');
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    const offsetTop = targetElement.offsetTop - 80;
-                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                    if (window.innerWidth <= 768) {
-                        document.getElementById('sidebarToc')?.classList.remove('open');
-                    }
-                }
-            });
-        });
-    </script>
+    if (cards.length) {
+      cards.forEach((card, idx) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.45s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0px)';
+        }, idx * 130 + 150);
+      });
+    }
+  })();
+</script>
 </body>
 </html>

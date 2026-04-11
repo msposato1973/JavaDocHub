@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>CI/CD Pipeline Visualizer | Continuous Integration & Delivery - Complete Guide</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/cicd.css">
+</head>
+<body>
+
+  
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+<button class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars"></i>
+</button>
+
+
+<div class="app-wrapper">
+	<aside class="sidebar" id="sidebar">
+	    <div class="sidebar-header">
+            <div class="sidebar-logo">
+                🚀 CI/CD
+                <small>Pipeline Flow</small>
+            </div>
+        </div>
+        <nav>
+            <ul class="nav-menu" id="navMenu"></ul>
+        </nav>
+        <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(59,130,246,0.2);">
+            <div style="font-size: 0.75rem; color: #475569; text-align: center;">
+                <i class="fas fa-infinity"></i> DevOps Automation
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="header">
+                <div class="badge"><i class="fas fa-code-branch"></i> Continuous Integration & Delivery</div>
+                <h1>CI/CD Pipeline</h1>
+                <p class="subhead">Continuous Integration · Continuous Delivery · Continuous Deployment<br>A complete guide to software lifecycle automation</p>
+            </div>
+
+            <div class="pipeline-flow" id="pipelineFlow"></div>
+            <div class="detail-section" id="detailSection">
+                <div style="text-align: center; padding: 2rem; color: #64748b;">✨ Select a pipeline stage to explore in detail ✨</div>
+            </div>
+
+            <div class="benefits">
+                <div class="benefit-card"><i class="fas fa-rocket"></i><h3>Faster Deployments</h3><p>From days to minutes. Frequent, safe, automated releases.</p></div>
+                <div class="benefit-card"><i class="fas fa-bug"></i><h3>Fewer Bugs</h3><p>Automated tests on every commit. Errors identified immediately.</p></div>
+                <div class="benefit-card"><i class="fas fa-users"></i><h3>Collaborative Team</h3><p>Continuous integration and immediate feedback for the whole team.</p></div>
+                <div class="benefit-card"><i class="fas fa-chart-line"></i><h3>Total Automation</h3><p>Reproducible pipeline, no manual tasks or human errors.</p></div>
+            </div>
+
+            <div class="glossary">
+                <h3><i class="fas fa-book-open"></i> CI/CD Glossary</h3>
+                <div class="glossary-grid">
+                    <div class="glossary-item"><strong>Continuous Integration (CI)</strong><p>Practice of frequently integrating code into a shared repository with automated builds and tests.</p></div>
+                    <div class="glossary-item"><strong>Continuous Delivery (CD)</strong><p>Extension of CI: the software is always ready for production deployment.</p></div>
+                    <div class="glossary-item"><strong>Continuous Deployment</strong><p>Every change that passes tests is automatically deployed to production.</p></div>
+                    <div class="glossary-item"><strong>Pipeline</strong><p>Automated sequence of steps that code goes through from commit to deploy.</p></div>
+                    <div class="glossary-item"><strong>Artifact</strong><p>Build output (JAR, Docker image, bundle) ready for deployment.</p></div>
+                    <div class="glossary-item"><strong>Orchestrator</strong><p>Tool that manages pipeline execution (Jenkins, GitLab CI, GitHub Actions).</p></div>
+                </div>
+            </div>
+
+            <footer>
+                <i class="fas fa-infinity"></i> Modern CI/CD Pipeline | Jenkins · GitHub Actions · GitLab CI · Azure DevOps · CircleCI
+            </footer>
+        </div>
+    </main>
+</div>
+
+<script>
+    const stages = [
+        {
+            id: "source",
+            name: "Source",
+            displayName: "📦 Source Control",
+            shortDesc: "Version Control",
+            icon: "fa-code-branch",
+            title: "Source Control (Code)",
+            description: "The starting point of every CI/CD pipeline. Developers write code and version it in Git repositories.",
+            longDescription: `<p>Source Control Management (SCM) is the foundation of CI/CD. When a developer <strong>pushes</strong> or opens a <strong>pull request</strong>, the pipeline is automatically triggered.</p>
+            <h3><i class="fas fa-check-circle"></i> Best Practices</h3>
+            <ul>
+                <li><strong>Frequent, small commits</strong> - Facilitates review and debugging</li>
+                <li><strong>Clear branch strategy</strong> - Git Flow, GitHub Flow, or Trunk Based Development</li>
+                <li><strong>Protect main branches</strong> - Require PRs and mandatory status checks</li>
+                <li><strong>Meaningful commit messages</strong> - Follow conventions like Conventional Commits</li>
+            </ul>
+            <h3><i class="fas fa-chart-line"></i> Metrics to monitor</h3>
+            <ul>
+                <li>Commit frequency per developer</li>
+                <li>Average time between commit and review</li>
+                <li>Average pull request size</li>
+            </ul>
+            <div class="best-practice">
+                <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Use webhooks to automatically trigger the pipeline on every push.
+            </div>`,
+            tools: ["Git", "GitHub", "GitLab", "Bitbucket", "Azure Repos", "AWS CodeCommit"],
+            demoLog: "> git push origin main\n[INFO] Commit 3a4f2b1: feat(auth): implement JWT login\n[CI] Webhook triggered → pipeline start...\n[OK] 3 commits successfully pushed",
+            demoCommand: "git commit -m 'feat: add new feature' && git push origin main"
+        },
+        {
+            id: "build",
+            name: "Build",
+            displayName: "🔧 Build",
+            shortDesc: "Compile & Package",
+            icon: "fa-hammer",
+            title: "Build & Compilation",
+            description: "Transformation of source code into executable artifacts.",
+            longDescription: `<p>The build phase compiles the code, resolves dependencies, and produces artifacts ready for testing and deployment. It can also include linting, formatting, and static analysis.</p>
+            <h3><i class="fas fa-check-circle"></i> Best Practices</h3>
+            <ul>
+                <li><strong>Deterministic builds</strong> - Same input → same output (use lock files)</li>
+                <li><strong>Dependency caching</strong> - Reduces subsequent build times</li>
+                <li><strong>Artifact versioning</strong> - Use Git tags or unique build numbers</li>
+                <li><strong>Early containerization</strong> - Build Docker images already in this phase</li>
+            </ul>
+            <h3><i class="fas fa-chart-line"></i> Metrics to monitor</h3>
+            <ul>
+                <li>Build time (target: < 10 minutes)</li>
+                <li>Generated artifact size</li>
+                <li>Build success rate</li>
+            </ul>
+            <div class="best-practice">
+                <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Use Docker layer caching to speed up rebuilds.
+            </div>`,
+            tools: ["Maven", "Gradle", "Docker", "Webpack", "npm", "Go build", "Rust cargo"],
+            demoLog: "> mvn clean package -DskipTests\n[BUILD] Downloading dependencies... (2.3s)\n[BUILD] Compiling sources... (4.1s)\n[BUILD] Generating JAR... (0.8s)\n[ARTIFACT] target/app-1.0.0.jar (24.5 MB)\n[Docker] docker build -t myapp:1.0.0...\n✅ Build completed in 7.2s",
+            demoCommand: "mvn clean package && docker build -t myapp:latest ."
+        },
+        {
+            id: "test",
+            name: "Test",
+            displayName: "🧪 Test",
+            shortDesc: "Unit & Integration",
+            icon: "fa-vial",
+            title: "Automated Testing",
+            description: "Automatic verification of code correctness and security.",
+            longDescription: `<p>Testing is the heart of CI/CD. The more tests are run, the greater the confidence in the release. Includes unit tests, integration tests, end-to-end, security scans, and code coverage.</p>
+            <h3><i class="fas fa-check-circle"></i> Best Practices</h3>
+            <ul>
+                <li><strong>Test pyramid</strong> - Many unit tests, fewer integration, few E2E</li>
+                <li><strong>Independent tests</strong> - Each test must be able to run in isolation</li>
+                <li><strong>Code coverage > 80%</strong> - But quality > quantity</li>
+                <li><strong>Automated security scanning</strong> - SCA, SAST, DAST</li>
+            </ul>
+            <h3><i class="fas fa-chart-line"></i> Metrics to monitor</h3>
+            <ul>
+                <li>Code coverage percentage</li>
+                <li>Test execution time</li>
+                <li>Number of flaky tests</li>
+            </ul>
+            <div class="best-practice">
+                <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Run fast tests (unit) first, then slow ones (integration/E2E).
+            </div>`,
+            tools: ["JUnit", "pytest", "Jest", "Selenium", "SonarQube", "OWASP ZAP", "Cypress"],
+            demoLog: "> npm run test\n✅ Unit tests: 124 passed, 0 failed (1.2s)\n✅ Integration tests: 28 passed, 0 failed (3.4s)\n✅ Coverage: 87.3% (threshold 80% exceeded)\n🔒 Security scan: 0 critical, 2 medium, 5 low\n📊 SonarQube Quality Gate: PASSED\n🏁 All tests passed!",
+            demoCommand: "npm run test && npm run test:integration && sonar-scanner"
+        },
+        {
+            id: "deploy-staging",
+            name: "Staging",
+            displayName: "🚀 Deploy Staging",
+            shortDesc: "Pre-prod",
+            icon: "fa-cloud-upload-alt",
+            title: "Deploy to Staging",
+            description: "Release to pre-production environment for final tests.",
+            longDescription: `<p>The staging environment is identical to production but isolated from real users. Smoke tests, load tests, and sometimes user acceptance testing (UAT) are performed here.</p>
+            <h3><i class="fas fa-check-circle"></i> Best Practices</h3>
+            <ul>
+                <li><strong>Environment mirroring production</strong> - Same configuration, same services</li>
+                <li><strong>Anonymized database</strong> - Use anonymized production data</li>
+                <li><strong>Automated smoke tests</strong> - Verify the app is alive</li>
+                <li><strong>Automated rollback</strong> - In case of failure, revert to stable version</li>
+            </ul>
+            <h3><i class="fas fa-chart-line"></i> Metrics to monitor</h3>
+            <ul>
+                <li>Deployment time</li>
+                <li>Smoke test success rate</li>
+                <li>Latency and error rate post-deploy</li>
+            </ul>
+            <div class="best-practice">
+                <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Use deployment strategies like blue-green or canary to reduce risks.
+            </div>`,
+            tools: ["Kubernetes", "Ansible", "Terraform", "AWS CodeDeploy", "Heroku", "ArgoCD"],
+            demoLog: "> kubectl apply -f k8s/staging/\n✅ Deployment 'myapp-staging' created\n✅ Service 'myapp-staging' exposed on port 8080\n🌐 URL: https://staging.myapp.com\n🔍 Smoke test: GET /health → 200 OK\n🔍 Integration test: 12/12 passed\n📊 Load test: 500 req/s → 99.9% success\n🏁 Staging deploy completed!",
+            demoCommand: "kubectl apply -f k8s/staging/ && kubectl rollout status deploy/myapp-staging"
+        },
+        {
+            id: "production",
+            name: "Production",
+            displayName: "🌍 Production",
+            shortDesc: "Live Release",
+            icon: "fa-globe",
+            title: "Deploy to Production (CD)",
+            description: "Final release to the live environment for real users.",
+            longDescription: `<p>The final phase: code goes into production. It can be fully automatic (Continuous Deployment) or require manual approval (Continuous Delivery). Monitoring and observability are crucial.</p>
+            <h3><i class="fas fa-check-circle"></i> Best Practices</h3>
+            <ul>
+                <li><strong>Gradual deployment</strong> - Canary release or feature flags</li>
+                <li><strong>Real-time monitoring</strong> - Metrics, logs, traces (observability system)</li>
+                <li><strong>Auto-rollback</strong> - If errors exceed a threshold, go back</li>
+                <li><strong>Approval gate</strong> - For teams with strict compliance</li>
+            </ul>
+            <h3><i class="fas fa-chart-line"></i> Metrics to monitor</h3>
+            <ul>
+                <li>Error rate (5xx, exceptions)</li>
+                <li>Latency (p95, p99)</li>
+                <li>MTTR (Mean Time To Recovery)</li>
+                <li>Deploy frequency</li>
+            </ul>
+            <div class="best-practice">
+                <i class="fas fa-lightbulb"></i> <strong>Pro Tip:</strong> Implement monitoring with tools like Prometheus+Grafana and centralized logging.
+            </div>`,
+            tools: ["ArgoCD", "Spinnaker", "GitOps", "New Relic", "Datadog", "Prometheus", "Grafana"],
+            demoLog: "🚀 Starting production deployment (canary 10%)\n✅ 2 replicas started (10% traffic)\n📊 Monitoring error rate: 0.02%\n📊 Monitoring latency p95: 124ms\n✅ Canary 10% stable for 5 minutes\n🚀 Gradual rollout: 25% → 50% → 100%\n✅ Full deployment completed!\n🎉 Version 2.1.0 live for all users",
+            demoCommand: "kubectl apply -f k8s/prod/ && kubectl rollout status deploy/myapp-prod --watch"
+        }
+    ];
+
+    let activeStageId = "source";
+
+    function renderSidebarMenu() {
+        const navMenu = document.getElementById("navMenu");
+        if (!navMenu) return;
+        navMenu.innerHTML = "";
+        stages.forEach(stage => {
+            const li = document.createElement("li");
+            li.className = "nav-item";
+            const a = document.createElement("a");
+            a.className = `nav-link ${activeStageId === stage.id ? 'active' : ''}`;
+            a.setAttribute("data-id", stage.id);
+            a.innerHTML = `<i class="fas ${stage.icon}"></i><span>${stage.displayName}</span>`;
+            a.addEventListener("click", (e) => {
+                e.preventDefault();
+                setActiveStage(stage.id);
+                if (window.innerWidth <= 900) {
+                    document.getElementById("sidebar").classList.remove("open");
+                }
+            });
+            li.appendChild(a);
+            navMenu.appendChild(li);
+        });
+    }
+
+    function renderPipeline() {
+        const container = document.getElementById("pipelineFlow");
+        if (!container) return;
+        container.innerHTML = "";
+        stages.forEach((stage, idx) => {
+            const stageDiv = document.createElement("div");
+            stageDiv.className = `stage-card ${activeStageId === stage.id ? 'active' : ''}`;
+            stageDiv.setAttribute("data-id", stage.id);
+            stageDiv.innerHTML = `
+                <div class="stage-icon"><i class="fas ${stage.icon}"></i></div>
+                <div class="stage-name">${stage.displayName}</div>
+                <div class="stage-desc">${stage.shortDesc}</div>
+            `;
+            stageDiv.addEventListener("click", () => {
+                setActiveStage(stage.id);
+            });
+            container.appendChild(stageDiv);
+            if (idx < stages.length - 1) {
+                const arrowSpan = document.createElement("span");
+                arrowSpan.className = "arrow";
+                arrowSpan.innerHTML = "<i class='fas fa-arrow-right'></i>";
+                container.appendChild(arrowSpan);
+            }
+        });
+    }
+
+    function setActiveStage(stageId) {
+        activeStageId = stageId;
+        renderPipeline();
+        renderSidebarMenu();
+        
+        const stageData = stages.find(s => s.id === stageId);
+        if (!stageData) return;
+
+        const detailContainer = document.getElementById("detailSection");
+        if (!detailContainer) return;
+
+        detailContainer.innerHTML = `
+            <div class="detail-header">
+                <div class="detail-icon"><i class="fas ${stageData.icon}"></i></div>
+                <div class="detail-title">${stageData.title}</div>
+            </div>
+            <div class="detail-content">
+                <div class="info-box">
+                    <p><strong>📖 Description</strong><br>${stageData.description}</p>
+                    ${stageData.longDescription}
+                    <p><strong>🛠️ Common Tools</strong></p>
+                    <div class="tools-list">
+                        ${stageData.tools.map(tool => `<span class="tool-tag"><i class="fas fa-cog"></i> ${tool}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="demo-box">
+                    <h4><i class="fas fa-play-circle"></i> Live Log Simulation</h4>
+                    <div class="terminal" id="simulatedLog">
+                        ${stageData.demoLog}
+                    </div>
+                    <button class="simulate-btn" id="simulateStageBtn"><i class="fas fa-sync-alt"></i> Run pipeline step</button>
+                    <div id="extraLogArea" class="log-area" style="display: none;"></div>
+                </div>
+            </div>
+        `;
+
+        const simulateBtn = document.getElementById("simulateStageBtn");
+        const extraLogDiv = document.getElementById("extraLogArea");
+        
+        if (simulateBtn) {
+            const newBtn = simulateBtn.cloneNode(true);
+            simulateBtn.parentNode.replaceChild(newBtn, simulateBtn);
+            newBtn.addEventListener("click", () => {
+                if (extraLogDiv) {
+                    extraLogDiv.style.display = "block";
+                    extraLogDiv.innerHTML = "⏳ Starting step: " + stageData.displayName + " ...<br>";
+                    let counter = 0;
+                    const messages = [
+                        `[${stageData.id.toUpperCase()}] Initializing environment...`,
+                        `[${stageData.id.toUpperCase()}] Executing command: ${stageData.demoCommand}`,
+                        `[${stageData.id.toUpperCase()}] ✅ Operation completed successfully.`,
+                        `[${stageData.id.toUpperCase()}] Duration: ${Math.floor(Math.random() * 3) + 1}.${Math.floor(Math.random() * 100)}s`,
+                        `🎉 Stage "${stageData.displayName}" completed. Pipeline in progress...`
+                    ];
+                    const interval = setInterval(() => {
+                        if (counter < messages.length) {
+                            extraLogDiv.innerHTML += messages[counter] + "<br>";
+                            extraLogDiv.scrollTop = extraLogDiv.scrollHeight;
+                            counter++;
+                        } else {
+                            clearInterval(interval);
+                            extraLogDiv.innerHTML += "<span style='color:#a5f3c3;'>✓ ✓ ✓ Step simulated successfully</span>";
+                        }
+                    }, 700);
+                }
+            });
+        }
+    }
+
+    function updateScrollProgress() {
+        const winScroll = document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        const progressBar = document.getElementById("scrollProgress");
+        if (progressBar) {
+            progressBar.style.width = scrolled + "%";
+        }
+    }
+
+    function initMobileMenu() {
+        const toggleBtn = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
+        if (toggleBtn && sidebar) {
+            toggleBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("open");
+            });
+            document.addEventListener("click", (e) => {
+                if (window.innerWidth <= 900 && sidebar.classList.contains("open")) {
+                    if (!sidebar.contains(e.target) && e.target !== toggleBtn && !toggleBtn.contains(e.target)) {
+                        sidebar.classList.remove("open");
+                    }
+                }
+            });
+        }
+    }
+
+    function init() {
+        renderSidebarMenu();
+        renderPipeline();
+        setActiveStage("source");
+        window.addEventListener('scroll', updateScrollProgress);
+        updateScrollProgress();
+        initMobileMenu();
+    }
+
+    init();
+</script>
+<script src="js/script.js"></script>
+<script src="js/navbar.js"></script>
+</body>
+</html>

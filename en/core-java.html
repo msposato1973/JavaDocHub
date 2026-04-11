@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Java | JavaDoc Hub</title>
+     <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+     
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDEX</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduction
+                </a></li>
+                <li><a href="#jvm-jre-jdk" class="toc-link" data-target="jvm-jre-jdk">
+                    <i class="fas fa-microchip"></i> JVM, JRE, JDK
+                </a></li>
+                <li><a href="#sintassi-base" class="toc-link" data-target="sintassi-base">
+                    <i class="fas fa-code"></i> Basic Syntax
+                </a></li>
+                <li><a href="#tipi-dati" class="toc-link" data-target="tipi-dati">
+                    <i class="fas fa-database"></i> Data Types
+                </a></li>
+                <li><a href="#operatori" class="toc-link" data-target="operatori">
+                    <i class="fas fa-calculator"></i> Operators
+                </a></li>
+                <li><a href="#controllo-flusso" class="toc-link" data-target="controllo-flusso">
+                    <i class="fas fa-code-branch"></i> Flow Control
+                </a></li>
+                <li><a href="#array" class="toc-link" data-target="array">
+                    <i class="fas fa-table"></i> Arrays
+                </a></li>
+                <li><a href="#stringhe" class="toc-link" data-target="stringhe">
+                    <i class="fas fa-font"></i> Strings
+                </a></li>
+                <li><a href="#metodi" class="toc-link" data-target="metodi">
+                    <i class="fas fa-cogs"></i> Methods
+                </a></li>
+                <li><a href="#input-output" class="toc-link" data-target="input-output">
+                    <i class="fas fa-keyboard"></i> Input/Output
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Index
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fab fa-java"></i> Core Java</h1>
+                <p>The fundamentals of the Java language: from JVM to basic syntax, data types, operators, and control structures</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUCTION ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>What is Java?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="desc">
+                        Java is an <strong>object-oriented</strong>, <strong>platform-independent</strong> 
+                        (thanks to the JVM), and <strong>strongly typed</strong> programming language. 
+                        Created by Sun Microsystems in 1995, it is now one of the most widely used 
+                        languages in the world for enterprise, mobile (Android), and web applications.
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Main features of Java:</strong><br>
+                        - <strong>Platform Independent</strong>: "Write Once, Run Anywhere" (WORA)<br>
+                        - <strong>Object-Oriented</strong>: everything is organized into classes and objects<br>
+                        - <strong>Robust</strong>: automatic memory management (garbage collection)<br>
+                        - <strong>Secure</strong>: no explicit pointers, sandbox security<br>
+                        - <strong>Multithreaded</strong>: native support for concurrent programming
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. JVM, JRE, JDK ==================== -->
+            <div class="section-card" id="jvm-jre-jdk">
+                <div class="card-header">
+                    <i class="fas fa-microchip"></i>
+                    <h2>JVM, JRE, JDK</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Java Virtual Machine, Java Runtime Environment, Java Development Kit</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 JVM (Java Virtual Machine)</h3>
+                    <div class="desc">
+                        The JVM is the engine that executes Java bytecode. It provides the platform-independent runtime environment.
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 JRE (Java Runtime Environment)</h3>
+                    <div class="desc">
+                        The JRE includes the JVM and core libraries needed to run Java applications (but not to develop them).
+                    </div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 JDK (Java Development Kit)</h3>
+                    <div class="desc">
+                        The JDK includes the JRE plus development tools such as the compiler (javac), debugger, etc.
+                    </div>
+                    
+                    <pre><code class="language-text">┌─────────────────────────────────────────────────────────┐
+│                        JDK                               │
+│  ┌─────────────────────────────────────────────────────┐ │
+│  │                      JRE                             │ │
+│  │  ┌─────────────────────────────────────────────────┐ │ │
+│  │  │                     JVM                          │ │ │
+│  │  │  ┌─────────────────────────────────────────────┐ │ │ │
+│  │  │  │           Core Libraries (rt.jar)           │ │ │ │
+│  │  │  └─────────────────────────────────────────────┘ │ │ │
+│  │  └─────────────────────────────────────────────────┘ │ │
+│  └─────────────────────────────────────────────────────┘ │
+│  ┌─────────────────────────────────────────────────────┐ │
+│  │      Development Tools (javac, jar, javadoc)        │ │
+│  └─────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
+
+Execution flow:
+.java (source) → javac → .class (bytecode) → JVM → execution</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 3. BASIC SYNTAX ==================== -->
+            <div class="section-card" id="sintassi-base">
+                <div class="card-header">
+                    <i class="fas fa-code"></i>
+                    <h2>Basic Syntax</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Structure of a Java program</div>
+                    <pre><code class="language-java">// Single line comment
+
+/*
+ * Multi-line comment
+ * (used for JavaDoc)
+ */
+
+/**
+ * JavaDoc documentation
+ * @author Author Name
+ * @version 1.0
+ */
+public class ClassName {
+    
+    // Class variable (static)
+    private static int counter = 0;
+    
+    // Instance variable
+    private String name;
+    
+    // Constructor
+    public ClassName(String name) {
+        this.name = name;
+        counter++;
+    }
+    
+    // Main method (entry point)
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        
+        // Creating an object
+        ClassName obj = new ClassName("Example");
+        
+        // Variable declaration
+        int number = 42;
+        String text = "Java";
+        
+        // Formatted output
+        System.out.printf("Number: %d, Text: %s%n", number, text);
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Hello, World!<br>
+                        Number: 42, Text: Java
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. DATA TYPES ==================== -->
+            <div class="section-card" id="tipi-dati">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>Data Types</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Primitive and reference types</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Primitive Types</h3>
+                    <table class="comparison-table">
+                        <tr><th>Type</th><th>Size</th><th>Range</th><th>Default Value</th></tr>
+                        <tr><td>byte</td><td>8 bit</td><td>-128 to 127</td><td>0</td></tr>
+                        <tr><td>short</td><td>16 bit</td><td>-32,768 to 32,767</td><td>0</td></tr>
+                        <tr><td>int</td><td>32 bit</td><td>-2³¹ to 2³¹-1</td><td>0</td></tr>
+                        <tr><td>long</td><td>64 bit</td><td>-2⁶³ to 2⁶³-1</td><td>0L</td></tr>
+                        <tr><td>float</td><td>32 bit</td><td>±3.4E-38 to ±3.4E+38</td><td>0.0f</td></tr>
+                        <tr><td>double</td><td>64 bit</td><td>±1.7E-308 to ±1.7E+308</td><td>0.0d</td></tr>
+                        <tr><td>char</td><td>16 bit</td><td>0 to 65,535 (Unicode)</td><td>'\u0000'</td></tr>
+                        <tr><td>boolean</td><td>not defined</td><td>true / false</td><td>false</td></tr>
+                    </table>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Reference Types</h3>
+                    <pre><code class="language-java">// Strings
+String greeting = "Hello World";
+
+// Arrays
+int[] numbers = new int[5];
+String[] names = {"Alice", "Bob", "Charlie"};
+
+// Classes and Interfaces
+Object obj = new Object();
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+
+// Conversions
+int a = 10;
+double b = a;        // implicit conversion (widening)
+int c = (int) b;     // explicit conversion (narrowing)</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 5. OPERATORS ==================== -->
+            <div class="section-card" id="operatori">
+                <div class="card-header">
+                    <i class="fas fa-calculator"></i>
+                    <h2>Operators</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Arithmetic, relational, logical, bitwise, assignment</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Arithmetic Operators</h3>
+                    <pre><code class="language-java">int a = 10, b = 3;
+System.out.println("Sum: " + (a + b));       // 13
+System.out.println("Difference: " + (a - b));  // 7
+System.out.println("Product: " + (a * b));    // 30
+System.out.println("Division: " + (a / b));   // 3 (integer division)
+System.out.println("Modulus: " + (a % b));      // 1 (remainder)
+
+// Increment/Decrement
+int x = 5;
+System.out.println(x++);  // 5 (post-increment)
+System.out.println(++x);  // 7 (pre-increment)</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Relational Operators</h3>
+                    <pre><code class="language-java">int a = 10, b = 20;
+System.out.println(a == b);  // false (equal)
+System.out.println(a != b);  // true  (not equal)
+System.out.println(a > b);   // false (greater than)
+System.out.println(a < b);   // true  (less than)
+System.out.println(a >= b);  // false (greater than or equal)
+System.out.println(a <= b);  // true  (less than or equal)</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Logical Operators</h3>
+                    <pre><code class="language-java">boolean p = true, q = false;
+System.out.println(p && q);  // false (logical AND)
+System.out.println(p || q);  // true  (logical OR)
+System.out.println(!p);      // false (logical NOT)
+
+// Short-circuit evaluation
+boolean result = (a > 0) && (b / a > 10);  // b/a not evaluated if a<=0</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Ternary Operator</h3>
+                    <pre><code class="language-java">int max = (a > b) ? a : b;  // if a>b returns a, otherwise b</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 6. FLOW CONTROL ==================== -->
+            <div class="section-card" id="controllo-flusso">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>Flow Control</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">if-else, switch, for, while, do-while</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 if-else</h3>
+                    <pre><code class="language-java">int grade = 85;
+
+if (grade >= 90) {
+    System.out.println("Excellent");
+} else if (grade >= 70) {
+    System.out.println("Good");
+} else if (grade >= 60) {
+    System.out.println("Sufficient");
+} else {
+    System.out.println("Needs improvement");
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 switch (Java 17+)</h3>
+                    <pre><code class="language-java">String day = "MONDAY";
+
+// Switch expression (Java 14+)
+String type = switch (day) {
+    case "SATURDAY", "SUNDAY" -> "Weekend";
+    case "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY" -> "Weekday";
+    default -> "Unknown";
+};
+System.out.println(day + " is " + type);</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Loops</h3>
+                    <pre><code class="language-java">// for loop
+for (int i = 0; i < 5; i++) {
+    System.out.print(i + " ");
+}
+// Output: 0 1 2 3 4
+
+// while loop
+int i = 0;
+while (i < 5) {
+    System.out.print(i + " ");
+    i++;
+}
+
+// do-while (executes at least once)
+int j = 0;
+do {
+    System.out.print(j + " ");
+    j++;
+} while (j < 5);
+
+// enhanced for (for-each)
+int[] numbers = {1, 2, 3, 4, 5};
+for (int n : numbers) {
+    System.out.print(n + " ");
+}
+
+// break and continue
+for (int k = 0; k < 10; k++) {
+    if (k == 5) break;      // exits the loop
+    if (k % 2 == 0) continue; // skips even numbers
+    System.out.print(k + " ");
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 7. ARRAYS ==================== -->
+            <div class="section-card" id="array">
+                <div class="card-header">
+                    <i class="fas fa-table"></i>
+                    <h2>Arrays</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Fixed-size data structures</div>
+                    
+                    <pre><code class="language-java">// ========== DECLARATION AND INITIALIZATION ==========
+// Method 1: with new and size
+int[] numbers = new int[5];
+numbers[0] = 10;
+numbers[1] = 20;
+numbers[2] = 30;
+
+// Method 2: direct initialization
+int[] grades = {85, 90, 78, 92, 88};
+
+// Method 3: with new and values
+String[] names = new String[]{"Alice", "Bob", "Charlie"};
+
+// ========== ITERATION ==========
+for (int i = 0; i < grades.length; i++) {
+    System.out.println(grades[i]);
+}
+
+// Enhanced for
+for (int grade : grades) {
+    System.out.println(grade);
+}
+
+// ========== MULTIDIMENSIONAL ARRAYS ==========
+int[][] matrix = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+for (int i = 0; i < matrix.length; i++) {
+    for (int j = 0; j < matrix[i].length; j++) {
+        System.out.print(matrix[i][j] + " ");
+    }
+    System.out.println();
+}
+
+// ========== ARRAYS UTILITY ==========
+import java.util.Arrays;
+
+int[] original = {5, 2, 8, 1, 9};
+Arrays.sort(original);                          // Sorting
+System.out.println(Arrays.toString(original));   // [1, 2, 5, 8, 9]
+
+int[] copy = Arrays.copyOf(original, 3);        // Copy first 3
+boolean equal = Arrays.equals(original, copy);  // Comparison
+Arrays.fill(original, 0);                       // Fill</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        1 2 3 <br>
+                        4 5 6 <br>
+                        7 8 9 <br>
+                        Sorted: [1, 2, 5, 8, 9]
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 8. STRINGS ==================== -->
+            <div class="section-card" id="stringhe">
+                <div class="card-header">
+                    <i class="fas fa-font"></i>
+                    <h2>Strings</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Immutable String, mutable StringBuilder</div>
+                    
+                    <pre><code class="language-java">// ========== CREATION ==========
+String s1 = "Hello";
+String s2 = new String("World");
+
+// ========== MAIN METHODS ==========
+String text = "Java Programming";
+
+System.out.println("Length: " + text.length());           // 16
+System.out.println("Uppercase: " + text.toUpperCase());      // JAVA PROGRAMMING
+System.out.println("Lowercase: " + text.toLowerCase());      // java programming
+System.out.println("Substring: " + text.substring(5, 11));   // Progra
+System.out.println("Contains 'Java'? " + text.contains("Java")); // true
+System.out.println("Starts with 'Java'? " + text.startsWith("Java")); // true
+System.out.println("Index of 'g': " + text.indexOf('g'));   // 10
+
+// ========== COMPARISON (use equals, not ==) ==========
+String str1 = "test";
+String str2 = new String("test");
+System.out.println(str1 == str2);        // false
+System.out.println(str1.equals(str2));   // true
+
+// ========== CONCATENATION ==========
+String concatenated = "Hello" + " " + "World";
+String formatted = String.format("Number: %d, Text: %s", 42, "Java");
+
+// ========== SPLIT AND JOIN ==========
+String csv = "apple,pear,banana";
+String[] fruits = csv.split(",");
+String rejoined = String.join("-", fruits);  // "apple-pear-banana"
+
+// ========== STRINGBUILDER (mutable, more efficient) ==========
+StringBuilder sb = new StringBuilder();
+sb.append("Java");
+sb.append(" ");
+sb.append("is");
+sb.append(" ");
+sb.append("awesome!");
+System.out.println(sb.toString());
+
+sb.insert(5, "programming ");
+sb.reverse();
+System.out.println(sb);</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Length: 16<br>
+                        Uppercase: JAVA PROGRAMMING<br>
+                        Substring: Progra<br>
+                        Java is awesome!<br>
+                        !emosewa si gnimmargorp avaJ
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 9. METHODS ==================== -->
+            <div class="section-card" id="metodi">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h2>Methods</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Declaration, parameters, return, overload, varargs</div>
+                    
+                    <pre><code class="language-java">public class MethodsDemo {
+    
+    // ========== METHOD WITHOUT PARAMETERS AND WITHOUT RETURN ==========
+    public static void greet() {
+        System.out.println("Hello from Java!");
+    }
+    
+    // ========== METHOD WITH PARAMETERS AND RETURN ==========
+    public static int sum(int a, int b) {
+        return a + b;
+    }
+    
+    // ========== OVERLOAD (same name, different parameters) ==========
+    public static double sum(double a, double b) {
+        return a + b;
+    }
+    
+    public static int sum(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    // ========== VARARGS (variable number of arguments) ==========
+    public static int sumVarargs(int... numbers) {
+        int total = 0;
+        for (int n : numbers) {
+            total += n;
+        }
+        return total;
+    }
+    
+    // ========== RECURSIVE METHOD ==========
+    public static long factorial(int n) {
+        if (n <= 1) return 1;
+        return n * factorial(n - 1);
+    }
+    
+    // ========== PARAMETER PASSING ==========
+    // Java is pass-by-value (changes to parameters do not affect the original)
+    public static void modifyPrimitive(int x) {
+        x = 100;  // does not modify the original variable
+    }
+    
+    public static void modifyObject(StringBuilder sb) {
+        sb.append(" added");  // modifies the original object
+    }
+    
+    public static void main(String[] args) {
+        greet();
+        
+        System.out.println("Sum 5+3: " + sum(5, 3));
+        System.out.println("Sum 5.5+3.2: " + sum(5.5, 3.2));
+        System.out.println("Sum 5+3+2: " + sum(5, 3, 2));
+        System.out.println("Sum varargs: " + sumVarargs(1, 2, 3, 4, 5));
+        System.out.println("Factorial of 5: " + factorial(5));
+        
+        // Test parameter passing
+        int value = 10;
+        modifyPrimitive(value);
+        System.out.println("Value after method: " + value);  // 10 (unchanged)
+        
+        StringBuilder sb = new StringBuilder("Test");
+        modifyObject(sb);
+        System.out.println("StringBuilder after method: " + sb);  // "Test added"
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Output:<br>
+                        Hello from Java!<br>
+                        Sum 5+3: 8<br>
+                        Sum 5.5+3.2: 8.7<br>
+                        Sum 5+3+2: 10<br>
+                        Sum varargs: 15<br>
+                        Factorial of 5: 120<br>
+                        Value after method: 10<br>
+                        StringBuilder after method: Test added
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 10. INPUT/OUTPUT ==================== -->
+            <div class="section-card" id="input-output">
+                <div class="card-header">
+                    <i class="fas fa-keyboard"></i>
+                    <h2>Console Input/Output</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Scanner, System.out, System.err</div>
+                    
+                    <pre><code class="language-java">import java.util.Scanner;
+
+public class InputOutputDemo {
+    public static void main(String[] args) {
+        // ========== OUTPUT ==========
+        System.out.println("Print with println (adds newline)");
+        System.out.print("Print with print (no newline)");
+        System.out.printf("Formatted print: %d, %s, %.2f%n", 42, "test", 3.14159);
+        System.err.println("This is an error message");
+        
+        // ========== INPUT WITH SCANNER ==========
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("\n--- Enter your data ---");
+        
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        
+        scanner.nextLine();  // consume the remaining newline
+        
+        System.out.print("Enter your city: ");
+        String city = scanner.nextLine();
+        
+        System.out.print("Enter your salary: ");
+        double salary = scanner.nextDouble();
+        
+        System.out.println("\n--- Summary ---");
+        System.out.printf("Name: %s%n", name);
+        System.out.printf("Age: %d years%n", age);
+        System.out.printf("City: %s%n", city);
+        System.out.printf("Salary: €%.2f%n", salary);
+        
+        scanner.close();
+    }
+}</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Example interaction:<br>
+                        --- Enter your data ---<br>
+                        Enter your name: Mario<br>
+                        Enter your age: 30<br>
+                        Enter your city: Rome<br>
+                        Enter your salary: 2500.50<br>
+                        --- Summary ---<br>
+                        Name: Mario<br>
+                        Age: 30 years<br>
+                        City: Rome<br>
+                        Salary: €2500.50
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Note:</strong> Always remember to close the Scanner with .close() to free resources!
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices for Core Java</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Fundamental rules for writing quality Java code</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. NAMING CONVENTIONS ====================
+// Classes: PascalCase (initial capital)
+public class ClassName { }
+
+// Methods and variables: camelCase (initial lowercase)
+public void methodName() { }
+int variableName = 10;
+
+// Constants: UPPER_SNAKE_CASE
+public static final int MAX_VALUE = 100;
+
+// Packages: lowercase (all lowercase)
+package com.example.project;
+
+// ==================== 2. COMMENTS AND DOCUMENTATION ====================
+/**
+ * Calculates the sum of two integers.
+ * 
+ * @param a the first number
+ * @param b the second number
+ * @return the sum of a and b
+ * @throws IllegalArgumentException if the numbers are negative
+ */
+public int sum(int a, int b) {
+    if (a < 0 || b < 0) {
+        throw new IllegalArgumentException("Non-negative numbers required");
+    }
+    return a + b;
+}
+
+// Single line comment for brief explanations
+
+/*
+ * Multi-line comment
+ * for longer explanations
+ */
+
+// ==================== 3. ERROR HANDLING ====================
+// ❌ Do not ignore exceptions
+try {
+    // operation
+} catch (Exception e) {
+    // DO NOT do nothing - very bad practice!
+}
+
+// ✅ At least log the error
+try {
+    // operation
+} catch (Exception e) {
+    System.err.println("Error: " + e.getMessage());
+    e.printStackTrace();
+}
+
+// ==================== 4. USING try-with-resources ====================
+// ✅ For AutoCloseable resources
+try (BufferedReader br = new BufferedReader(new FileReader("file.txt"))) {
+    String line = br.readLine();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+// br is automatically closed
+
+// ==================== 5. STRING COMPARISON ====================
+// ❌ Do not use ==
+if (str1 == str2) { }  // compares references, not content
+
+// ✅ Use equals
+if (str1.equals(str2)) { }
+if (str1.equalsIgnoreCase(str2)) { }  // case-insensitive
+
+// ==================== 6. VARIABLE DECLARATION ====================
+// ✅ Declare variables as close as possible to their use
+int result = 0;
+for (int i = 0; i < 10; i++) {
+    result += i;
+}
+
+// ==================== 7. AVOID MAGIC NUMBERS ====================
+// ❌ Magic number
+if (status == 404) { }
+
+// ✅ Constant with meaningful name
+public static final int HTTP_NOT_FOUND = 404;
+if (status == HTTP_NOT_FOUND) { }
+
+// ==================== 8. STRINGBUILDER FOR REPEATED CONCATENATIONS ====================
+// ❌ Inefficient in loop
+String result = "";
+for (int i = 0; i < 1000; i++) {
+    result += i;  // creates new String objects
+}
+
+// ✅ Efficient
+StringBuilder sb = new StringBuilder();
+for (int i = 0; i < 1000; i++) {
+    sb.append(i);
+}
+String result = sb.toString();</code></pre>
+                    
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Checklist for quality Java code:</strong><br>
+                        ✓ Follow Java naming conventions<br>
+                        ✓ Document public methods with JavaDoc<br>
+                        ✓ Never ignore exceptions<br>
+                        ✓ Use try-with-resources for AutoCloseable resources<br>
+                        ✓ Use equals() to compare strings, not ==<br>
+                        ✓ Avoid magic numbers (use constants)<br>
+                        ✓ Use StringBuilder for concatenations in loops<br>
+                        ✓ Make variables final when possible (immutability)<br>
+                        ✓ Use meaningful names for variables and methods
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Back to top</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Core Java | Language fundamentals
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> All examples are ready to run
+        </div>
+    </footer>
+
+    <!-- Prism.js and Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="includes/include.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        // TOC specific to this page
+        const sections = ['introduzione', 'jvm-jre-jdk', 'sintassi-base', 'tipi-dati', 'operatori', 'controllo-flusso', 'array', 'stringhe', 'metodi', 'input-output', 'best-practices'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

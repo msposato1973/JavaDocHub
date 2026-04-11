@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Boot Microservices | JavaDoc Hub</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDEX</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                    <i class="fas fa-question-circle"></i> Introduction
+                </a></li>
+                <li><a href="#dipendenze" class="toc-link" data-target="dipendenze">
+                    <i class="fas fa-cube"></i> Dependencies
+                </a></li>
+                <li><a href="#rest-controller" class="toc-link" data-target="rest-controller">
+                    <i class="fas fa-code-branch"></i> REST Controller
+                </a></li>
+                <li><a href="#entity-repository" class="toc-link" data-target="entity-repository">
+                    <i class="fas fa-database"></i> Entity and Repository
+                </a></li>
+                <li><a href="#feign-client" class="toc-link" data-target="feign-client">
+                    <i class="fas fa-exchange-alt"></i> Feign Client
+                </a></li>
+                <li><a href="#circuit-breaker" class="toc-link" data-target="circuit-breaker">
+                    <i class="fas fa-shield-alt"></i> Circuit Breaker
+                </a></li>
+                <li><a href="#service-discovery" class="toc-link" data-target="service-discovery">
+                    <i class="fas fa-globe"></i> Service Discovery
+                </a></li>
+                <li><a href="#api-gateway" class="toc-link" data-target="api-gateway">
+                    <i class="fas fa-gateway"></i> API Gateway
+                </a></li>
+                <li><a href="#config-server" class="toc-link" data-target="config-server">
+                    <i class="fas fa-cogs"></i> Config Server
+                </a></li>
+                <li><a href="#tracing" class="toc-link" data-target="tracing">
+                    <i class="fas fa-chart-line"></i> Distributed Tracing
+                </a></li>
+                <li><a href="#docker" class="toc-link" data-target="docker">
+                    <i class="fab fa-docker"></i> Docker
+                </a></li>
+                <li><a href="#best-practices" class="toc-link" data-target="best-practices">
+                    <i class="fas fa-star-of-life"></i> Best Practices
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Index
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fas fa-microchip"></i> Microservices with Spring Boot</h1>
+                <p>Architecture, REST API, Spring Cloud, inter-service communication, and Docker</p>
+            </div>
+
+            <!-- ==================== 1. INTRODUCTION ==================== -->
+            <div class="section-card" id="introduzione">
+                <div class="card-header">
+                    <i class="fas fa-question-circle"></i>
+                    <h2>What is a Microservice?</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-building"></i> Distributed architecture</div>
+                    <div class="desc">
+                        Microservices are an architecture where an application is split into small independent services,
+                        each with its own responsibility, database, and lifecycle. Each service communicates with others
+                        through well-defined APIs (usually REST).
+                    </div>
+                    <table class="comparison-table">
+                        <tr><th>Feature</th><th>Monolith</th><th>Microservices</th></tr>
+                        <tr><td>Deployment</td><td>Single artifact</td><td>Independent per service</td></tr>
+                        <tr><td>Scalability</td><td>Whole application</td><td>Per service</td></tr>
+                        <tr><td>Technologies</td><td>Single stack</td><td>Mixed (polyglot)</td></tr>
+                        <tr><td>Database</td><td>Shared</td><td>Database per service</td></tr>
+                        <tr><td>Team size</td><td>Large team</td><td>Small teams (2-pizza team)</td></tr>
+                    </table>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>Benefits of microservices:</strong><br>
+                        - <strong>Independent scalability</strong>: scale only the services that need it<br>
+                        - <strong>Resilience</strong>: a down service doesn't block the entire system<br>
+                        - <strong>Frequent deployments</strong>: you can deploy a single service<br>
+                        - <strong>Different technologies</strong>: each service can use the best language
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 2. DEPENDENCIES ==================== -->
+            <div class="section-card" id="dipendenze">
+                <div class="card-header">
+                    <i class="fas fa-cube"></i>
+                    <h2>Dependencies for Spring Boot Microservices</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Maven pom.xml</div>
+                    <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    
+    &lt;parent&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+        &lt;version&gt;3.2.0&lt;/version&gt;
+    &lt;/parent&gt;
+    
+    &lt;groupId&gt;com.example&lt;/groupId&gt;
+    &lt;artifactId&gt;microservice-demo&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+    
+    &lt;properties&gt;
+        &lt;java.version&gt;17&lt;/java.version&gt;
+        &lt;spring-cloud.version&gt;2023.0.0&lt;/spring-cloud.version&gt;
+    &lt;/properties&gt;
+    
+    &lt;dependencies&gt;
+        &lt;!-- Web/REST API --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- JPA / Database --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- MySQL Driver --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-j&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Service Discovery (Eureka Client) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- OpenFeign (inter-service communication) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Circuit Breaker (Resilience4j) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-circuitbreaker-resilience4j&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Actuator (monitoring) --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Lombok --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        
+        &lt;!-- Validation --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    
+    &lt;dependencyManagement&gt;
+        &lt;dependencies&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
+                &lt;version&gt;${spring-cloud.version}&lt;/version&gt;
+                &lt;type&gt;pom&lt;/type&gt;
+                &lt;scope&gt;import&lt;/scope&gt;
+            &lt;/dependency&gt;
+        &lt;/dependencies&gt;
+    &lt;/dependencyManagement&gt;
+&lt;/project&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 3. REST CONTROLLER ==================== -->
+            <div class="section-card" id="rest-controller">
+                <div class="card-header">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>REST Controller - Base Endpoint</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">@RestController, @RequestMapping, @Valid</div>
+                    <pre><code class="language-java">package com.example.microservice.controller;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+public class UserController {
+    
+    private final UserService userService;
+    
+    // GET - Retrieve all users
+    @GetMapping
+    public ResponseEntity&lt;List&lt;UserDTO&gt;&gt; getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        log.info("GET request /api/users - page={}, size={}", page, size);
+        return ResponseEntity.ok(userService.findAll(page, size));
+    }
+    
+    // GET by ID
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;UserDTO&gt; getUserById(@PathVariable Long id) {
+        log.info("GET request /api/users/{}", id);
+        return userService.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    // POST - Create new user
+    @PostMapping
+    public ResponseEntity&lt;UserDTO&gt; createUser(@Valid @RequestBody UserDTO user) {
+        log.info("POST request /api/users - body: {}", user);
+        UserDTO saved = userService.save(user);
+        return ResponseEntity
+            .created(URI.create("/api/users/" + saved.getId()))
+            .body(saved);
+    }
+    
+    // PUT - Update user
+    @PutMapping("/{id}")
+    public ResponseEntity&lt;UserDTO&gt; updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UserDTO user) {
+        log.info("PUT request /api/users/{} - body: {}", id, user);
+        return ResponseEntity.ok(userService.update(id, user));
+    }
+    
+    // PATCH - Partial update
+    @PatchMapping("/{id}")
+    public ResponseEntity&lt;UserDTO&gt; patchUser(
+            @PathVariable Long id,
+            @RequestBody Map&lt;String, Object&gt; updates) {
+        log.info("PATCH request /api/users/{} - updates: {}", id, updates);
+        return ResponseEntity.ok(userService.patch(id, updates));
+    }
+    
+    // DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity&lt;Void&gt; deleteUser(@PathVariable Long id) {
+        log.info("DELETE request /api/users/{}", id);
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    // GET with search
+    @GetMapping("/search")
+    public ResponseEntity&lt;List&lt;UserDTO&gt;&gt; searchUsers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email) {
+        log.info("GET request /api/users/search - name={}, email={}", name, email);
+        return ResponseEntity.ok(userService.search(name, email));
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 4. ENTITY AND REPOSITORY ==================== -->
+            <div class="section-card" id="entity-repository">
+                <div class="card-header">
+                    <i class="fas fa-database"></i>
+                    <h2>Entity, DTO and Repository</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Spring Data JPA, Lombok, MapStruct</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Entity</h3>
+                    <pre><code class="language-java">package com.example.microservice.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "users", indexes = {
+    @Index(name = "idx_email", columnList = "email"),
+    @Index(name = "idx_name", columnList = "name")
+})
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class User {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, length = 100)
+    private String name;
+    
+    @Column(nullable = false, unique = true, length = 150)
+    private String email;
+    
+    @Column(nullable = false)
+    private Integer age;
+    
+    @Column(length = 20)
+    private String phone;
+    
+    @Column(nullable = false)
+    private boolean active = true;
+    
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+    
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+    
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+    
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 DTO (Data Transfer Object)</h3>
+                    <pre><code class="language-java">package com.example.microservice.dto;
+
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDTO {
+    
+    private Long id;
+    
+    @NotBlank(message = "Name is required")
+    @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
+    private String name;
+    
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    private String email;
+    
+    @NotNull(message = "Age is required")
+    @Min(value = 0, message = "Age cannot be negative")
+    @Max(value = 150, message = "Age cannot exceed 150")
+    private Integer age;
+    
+    @Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "Invalid phone format")
+    private String phone;
+    
+    private boolean active;
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Repository</h3>
+                    <pre><code class="language-java">package com.example.microservice.repository;
+
+import com.example.microservice.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+    
+    // Query method
+    Optional&lt;User&gt; findByEmail(String email);
+    
+    List&lt;User&gt; findByNameContainingIgnoreCase(String name);
+    
+    Page&lt;User&gt; findByActiveTrue(Pageable pageable);
+    
+    // JPQL Query
+    @Query("SELECT u FROM User u WHERE u.age BETWEEN :minAge AND :maxAge")
+    List&lt;User&gt; findByAgeBetween(@Param("minAge") int minAge, @Param("maxAge") int maxAge);
+    
+    @Query("SELECT u FROM User u WHERE " +
+           "(:name IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
+           "(:email IS NULL OR LOWER(u.email) LIKE LOWER(CONCAT('%', :email, '%')))")
+    List&lt;User&gt; search(@Param("name") String name, @Param("email") String email);
+    
+    // Native Query
+    @Query(value = "SELECT * FROM users WHERE YEAR(created_at) = :year", nativeQuery = true)
+    List&lt;User&gt; findUsersByCreationYear(@Param("year") int year);
+    
+    // Update query
+    @Modifying
+    @Transactional
+    @Query("UPDATE User u SET u.active = false WHERE u.id = :id")
+    void deactivateUser(@Param("id") Long id);
+    
+    // Count query
+    long countByActiveTrue();
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 5. FEIGN CLIENT ==================== -->
+            <div class="section-card" id="feign-client">
+                <div class="card-header">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h2>Microservice Communication - OpenFeign</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue"><i class="fas fa-plug"></i> Feign Client + Load Balancing</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Enable Feign Client</h3>
+                    <pre><code class="language-java">package com.example.order;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableFeignClients
+@EnableDiscoveryClient
+public class OrderServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(OrderServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Define Feign Client</h3>
+                    <pre><code class="language-java">package com.example.order.client;
+
+import com.example.order.dto.UserDTO;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@FeignClient(name = "user-service", url = "${user.service.url:http://localhost:8081}")
+public interface UserServiceClient {
+    
+    @GetMapping("/api/users/{id}")
+    UserDTO getUserById(@PathVariable("id") Long id);
+    
+    @GetMapping("/api/users")
+    List&lt;UserDTO&gt; getAllUsers();
+    
+    @GetMapping("/api/users/search")
+    List&lt;UserDTO&gt; searchUsers(@RequestParam("name") String name);
+    
+    @PostMapping("/api/users")
+    UserDTO createUser(@RequestBody UserDTO user);
+    
+    @PutMapping("/api/users/{id}")
+    UserDTO updateUser(@PathVariable("id") Long id, @RequestBody UserDTO user);
+    
+    @DeleteMapping("/api/users/{id}")
+    void deleteUser(@PathVariable("id") Long id);
+}
+
+// With custom configuration
+@FeignClient(
+    name = "product-service",
+    url = "${product.service.url}",
+    configuration = FeignConfig.class,
+    fallback = ProductServiceFallback.class
+)
+public interface ProductServiceClient {
+    @GetMapping("/api/products/{id}")
+    ProductDTO getProduct(@PathVariable("id") Long id);
+}
+
+// Feign configuration
+@Configuration
+public class FeignConfig {
+    
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return requestTemplate -> {
+            requestTemplate.header("X-Correlation-Id", UUID.randomUUID().toString());
+            requestTemplate.header("User-Agent", "Microservice-Client");
+        };
+    }
+    
+    @Bean
+    public Decoder feignDecoder() {
+        return new JacksonDecoder();
+    }
+    
+    @Bean
+    public Encoder feignEncoder() {
+        return new JacksonEncoder();
+    }
+}
+
+// Fallback for resilience
+@Component
+public class ProductServiceFallback implements ProductServiceClient {
+    
+    @Override
+    public ProductDTO getProduct(Long id) {
+        return ProductDTO.builder()
+            .id(id)
+            .name("Product not available")
+            .price(0.0)
+            .build();
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Using the client in a Service</h3>
+                    <pre><code class="language-java">package com.example.order.service;
+
+import com.example.order.client.UserServiceClient;
+import com.example.order.dto.OrderDTO;
+import com.example.order.dto.UserDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class OrderService {
+    
+    private final UserServiceClient userClient;
+    
+    public OrderDTO createOrderForUser(Long userId, OrderDTO order) {
+        log.info("Creating order for user ID: {}", userId);
+        
+        try {
+            // Verify that the user exists
+            UserDTO user = userClient.getUserById(userId);
+            log.info("User found: {} {}", user.getName(), user.getEmail());
+            
+            // Associate the order with the user
+            order.setUserId(userId);
+            order.setUserName(user.getName());
+            
+            // Save the order...
+            return order;
+            
+        } catch (Exception e) {
+            log.error("Error communicating with user-service: {}", e.getMessage());
+            throw new RuntimeException("User service unavailable");
+        }
+    }
+    
+    public List&lt;UserDTO&gt; searchUsers(String name) {
+        log.info("Searching users by name: {}", name);
+        return userClient.searchUsers(name);
+    }
+}</code></pre>
+
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i> <strong>application.yml configuration for Feign:</strong><br>
+                        <code>user.service.url: http://localhost:8081</code><br>
+                        With Service Discovery (Eureka), the URL is resolved automatically.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. CIRCUIT BREAKER ==================== -->
+            <div class="section-card" id="circuit-breaker">
+                <div class="card-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>Resilience - Circuit Breaker (Resilience4j)</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fas fa-heartbeat"></i> Fault tolerance</div>
+                    
+                    <pre><code class="language-java">package com.example.order.service;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import java.util.concurrent.CompletableFuture;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ResilientService {
+    
+    private final UserServiceClient userClient;
+    
+    // ========== CIRCUIT BREAKER ==========
+    // Prevents continuous calls to a down service
+    @CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetUser")
+    public UserDTO getUserWithCircuitBreaker(Long id) {
+        log.info("Calling user-service for ID: {}", id);
+        return userClient.getUserById(id);
+    }
+    
+    // ========== RETRY ==========
+    // Automatically retries on failure
+    @Retry(name = "userService", fallbackMethod = "fallbackGetUser")
+    public UserDTO getUserWithRetry(Long id) {
+        log.info("Attempting call for ID: {}", id);
+        return userClient.getUserById(id);
+    }
+    
+    // ========== TIME LIMITER ==========
+    // Timeout on operations
+    @TimeLimiter(name = "userService")
+    @CircuitBreaker(name = "userService")
+    public CompletableFuture&lt;UserDTO&gt; getUserAsync(Long id) {
+        return CompletableFuture.supplyAsync(() -> userClient.getUserById(id));
+    }
+    
+    // ========== COMBINATION OF ANNOTATIONS ==========
+    @Retry(name = "userService")
+    @CircuitBreaker(name = "userService", fallbackMethod = "fallbackGetUser")
+    public UserDTO getResilientUser(Long id) {
+        return userClient.getUserById(id);
+    }
+    
+    // ========== FALLBACK METHOD ==========
+    private UserDTO fallbackGetUser(Long id, Exception e) {
+        log.warn("Circuit breaker activated for id: {} - Error: {}", id, e.getMessage());
+        return UserDTO.builder()
+            .id(id)
+            .name("User not available (fallback)")
+            .email("unknown@example.com")
+            .age(0)
+            .active(false)
+            .build();
+    }
+    
+    // ========== METHOD TO TEST CIRCUIT BREAKER ==========
+    public void testCircuitBreaker() {
+        for (int i = 0; i < 20; i++) {
+            try {
+                UserDTO user = getUserWithCircuitBreaker(1L);
+                log.info("Result: {}", user);
+            } catch (Exception e) {
+                log.error("Error on call {}", i, e);
+            }
+        }
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml configuration</h3>
+                    <pre><code class="language-yaml">resilience4j:
+  circuitbreaker:
+    instances:
+      userService:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10000
+        permitted-number-of-calls-in-half-open-state: 3
+        minimum-number-of-calls: 5
+        slow-call-rate-threshold: 100
+        slow-call-duration-threshold: 5000
+  retry:
+    instances:
+      userService:
+        max-attempts: 3
+        wait-duration: 1000
+        retry-exceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.io.IOException
+  timelimiter:
+    instances:
+      userService:
+        timeout-duration: 2s</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 7. SERVICE DISCOVERY ==================== -->
+            <div class="section-card" id="service-discovery">
+                <div class="card-header">
+                    <i class="fas fa-globe"></i>
+                    <h2>Service Discovery with Netflix Eureka</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge"><i class="fas fa-server"></i> Service registration and discovery</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Server (Discovery Service)</h3>
+                    <pre><code class="language-java">package com.example.discovery;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+
+@SpringBootApplication
+@EnableEurekaServer
+public class DiscoveryServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DiscoveryServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Server Configuration (application.yml)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-service
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 0
+    enable-self-preservation: false</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Client (Microservice)</h3>
+                    <pre><code class="language-java">package com.example.userservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+public class UserServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UserServiceApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Eureka Client Configuration (application.yml)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 0  # Random port
+
+spring:
+  application:
+    name: user-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    instance-id: ${spring.application.name}:${random.value}
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    env:
+      enabled: true</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 8. API GATEWAY ==================== -->
+            <div class="section-card" id="api-gateway">
+                <div class="card-header">
+                    <i class="fas fa-gateway"></i>
+                    <h2>API Gateway with Spring Cloud Gateway</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Single entry point, routing, authentication</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 API Gateway Dependency</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Routing Configuration (application.yml)</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: userService
+                fallbackUri: forward:/fallback/users
+            - AddRequestHeader=X-Request-Source, Gateway
+            - AddRequestParameter=gateway, true
+            
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - Retry=3
+            
+        - id: fallback-route
+          uri: forward:/fallback
+          predicates:
+            - Path=/fallback/**
+            
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health,info</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Custom Gateway Filter</h3>
+                    <pre><code class="language-java">package com.example.gateway.filter;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.core.Ordered;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+import java.util.UUID;
+
+@Slf4j
+@Component
+public class LoggingGlobalFilter implements GlobalFilter, Ordered {
+    
+    @Override
+    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilter

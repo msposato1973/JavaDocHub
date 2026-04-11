@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 11 vs Java 17 | JavaDoc Hub</title>
+    
+     <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	 
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Include Navbar -->
+    <div data-include="navbar"></div>
+	<!-- Scroll progress bar -->
+
+    <div class="main-layout">
+        
+        <!-- Sidebar TOC -->
+        <div class="sidebar-toc" id="sidebarToc">
+            <div class="toc-header">
+                <div class="toc-title">
+                    <i class="fas fa-bars-staggered"></i>
+                    <span>INDEX</span>
+                </div>
+            </div>
+            <ul class="toc-list">
+                <li><a href="#confronto-generale" class="toc-link" data-target="confronto-generale">
+                    <i class="fas fa-chart-simple"></i> General Comparison
+                </a></li>
+                <li><a href="#switch-expression" class="toc-link" data-target="switch-expression">
+                    <i class="fas fa-code-branch"></i> Switch Expression
+                </a></li>
+                <li><a href="#text-block" class="toc-link" data-target="text-block">
+                    <i class="fas fa-quote-right"></i> Text Block
+                </a></li>
+                <li><a href="#record-class" class="toc-link" data-target="record-class">
+                    <i class="fas fa-database"></i> Record Class
+                </a></li>
+                <li><a href="#pattern-matching" class="toc-link" data-target="pattern-matching">
+                    <i class="fas fa-shapes"></i> Pattern Matching instanceof
+                </a></li>
+                <li><a href="#sealed-class" class="toc-link" data-target="sealed-class">
+                    <i class="fas fa-lock"></i> Sealed Class
+                </a></li>
+                <li><a href="#var-lambda" class="toc-link" data-target="var-lambda">
+                    <i class="fas fa-code"></i> var in Lambda
+                </a></li>
+                <li><a href="#string-methods" class="toc-link" data-target="string-methods">
+                    <i class="fas fa-font"></i> New String Methods
+                </a></li>
+                <li><a href="#http-client" class="toc-link" data-target="http-client">
+                    <i class="fas fa-globe"></i> HTTP Client
+                </a></li>
+                <li><a href="#garbage-collector" class="toc-link" data-target="garbage-collector">
+                    <i class="fas fa-recycle"></i> Garbage Collector
+                </a></li>
+                <li><a href="#altre-novita" class="toc-link" data-target="altre-novita">
+                    <i class="fas fa-gift"></i> Other New Features
+                </a></li>
+                <li><a href="#api-rimosse" class="toc-link" data-target="api-rimosse">
+                    <i class="fas fa-trash-alt"></i> Removed APIs
+                </a></li>
+                <li><a href="#guida-migrazione" class="toc-link" data-target="guida-migrazione">
+                    <i class="fas fa-exchange-alt"></i> Migration Guide
+                </a></li>
+            </ul>
+        </div>
+
+        <button class="toc-toggle" id="tocToggleBtn">
+            <i class="fas fa-bars"></i> Index
+        </button>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1><i class="fab fa-java"></i> Java 11 vs Java 17</h1>
+                <p>Complete comparison between the two LTS (Long Term Support) versions of Java</p>
+            </div>
+
+            <!-- ==================== 1. GENERAL COMPARISON ==================== -->
+            <div class="section-card" id="confronto-generale">
+                <div class="card-header"><i class="fas fa-chart-simple"></i><h2>General Comparison</h2></div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Feature</th><th>Java 11 (LTS - Sep 2018)</th><th>Java 17 (LTS - Sep 2021)</th></tr>
+                        <tr><td>LTS Support</td><td>Until Sep 2026</td><td>Until Sep 2029</td></tr>
+                        <tr><td>License</td><td>Commercial Oracle JDK from 2019</td><td>Free OpenJDK</td></tr>
+                        <tr><td>ZGC (Garbage Collector)</td><td>Experimental</td><td>✅ Stable</td></tr>
+                        <tr><td>Pattern Matching</td><td>❌ No</td><td>✅ instanceof + switch</td></tr>
+                        <tr><td>Record Class</td><td>❌ No</td><td>✅ Yes (Preview in 14, 15, 16)</td></tr>
+                        <tr><td>Sealed Class</td><td>❌ No</td><td>✅ Yes (Preview in 15, 16)</td></tr>
+                        <tr><td>Text Block</td><td>❌ No</td><td>✅ Yes (Preview in 13, 14)</td></tr>
+                        <tr><td>Switch Expression</td><td>❌ No</td><td>✅ Yes (Preview in 12, 13, 14)</td></tr>
+                        <tr><td>var in Lambda</td><td>❌ No</td><td>✅ Yes (Java 16+)</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ==================== 2. SWITCH EXPRESSION ==================== -->
+            <div class="section-card" id="switch-expression">
+                <div class="card-header"><i class="fas fa-code-branch"></i><h2>Switch Expression</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → Only switch statement</div>
+                    <div class="badge-green">Java 17 → Switch expression + yield</div>
+                    
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fab fa-java"></i> Java 11</div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">String day = "MONDAY";
+String type;
+switch (day) {
+    case "SATURDAY":
+    case "SUNDAY":
+        type = "Weekend";
+        break;
+    case "MONDAY":
+    case "TUESDAY":
+    case "WEDNESDAY":
+    case "THURSDAY":
+    case "FRIDAY":
+        type = "Weekday";
+        break;
+    default:
+        type = "Unknown";
+}
+System.out.println(type);</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fab fa-java"></i> Java 17 <span class="feature-new">NEW</span></div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">String day = "MONDAY";
+String type = switch (day) {
+    case "SATURDAY", "SUNDAY" -> "Weekend";
+    case "MONDAY", "TUESDAY", 
+         "WEDNESDAY", "THURSDAY", 
+         "FRIDAY" -> "Weekday";
+    default -> "Unknown";
+};
+System.out.println(type);
+
+// With yield for code blocks
+String result = switch (day) {
+    case "MONDAY" -> {
+        System.out.println("Start of week");
+        yield "Monday";
+    }
+    default -> "Other";
+};</code></pre>
+                        </div>
+                    </div>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Java 17 advantage: <strong>5 lines vs 16 lines</strong> for the same result!
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 3. TEXT BLOCK ==================== -->
+            <div class="section-card" id="text-block">
+                <div class="card-header"><i class="fas fa-quote-right"></i><h2>Text Block (Multiline Strings)</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → Concatenation and \n</div>
+                    <div class="badge-green">Java 17 → Native text blocks</div>
+                    
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fab fa-java"></i> Java 11</div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">String json = "{\n" +
+    "  \"name\": \"Mario\",\n" +
+    "  \"age\": 30,\n" +
+    "  \"city\": \"Rome\"\n" +
+    "}";
+
+String sql = "SELECT id, name, email\n" +
+    "FROM users\n" +
+    "WHERE active = true\n" +
+    "ORDER BY name";</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fab fa-java"></i> Java 17 <span class="feature-new">NEW</span></div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">String json = """
+    {
+      "name": "Mario",
+      "age": 30,
+      "city": "Rome"
+    }
+    """;
+
+String sql = """
+    SELECT id, name, email
+    FROM users
+    WHERE active = true
+    ORDER BY name
+    """;
+
+// Text block with automatic formatting
+String html = """
+    <html>
+        <body>
+            <h1>Title</h1>
+            <p>Example paragraph</p>
+        </body>
+    </html>
+    """;</code></pre>
+                        </div>
+                    </div>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Java 17 advantage: <strong>Much better readability</strong> for JSON, SQL, HTML
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 4. RECORD CLASS ==================== -->
+            <div class="section-card" id="record-class">
+                <div class="card-header"><i class="fas fa-database"></i><h2>Record Class (Data Carrier)</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → Classes with boilerplate (~50 lines)</div>
+                    <div class="badge-green">Java 17 → Record (1 line)</div>
+                    
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fab fa-java"></i> Java 11</div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">public class Person {
+    private final String name;
+    private final int age;
+    
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public String getName() { return name; }
+    public int getAge() { return age; }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person that = (Person) o;
+        return age == that.age &amp;&amp; 
+               Objects.equals(name, that.name);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+    
+    @Override
+    public String toString() {
+        return "Person{name='" + name + "', age=" + age + "}";
+    }
+}</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fab fa-java"></i> Java 17 <span class="feature-new">NEW</span></div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">public record Person(String name, int age) {}
+
+// Usage
+Person p = new Person("Mario", 30);
+System.out.println(p.name());  // automatic getter
+System.out.println(p);  // automatic toString()
+
+// Record with compact constructor (validation)
+public record User(String email, int age) {
+    public User {
+        if (age < 0) 
+            throw new IllegalArgumentException("Negative age");
+        if (!email.contains("@")) 
+            throw new IllegalArgumentException("Invalid email");
+    }
+}
+
+// Record with additional methods
+public record Point(int x, int y) {
+    public double distanceFromOrigin() {
+        return Math.sqrt(x * x + y * y);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Java 17 advantage: <strong>1 line of code vs ~50 lines</strong> for an immutable DTO!
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 5. PATTERN MATCHING instanceof ==================== -->
+            <div class="section-card" id="pattern-matching">
+                <div class="card-header"><i class="fas fa-shapes"></i><h2>Pattern Matching for instanceof</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → Explicit cast</div>
+                    <div class="badge-green">Java 17 → Direct pattern binding</div>
+                    
+                    <div class="comparison">
+                        <div class="wrong-box">
+                            <div class="wrong-title"><i class="fab fa-java"></i> Java 11</div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">Object obj = "Hello World";
+if (obj instanceof String) {
+    String s = (String) obj;  // explicit cast!
+    System.out.println(s.toUpperCase());
+}
+
+// With additional conditions
+if (obj instanceof String) {
+    String s = (String) obj;
+    if (s.length() > 5) {
+        System.out.println("Long: " + s);
+    }
+}</code></pre>
+                        </div>
+                        <div class="correct-box">
+                            <div class="correct-title"><i class="fab fa-java"></i> Java 17 <span class="feature-new">NEW</span></div>
+                            <pre style="font-size: 0.75rem;"><code class="language-java">Object obj = "Hello World";
+if (obj instanceof String s) {
+    System.out.println(s.toUpperCase());
+}
+
+// With additional conditions (&&)
+if (obj instanceof String s && s.length() > 5) {
+    System.out.println("Long: " + s);
+}
+
+// Pattern matching in switch (Java 17 preview, 21 stable)
+Object value = "Test";
+String result = switch (value) {
+    case Integer i -> "Integer: " + i;
+    case String s -> "String: " + s;
+    case null -> "Null";
+    default -> "Unknown";
+};</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 6. SEALED CLASS ==================== -->
+            <div class="section-card" id="sealed-class">
+                <div class="card-header"><i class="fas fa-lock"></i><h2>Sealed Class</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → Open inheritance (any class can extend)</div>
+                    <div class="badge-green">Java 17 → Precise control over permitted subclasses</div>
+                    
+                    <pre><code class="language-java">// Java 17 - Sealed Class
+public sealed class Shape 
+    permits Circle, Rectangle, Triangle {
+    public abstract double area();
+}
+
+// Subclasses must be final, sealed, or non-sealed
+public final class Circle extends Shape {
+    private final double radius;
+    
+    public Circle(double radius) { this.radius = radius; }
+    
+    @Override
+    public double area() { 
+        return Math.PI * radius * radius; 
+    }
+}
+
+public sealed class Rectangle extends Shape permits Square {
+    private final double width;
+    private final double height;
+    
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+    
+    @Override
+    public double area() { 
+        return width * height; 
+    }
+}
+
+public final class Square extends Rectangle {
+    public Square(double side) {
+        super(side, side);
+    }
+}
+
+public non-sealed class Triangle extends Shape {
+    // non-sealed allows unlimited extensions
+    private final double base;
+    private final double height;
+    
+    public Triangle(double base, double height) {
+        this.base = base;
+        this.height = height;
+    }
+    
+    @Override
+    public double area() { 
+        return (base * height) / 2; 
+    }
+}
+
+// Attempting to extend Shape with a non-permitted class causes an error!
+// public class Pentagon extends Shape {}  // COMPILATION ERROR!</code></pre>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Java 17 advantage: <strong>Explicit control</strong> over which classes can extend
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 7. VAR IN LAMBDA ==================== -->
+            <div class="section-card" id="var-lambda">
+                <div class="card-header"><i class="fas fa-code"></i><h2>var in Lambda Parameters</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → Implicit type without annotations</div>
+                    <div class="badge-green">Java 17 → var with annotations in lambdas</div>
+                    
+                    <pre><code class="language-java">import javax.validation.constraints.NotNull;
+import java.util.*;
+
+public class VarLambdaDemo {
+    public static void main(String[] args) {
+        List&lt;String&gt; names = Arrays.asList("Alice", "Bob", "Charlie");
+        
+        // ========== Java 11 ==========
+        // Lambda with inferred type (without var)
+        names.sort((a, b) -> a.compareTo(b));
+        
+        // Cannot use annotations in lambda parameters
+        // names.sort((@NotNull a, @NotNull b) -> a.compareTo(b));  // ERROR!
+        
+        // ========== Java 17 ==========
+        // var can be used in lambda parameters
+        names.sort((var a, var b) -> a.compareTo(b));
+        
+        // With annotations (useful for validation) - only with var!
+        names.sort((@NotNull var a, @NotNull var b) -> a.compareTo(b));
+        
+        // var allows specifying type when needed
+        Function&lt;String, Integer&gt; length = (var s) -> s.length();
+        
+        // Useful with complex generic types
+        BiFunction&lt;List&lt;String&gt;, Integer, String&gt; get = 
+            (var list, var index) -> list.get(index);
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 8. NEW STRING METHODS ==================== -->
+            <div class="section-card" id="string-methods">
+                <div class="card-header"><i class="fas fa-font"></i><h2>New String Methods</h2></div>
+                <div class="card-body">
+                    <div class="badge">Java 11 → strip(), isBlank(), lines(), repeat()</div>
+                    <div class="badge-green">Java 17 → Same methods (more mature)</div>
+                    
+                    <pre><code class="language-java">String text = "  \t Hello World \n  ";
+
+// strip() vs trim() - important difference!
+String strip = text.strip();   // "Hello World" (removes Unicode spaces)
+String trim = text.trim();      // "Hello World" (ASCII only)
+
+// isBlank() - checks if string is empty or only spaces
+"   ".isBlank();  // true
+"".isBlank();      // true
+
+// lines() - split by lines (more efficient than split("\n"))
+String multiline = "line1\nline2\nline3";
+multiline.lines().forEach(System.out::println);
+
+// repeat() - repeats the string
+"Java".repeat(3);  // "JavaJavaJava"
+
+// formatted() - printf-style formatting (Java 15+)
+String name = "Mario";
+int age = 30;
+String msg = "Name: %s, Age: %d".formatted(name, age);
+System.out.println(msg);  // "Name: Mario, Age: 30"
+
+// indent() - adds/removes indentation (Java 12+)
+String indented = "text".indent(4);  // "    text\n"
+
+// transform() - transforms the string (Java 12+)
+String result = "hello".transform(s -> s.toUpperCase());
+System.out.println(result);  // "HELLO"</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 9. HTTP CLIENT ==================== -->
+            <div class="section-card" id="http-client">
+                <div class="card-header"><i class="fas fa-globe"></i><h2>HTTP Client</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → Modern HttpClient (introduced)</div>
+                    <div class="badge-green">Java 17 → Enhanced HttpClient (WebSocket, HTTP/2)</div>
+                    
+                    <pre><code class="language-java">import java.net.http.*;
+import java.net.URI;
+import java.time.Duration;
+import java.util.concurrent.*;
+
+public class HttpClientDemo {
+    public static void main(String[] args) throws Exception {
+        
+        // Modern HttpClient (introduced in Java 11, enhanced in Java 17)
+        HttpClient client = HttpClient.newBuilder()
+            .version(HttpClient.Version.HTTP_2)
+            .connectTimeout(Duration.ofSeconds(10))
+            .followRedirects(HttpClient.Redirect.NORMAL)
+            .build();
+        
+        // Synchronous GET request
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.example.com/users/1"))
+            .timeout(Duration.ofSeconds(30))
+            .header("Content-Type", "application/json")
+            .GET()
+            .build();
+        
+        HttpResponse&lt;String&gt; response = client.send(request, 
+            HttpResponse.BodyHandlers.ofString());
+        System.out.println("Status: " + response.statusCode());
+        System.out.println("Body: " + response.body());
+        
+        // Asynchronous request (non-blocking)
+        CompletableFuture&lt;HttpResponse&lt;String&gt;&gt; future = client.sendAsync(
+            request, 
+            HttpResponse.BodyHandlers.ofString()
+        );
+        future.thenAccept(resp -> System.out.println(resp.body()));
+        
+        // POST request with JSON
+        String json = "{\"name\":\"Mario\",\"age\":30}";
+        HttpRequest postRequest = HttpRequest.newBuilder()
+            .uri(URI.create("https://api.example.com/users"))
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(json))
+            .build();
+        
+        HttpResponse&lt;String&gt; postResponse = client.send(postRequest, 
+            HttpResponse.BodyHandlers.ofString());
+        
+        // WebSocket support (Java 11+)
+        WebSocket ws = client.newWebSocketBuilder()
+            .buildAsync(URI.create("ws://example.com/socket"), new WebSocket.Listener() {})
+            .join();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 10. GARBAGE COLLECTOR ==================== -->
+            <div class="section-card" id="garbage-collector">
+                <div class="card-header"><i class="fas fa-recycle"></i><h2>Garbage Collector and Performance</h2></div>
+                <div class="card-body">
+                    <div class="badge-blue">Java 11 → G1GC (default), ZGC experimental</div>
+                    <div class="badge-green">Java 17 → Stable ZGC, G1GC improvements, Shenandoah</div>
+                    
+                    <div class="version-java11" style="background: #0a1a2a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <strong><i class="fab fa-java"></i> Java 11:</strong><br>
+                        - G1GC by default<br>
+                        - ZGC requires experimental flag: <code>-XX:+UnlockExperimentalVMOptions -XX:+UseZGC</code><br>
+                        - Higher GC pauses
+                    </div>
+                    <div class="version-java17" style="background: #0a2a1a; padding: 1rem; border-radius: 8px;">
+                        <strong><i class="fab fa-java"></i> Java 17:</strong><br>
+                        - Stable ZGC: <code>-XX:+UseZGC</code> (no experimental flag)<br>
+                        - Shenandoah GC available: <code>-XX:+UseShenandoahGC</code><br>
+                        - GC pauses below 10ms even for terabyte heaps<br>
+                        - Compressed oops supported for ZGC<br>
+                        - Better container integration
+                    </div>
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-lightbulb"></i> <strong>GC Comparison:</strong><br>
+                        - <strong>G1GC</strong>: balanced, good for most cases<br>
+                        - <strong>ZGC</strong>: very low pauses, ideal for large heaps<br>
+                        - <strong>Shenandoah</strong>: low pauses, concurrent
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. OTHER NEW FEATURES ==================== -->
+            <div class="section-card" id="altre-novita">
+                <div class="card-header"><i class="fas fa-gift"></i><h2>Other Java 17 Features</h2></div>
+                <div class="card-body">
+                    <div class="badge-green">Minor but very useful features</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. HexFormat (Java 17) ====================
+import java.util.HexFormat;
+
+HexFormat hex = HexFormat.of();
+byte[] bytes = {0x01, 0x2A, 0x3F, 0x4E};
+String hexadecimal = hex.formatHex(bytes);
+System.out.println(hexadecimal);  // "012a3f4e"
+
+byte[] decoded = hex.parseHex("012a3f4e");
+
+// With delimiter
+HexFormat hexDelimiter = HexFormat.ofDelimiter(":");
+String withDelimiters = hexDelimiter.formatHex(bytes);
+System.out.println(withDelimiters);  // "01:2a:3f:4e"
+
+// ==================== 2. Enhanced Pseudo-Random Number Generators ====================
+import java.util.random.*;
+
+// New RandomGenerator interface
+RandomGenerator rng1 = RandomGenerator.of("L64X128MixRandom");
+int random = rng1.nextInt(100);
+
+RandomGenerator rng2 = RandomGeneratorFactory
+    .of("Xoshiro256PlusPlus")
+    .create(12345L);  // seed
+
+// Stream of random numbers
+rng2.ints(10, 0, 100).forEach(System.out::println);
+
+// ==================== 3. MacOS/AArch64 Support ====================
+// Official support for Apple Silicon (M1, M2, M3)
+
+// ==================== 4. Strict Floating Point (always active) ====================
+// No longer need to use "strictfp"
+
+// ==================== 5. Numeric Text Blocks ====================
+// Java 17 allows trailing backslash in text blocks
+String json = """
+    {
+        "name": "Mario",
+        "age": 30
+    }\
+    """;  // The backslash removes the final newline
+
+// ==================== 6. Deprecation of Security Manager ====================
+// @Deprecated(since="17", forRemoval=true)
+// SecurityManager will be removed in a future version</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 12. REMOVED APIS ==================== -->
+            <div class="section-card" id="api-rimosse">
+                <div class="card-header"><i class="fas fa-trash-alt" style="color: #f44336;"></i><h2>Removed APIs and Features</h2></div>
+                <div class="card-body">
+                    <div class="badge-red">Removed between Java 11 and Java 17</div>
+                    
+                    <pre><code class="language-java">// ==================== APIs REMOVED IN JAVA 17 ====================
+
+// 1. Applet API (deprecated since Java 9, removed in Java 17)
+// - java.applet.Applet
+// - javax.swing.JApplet
+
+// 2. RMI Activation (deprecated in Java 15, removed in Java 17)
+// - java.rmi.activation.Activatable
+// - java.rmi.activation.ActivationGroup
+
+// 3. Security Manager (@Deprecated(forRemoval=true))
+// System.setSecurityManager(...) - deprecated, will be removed
+
+// 4. ConcurrentHashMap - old methods
+// ConcurrentHashMap.keySet().map(...) - some variants deprecated
+
+// ==================== APIS DEPRECATED FOR REMOVAL ====================
+
+// Finalizer (deprecated since Java 9)
+@Override
+@Deprecated(since="9", forRemoval=true)
+protected void finalize() {
+    // Do not use anymore! Use Cleaner or try-with-resources
+}
+
+// Thread.stop(), Thread.suspend(), Thread.resume()
+Thread t = new Thread();
+t.stop();  // @Deprecated(forRemoval=true) - do not use!
+
+// URL constructor (deprecated for removal)
+new URL("http", "example.com", 80, "/path");  // Use URI.toURL() instead
+
+// System.runFinalizersOnExit()
+System.runFinalizersOnExit(true);  // Deprecated, dangerous!</code></pre>
+                    <div class="warning-block" style="margin-top: 1rem;">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Warning:</strong> The Security Manager will be completely removed in a future version.
+                        Migrate code that uses it.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 13. MIGRATION GUIDE ==================== -->
+            <div class="section-card" id="guida-migrazione">
+                <div class="card-header"><i class="fas fa-exchange-alt"></i><h2>Migration Guide from Java 11 to Java 17</h2></div>
+                <div class="card-body">
+                    <table class="comparison-table">
+                        <tr><th>Phase</th><th>Recommended Actions</th><th>Details</th></tr>
+                        <tr><td>1️⃣</td>
+                            <td>Update toolchain</td>
+                            <td>Update Maven/Gradle compiler, surefire, failsafe plugins</td>
+                        </tr>
+                        <tr><td>2️⃣</td>
+                            <td>Check dependencies</td>
+                            <td>Ensure all libraries support Java 17</td>
+                        </tr>
+                        <tr><td>3️⃣</td>
+                            <td>Remove deprecated code</td>
+                            <td>Remove calls to finalize(), stop(), suspend()</td>
+                        </tr>
+                        <tr><td>4️⃣</td>
+                            <td>Test with --illegal-access=deny</td>
+                            <td>Identify accesses to internal APIs</td>
+                        </tr>
+                        <tr><td>5️⃣</td>
+                            <td>Adopt new features</td>
+                            <td>Records, Switch expressions, Text blocks, Pattern matching</td>
+                        </tr>
+                    </table>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Maven configuration</h3>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Maven pom.xml:<br>
+                        <code>
+                        &lt;properties&gt;<br>
+                        &nbsp;&nbsp;&lt;maven.compiler.source&gt;17&lt;/maven.compiler.source&gt;<br>
+                        &nbsp;&nbsp;&lt;maven.compiler.target&gt;17&lt;/maven.compiler.target&gt;<br>
+                        &lt;/properties&gt;
+                        </code>
+                    </div>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Gradle configuration</h3>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> build.gradle:<br>
+                        <code>
+                        java {<br>
+                        &nbsp;&nbsp;sourceCompatibility = JavaVersion.VERSION_17<br>
+                        &nbsp;&nbsp;targetCompatibility = JavaVersion.VERSION_17<br>
+                        }
+                        </code>
+                    </div>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Migration testing</h3>
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> Useful test commands:<br>
+                        <code>
+                        # Compile with Java 17<br>
+                        mvn clean compile<br><br>
+                        # Run tests<br>
+                        mvn test<br><br>
+                        # Check illegal accesses<br>
+                        java --illegal-access=deny -jar myapp.jar
+                        </code>
+                    </div>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-lightbulb"></i> <strong>Migration checklist:</strong><br>
+                        ✓ Update JDK to Java 17<br>
+                        ✓ Update Maven/Gradle plugins<br>
+                        ✓ Update all dependencies<br>
+                        ✓ Remove deprecated code<br>
+                        ✓ Test with --illegal-access=deny<br>
+                        ✓ Update CI/CD pipeline<br>
+                        ✓ Consider adopting new features
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Back to top</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Java 11 vs Java 17 | Complete LTS comparison
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> All examples are ready to run
+        </div>
+    </footer>
+
+    <!-- Prism.js and Script -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="includes/include.js"></script>
+    <script src="js/navbar.js"></script>
+    
+    <script>
+        // TOC specific to this page
+        const sections = ['confronto-generale', 'switch-expression', 'text-block', 'record-class', 'pattern-matching', 'sealed-class', 'var-lambda', 'string-methods', 'http-client', 'garbage-collector', 'altre-novita', 'api-rimosse', 'guida-migrazione'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
