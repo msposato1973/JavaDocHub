@@ -5,17 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spring Boot Microservices | JavaDoc Hub</title>
     
+   
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
-	 
+     
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+   
 
     <!-- Scroll progress bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -23,6 +25,7 @@
     <!-- Include Navbar -->
     <div data-include="navbar"></div>
 	<!-- Scroll progress bar -->
+
 
     <div class="main-layout">
         
@@ -35,10 +38,10 @@
                 </div>
             </div>
             <ul class="toc-list">
-                <li><a href="#introduzione" class="toc-link" data-target="introduzione">
+                <li><a href="#introduction" class="toc-link" data-target="introduction">
                     <i class="fas fa-question-circle"></i> Introduction
                 </a></li>
-                <li><a href="#dipendenze" class="toc-link" data-target="dipendenze">
+                <li><a href="#dependencies" class="toc-link" data-target="dependencies">
                     <i class="fas fa-cube"></i> Dependencies
                 </a></li>
                 <li><a href="#rest-controller" class="toc-link" data-target="rest-controller">
@@ -81,11 +84,11 @@
         <div class="content-wrapper">
             <div class="page-header">
                 <h1><i class="fas fa-microchip"></i> Microservices with Spring Boot</h1>
-                <p>Architecture, REST API, Spring Cloud, inter-service communication, and Docker</p>
+                <p>Architecture, REST APIs, Spring Cloud, inter-service communication and Docker</p>
             </div>
 
             <!-- ==================== 1. INTRODUCTION ==================== -->
-            <div class="section-card" id="introduzione">
+            <div class="section-card" id="introduction">
                 <div class="card-header">
                     <i class="fas fa-question-circle"></i>
                     <h2>What is a Microservice?</h2>
@@ -93,14 +96,14 @@
                 <div class="card-body">
                     <div class="badge"><i class="fas fa-building"></i> Distributed architecture</div>
                     <div class="desc">
-                        Microservices are an architecture where an application is split into small independent services,
+                        Microservices are an architecture where an application is divided into small independent services,
                         each with its own responsibility, database, and lifecycle. Each service communicates with others
                         through well-defined APIs (usually REST).
                     </div>
                     <table class="comparison-table">
                         <tr><th>Feature</th><th>Monolith</th><th>Microservices</th></tr>
                         <tr><td>Deployment</td><td>Single artifact</td><td>Independent per service</td></tr>
-                        <tr><td>Scalability</td><td>Whole application</td><td>Per service</td></tr>
+                        <tr><td>Scalability</td><td>Whole application</td><td>Per single service</td></tr>
                         <tr><td>Technologies</td><td>Single stack</td><td>Mixed (polyglot)</td></tr>
                         <tr><td>Database</td><td>Shared</td><td>Database per service</td></tr>
                         <tr><td>Team size</td><td>Large team</td><td>Small teams (2-pizza team)</td></tr>
@@ -108,7 +111,7 @@
                     <div class="info-block">
                         <i class="fas fa-lightbulb"></i> <strong>Benefits of microservices:</strong><br>
                         - <strong>Independent scalability</strong>: scale only the services that need it<br>
-                        - <strong>Resilience</strong>: a down service doesn't block the entire system<br>
+                        - <strong>Resilience</strong>: a down service does not block the entire system<br>
                         - <strong>Frequent deployments</strong>: you can deploy a single service<br>
                         - <strong>Different technologies</strong>: each service can use the best language
                     </div>
@@ -116,7 +119,7 @@
             </div>
 
             <!-- ==================== 2. DEPENDENCIES ==================== -->
-            <div class="section-card" id="dipendenze">
+            <div class="section-card" id="dependencies">
                 <div class="card-header">
                     <i class="fas fa-cube"></i>
                     <h2>Dependencies for Spring Boot Microservices</h2>
@@ -397,15 +400,15 @@ public class UserDTO {
     
     private Long id;
     
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Name is mandatory")
     @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     private String name;
     
-    @NotBlank(message = "Email is required")
+    @NotBlank(message = "Email is mandatory")
     @Email(message = "Invalid email format")
     private String email;
     
-    @NotNull(message = "Age is required")
+    @NotNull(message = "Age is mandatory")
     @Min(value = 0, message = "Age cannot be negative")
     @Max(value = 150, message = "Age cannot exceed 150")
     private Integer age;
@@ -492,7 +495,7 @@ public class OrderServiceApplication {
     }
 }</code></pre>
 
-                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Define Feign Client</h3>
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Define the Feign Client</h3>
                     <pre><code class="language-java">package com.example.order.client;
 
 import com.example.order.dto.UserDTO;
@@ -534,7 +537,7 @@ public interface ProductServiceClient {
     ProductDTO getProduct(@PathVariable("id") Long id);
 }
 
-// Feign configuration
+// Feign Configuration
 @Configuration
 public class FeignConfig {
     
@@ -592,15 +595,15 @@ public class OrderService {
         log.info("Creating order for user ID: {}", userId);
         
         try {
-            // Verify that the user exists
+            // Verify user exists
             UserDTO user = userClient.getUserById(userId);
             log.info("User found: {} {}", user.getName(), user.getEmail());
             
-            // Associate the order with the user
+            // Associate order with user
             order.setUserId(userId);
             order.setUserName(user.getName());
             
-            // Save the order...
+            // Save order...
             return order;
             
         } catch (Exception e) {
@@ -610,7 +613,7 @@ public class OrderService {
     }
     
     public List&lt;UserDTO&gt; searchUsers(String name) {
-        log.info("Searching users by name: {}", name);
+        log.info("Searching users with name: {}", name);
         return userClient.searchUsers(name);
     }
 }</code></pre>
@@ -699,13 +702,13 @@ public class ResilientService {
                 UserDTO user = getUserWithCircuitBreaker(1L);
                 log.info("Result: {}", user);
             } catch (Exception e) {
-                log.error("Error on call {}", i, e);
+                log.error("Error in call {}", i, e);
             }
         }
     }
 }</code></pre>
 
-                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml configuration</h3>
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml Configuration</h3>
                     <pre><code class="language-yaml">resilience4j:
   circuitbreaker:
     instances:
@@ -914,4 +917,672 @@ import java.util.UUID;
 public class LoggingGlobalFilter implements GlobalFilter, Ordered {
     
     @Override
-    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilter
+    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
+        
+        // Add Correlation ID
+        String correlationId = UUID.randomUUID().toString();
+        ServerHttpRequest mutatedRequest = request.mutate()
+            .header("X-Correlation-Id", correlationId)
+            .build();
+        
+        log.info("Request: {} {} - CorrelationId: {}",
+            request.getMethod(), request.getURI(), correlationId);
+        
+        long startTime = System.currentTimeMillis();
+        
+        return chain.filter(exchange.mutate().request(mutatedRequest).build())
+            .then(Mono.fromRunnable(() -> {
+                long duration = System.currentTimeMillis() - startTime;
+                log.info("Response: {} - Duration: {}ms - CorrelationId: {}",
+                    exchange.getResponse().getStatusCode(), duration, correlationId);
+            }));
+    }
+    
+    @Override
+    public int getOrder() {
+        return -1;  // Executed first
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Fallback Controller</h3>
+                    <pre><code class="language-java">package com.example.gateway.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/fallback")
+public class FallbackController {
+    
+    @GetMapping("/users")
+    public Map&lt;String, String&gt; userFallback() {
+        return Map.of(
+            "status", "DOWN",
+            "message", "User service is unavailable",
+            "timestamp", String.valueOf(System.currentTimeMillis())
+        );
+    }
+    
+    @GetMapping("/orders")
+    public Map&lt;String, String&gt; orderFallback() {
+        return Map.of(
+            "status", "DOWN",
+            "message", "Order service is unavailable"
+        );
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 9. CENTRALIZED CONFIGURATION ==================== -->
+            <div class="section-card" id="config-server">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i>
+                    <h2>Centralized Configuration - Spring Cloud Config</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green">Config Server + Config Client</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Server</h3>
+                    <pre><code class="language-java">package com.example.config;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.config.server.EnableConfigServer;
+
+@SpringBootApplication
+@EnableConfigServer
+public class ConfigServerApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ConfigServerApplication.class, args);
+    }
+}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Server application.yml</h3>
+                    <pre><code class="language-yaml">server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/my-user/config-repo
+          default-label: main
+          search-paths: '{application}'
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
+      fail-fast: true
+
+encrypt:
+  key: ${ENCRYPT_KEY:my-secret-key}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Config Client (bootstrap.yml)</h3>
+                    <pre><code class="language-yaml">spring:
+  application:
+    name: user-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+      retry:
+        max-attempts: 6
+        initial-interval: 1000
+        multiplier: 1.1
+      enabled: true
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Git Repository with configurations</h3>
+                    <pre><code class="language-text">config-repo/
+├── application.yml
+├── application-dev.yml
+├── application-prod.yml
+├── user-service.yml
+├── user-service-dev.yml
+├── user-service-prod.yml
+└── order-service.yml
+
+# Example user-service.yml
+database:
+  url: jdbc:mysql://localhost:3306/users
+  username: ${DB_USERNAME:root}
+  password: ${DB_PASSWORD:secret}
+  driver-class-name: com.mysql.cj.jdbc.Driver
+
+app:
+  feature:
+    enable-notifications: true
+    max-users: 1000
+    
+logging:
+  level:
+    com.example: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 10. DISTRIBUTED TRACING ==================== -->
+            <div class="section-card" id="tracing">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>Distributed Tracing with Micrometer and Zipkin</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-blue">Distributed monitoring and debugging</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dependencies</h3>
+                    <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.micrometer&lt;/groupId&gt;
+    &lt;artifactId&gt;micrometer-tracing-bridge-brave&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.zipkin.reporter2&lt;/groupId&gt;
+    &lt;artifactId&gt;zipkin-reporter-brave&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.micrometer&lt;/groupId&gt;
+    &lt;artifactId&gt;micrometer-registry-prometheus&lt;/artifactId&gt;
+&lt;/dependency&gt;</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 application.yml Configuration</h3>
+                    <pre><code class="language-yaml">management:
+  tracing:
+    sampling:
+      probability: 1.0  # Sample all requests
+    propagation:
+      type: w3c,b3
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+      tags:
+        application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Custom Metrics</h3>
+                    <pre><code class="language-java">package com.example.microservice.metrics;
+
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.Tags;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CustomMetrics {
+    
+    private final MeterRegistry meterRegistry;
+    private final Counter requestsCounter;
+    private final Counter errorsCounter;
+    
+    public CustomMetrics(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+        
+        this.requestsCounter = Counter.builder("api.requests.total")
+            .description("Total number of API requests")
+            .tag("service", "user-service")
+            .register(meterRegistry);
+        
+        this.errorsCounter = Counter.builder("api.errors.total")
+            .description("Total number of API errors")
+            .tag("service", "user-service")
+            .register(meterRegistry);
+    }
+    
+    public void incrementRequests() {
+        requestsCounter.increment();
+    }
+    
+    public void incrementErrors() {
+        errorsCounter.increment();
+    }
+    
+    public Timer.Sample startTimer() {
+        return Timer.start(meterRegistry);
+    }
+    
+    public void stopTimer(Timer.Sample sample, String endpoint, String method) {
+        sample.stop(Timer.builder("api.response.time")
+            .description("API response time")
+            .tags(Tags.of("endpoint", endpoint, "method", method))
+            .register(meterRegistry));
+    }
+}</code></pre>
+
+                    <div class="output-demo">
+                        <i class="fas fa-terminal"></i> <strong>Useful Commands:</strong><br>
+                        📊 <strong>Actuator Endpoint</strong>: http://localhost:8080/actuator/health<br>
+                        📈 <strong>Prometheus Metrics</strong>: http://localhost:8080/actuator/prometheus<br>
+                        🔍 <strong>Zipkin UI</strong>: http://localhost:9411 (distributed tracing)
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 11. DOCKER ==================== -->
+            <div class="section-card" id="docker">
+                <div class="card-header">
+                    <i class="fab fa-docker"></i>
+                    <h2>Docker - Containerizing a Microservice</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge-green"><i class="fab fa-docker"></i> Dockerfile + docker-compose</div>
+                    
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Dockerfile (multi-stage build)</h3>
+                    <pre><code class="language-dockerfile"># Stage 1: Build
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+COPY src src
+RUN mvn package -DskipTests
+
+# Stage 2: Runtime
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+
+# Non-root user for security
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 docker-compose.yml (orchestration)</h3>
+                    <pre><code class="language-yaml">version: '3.8'
+
+services:
+  # Service Discovery
+  eureka-server:
+    build: ./discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+
+  # Config Server
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - microservices-net
+    depends_on:
+      - eureka-server
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka
+
+  # User Service
+  user-service:
+    build: ./user-service
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka
+      - CONFIG_URL=http://config-server:8888
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=user-db
+    depends_on:
+      - eureka-server
+      - config-server
+      - user-db
+    networks:
+      - microservices-net
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          memory: 512M
+
+  # User Database
+  user-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userdb
+    ports:
+      - "3306:3306"
+    networks:
+      - microservices-net
+    volumes:
+      - user-db-data:/var/lib/mysql
+
+  # API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_URL=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - user-service
+    networks:
+      - microservices-net
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # Zipkin (Distributed Tracing)
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices-net
+
+  # Prometheus (Metrics)
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - microservices-net
+
+  # Grafana (Dashboard)
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  user-db-data:</code></pre>
+
+                    <h3 style="margin: 1rem 0 0.5rem; color: #ff9800;">📌 Useful Docker Commands</h3>
+                    <pre><code class="language-bash"># Build images
+docker build -t user-service:latest ./user-service
+
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f user-service
+
+# Scale a service
+docker-compose up -d --scale user-service=3
+
+# Stop all services
+docker-compose down
+
+# Stop and remove volumes
+docker-compose down -v
+
+# Execute commands in a container
+docker exec -it user-service sh</code></pre>
+                </div>
+            </div>
+
+            <!-- ==================== 12. BEST PRACTICES ==================== -->
+            <div class="section-card" id="best-practices">
+                <div class="card-header">
+                    <i class="fas fa-star-of-life"></i>
+                    <h2>Best Practices for Microservices</h2>
+                </div>
+                <div class="card-body">
+                    <div class="badge">Fundamental rules for microservices architectures</div>
+                    
+                    <pre><code class="language-java">// ==================== 1. DATABASE PER SERVICE ====================
+// Each microservice must have its own isolated database
+// ❌ Database sharing between services
+// ✅ Each service has its own database
+
+// ==================== 2. API VERSIONING ====================
+@RestController
+@RequestMapping("/api/v1/users")
+public class UserControllerV1 {
+    // API version 1
+}
+
+@RestController
+@RequestMapping("/api/v2/users")
+public class UserControllerV2 {
+    // API version 2
+}
+
+// ==================== 3. CUSTOM HEALTH CHECK ====================
+@Component
+public class CustomHealthIndicator implements HealthIndicator {
+    
+    private final RestTemplate restTemplate;
+    
+    public CustomHealthIndicator(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+    
+    @Override
+    public Health health() {
+        try {
+            // Check external dependencies
+            ResponseEntity&lt;String&gt; response = restTemplate.getForEntity(
+                "http://external-service/health", String.class);
+            
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return Health.up()
+                    .withDetail("external-service", "available")
+                    .withDetail("timestamp", System.currentTimeMillis())
+                    .build();
+            }
+        } catch (Exception e) {
+            return Health.down()
+                .withDetail("external-service", "unavailable")
+                .withDetail("error", e.getMessage())
+                .build();
+        }
+        return Health.up().build();
+    }
+}
+
+// ==================== 4. CORRELATION ID FOR TRACING ====================
+@Component
+public class CorrelationIdFilter implements Filter {
+    
+    private static final String CORRELATION_ID_HEADER = "X-Correlation-Id";
+    
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, 
+                         FilterChain chain) throws IOException, ServletException {
+        
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String correlationId = httpRequest.getHeader(CORRELATION_ID_HEADER);
+        
+        if (correlationId == null) {
+            correlationId = UUID.randomUUID().toString();
+        }
+        
+        MDC.put("correlationId", correlationId);
+        chain.doFilter(request, response);
+        MDC.clear();
+    }
+}
+
+// ==================== 5. CENTRALIZED ERROR HANDLING ====================
+@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotFound(ResourceNotFoundException ex) {
+        log.error("Resource not found: {}", ex.getMessage());
+        return new ErrorResponse("NOT_FOUND", ex.getMessage(), LocalDateTime.now());
+    }
+    
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ErrorResponse handleBusiness(BusinessException ex) {
+        log.error("Business error: {}", ex.getMessage());
+        return new ErrorResponse("BUSINESS_ERROR", ex.getMessage(), LocalDateTime.now());
+    }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleValidation(MethodArgumentNotValidException ex) {
+        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage())
+        );
+        return new ErrorResponse("VALIDATION_ERROR", "Validation error", errors);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleGeneric(Exception ex) {
+        log.error("Unexpected error", ex);
+        return new ErrorResponse("INTERNAL_ERROR", "Internal server error", LocalDateTime.now());
+    }
+}
+
+// ==================== 6. CORRELATION ID CONFIGURATION IN FEIGN ====================
+@Configuration
+public class FeignCorrelationConfig {
+    
+    @Bean
+    public RequestInterceptor correlationIdInterceptor() {
+        return requestTemplate -> {
+            String correlationId = MDC.get("correlationId");
+            if (correlationId != null) {
+                requestTemplate.header("X-Correlation-Id", correlationId);
+            }
+        };
+    }
+}
+
+// ==================== 7. RATE LIMITING ====================
+@Service
+public class RateLimitingService {
+    
+    private final Map&lt;String, AtomicInteger&gt; requestCounts = new ConcurrentHashMap&lt;&gt;();
+    private final int MAX_REQUESTS = 100;
+    private final long WINDOW_MS = 60000; // 1 minute
+    
+    public boolean allowRequest(String clientId) {
+        long window = System.currentTimeMillis() / WINDOW_MS;
+        String key = clientId + ":" + window;
+        
+        AtomicInteger count = requestCounts.computeIfAbsent(key, k -> new AtomicInteger(0));
+        int current = count.incrementAndGet();
+        
+        // Clean old windows
+        requestCounts.keySet().removeIf(k -> !k.endsWith(":" + window));
+        
+        return current <= MAX_REQUESTS;
+    }
+}</code></pre>
+
+                    <div class="info-block" style="margin-top: 1rem;">
+                        <i class="fas fa-list-check"></i> <strong>Microservices Checklist:</strong><br>
+                        ✓ Database per service (data isolation)<br>
+                        ✓ API Versioning (backward compatibility)<br>
+                        ✓ Custom health checks<br>
+                        ✓ Correlation ID for distributed tracing<br>
+                        ✓ Centralized error handling<br>
+                        ✓ Rate limiting to prevent abuse<br>
+                        ✓ Circuit Breaker for resilience<br>
+                        ✓ Metrics and monitoring (Prometheus/Grafana)<br>
+                        ✓ Structured logging (JSON)<br>
+                        ✓ Containerization (Docker)<br>
+                        ✓ Orchestration (Kubernetes/docker-compose)
+                    </div>
+                </div>
+            </div>
+
+            <a href="#" class="back-home"><i class="fas fa-arrow-up"></i> Back to top</a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fab fa-java"></i> JavaDoc Hub - Spring Boot Microservices | Modern Architectures
+        <div style="margin-top: 0.5rem; font-size: 0.75rem;">
+            <i class="fas fa-code"></i> All examples are ready to run
+        </div>
+    </footer>
+
+    <!-- Prism.js and Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-docker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        // TOC specific for this page
+        const sections = ['introduction', 'dependencies', 'rest-controller', 'entity-repository', 'feign-client', 'circuit-breaker', 'service-discovery', 'api-gateway', 'config-server', 'tracing', 'docker', 'best-practices'];
+        const tocLinks = document.querySelectorAll('.toc-link');
+
+        function updateActiveToc() {
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100;
+            for (const sectionId of sections) {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetBottom = offsetTop + element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+                        currentSection = sectionId;
+                        break;
+                    }
+                }
+            }
+            tocLinks.forEach(link => {
+                link.classList.remove('active-toc');
+                if (link.getAttribute('data-target') === currentSection) {
+                    link.classList.add('active-toc');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveToc);
+        window.addEventListener('load', updateActiveToc);
+
+        tocLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('data-target');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    if (window.innerWidth <= 768) {
+                        document.getElementById('sidebarToc')?.classList.remove('open');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
